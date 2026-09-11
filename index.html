@@ -229,6 +229,28 @@
             opacity: 0.7;
         }
 
+        .test-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 14px;
+
+            border: none;
+            border-radius: 16px;
+
+            background: #2481cc;
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .test-button:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+
         .footer {
             padding: 25px 0 10px;
             text-align: center;
@@ -264,7 +286,6 @@
         <div class="menu">
 
             <button class="menu-button" onclick="openPage('createPage')">
-
                 <div class="icon">📝</div>
 
                 <div class="button-text">
@@ -276,12 +297,10 @@
                         Создание новой публикации
                     </div>
                 </div>
-
             </button>
 
 
             <button class="menu-button" onclick="openPage('scheduledPage')">
-
                 <div class="icon">⏰</div>
 
                 <div class="button-text">
@@ -293,12 +312,10 @@
                         Запланированные публикации
                     </div>
                 </div>
-
             </button>
 
 
             <button class="menu-button" onclick="openPage('editPage')">
-
                 <div class="icon">✏️</div>
 
                 <div class="button-text">
@@ -310,12 +327,10 @@
                         Управление публикациями
                     </div>
                 </div>
-
             </button>
 
 
             <button class="menu-button" onclick="openPage('statsPage')">
-
                 <div class="icon">📊</div>
 
                 <div class="button-text">
@@ -327,12 +342,10 @@
                         Статистика канала
                     </div>
                 </div>
-
             </button>
 
 
             <button class="menu-button" onclick="openPage('settingsPage')">
-
                 <div class="icon">⚙️</div>
 
                 <div class="button-text">
@@ -344,7 +357,6 @@
                         Настройки Kawaii Chan
                     </div>
                 </div>
-
             </button>
 
         </div>
@@ -384,8 +396,12 @@
 
         </div>
 
-        <div class="status">
-            🔧 Функция подключения находится в разработке
+        <button class="test-button" onclick="testBackend()">
+            🔌 Проверить связь с Backend
+        </button>
+
+        <div id="backendStatus" class="status">
+            ⚪ Backend ещё не проверен
         </div>
 
     </div>
@@ -547,23 +563,39 @@
 
 <script>
 
-    // Telegram Web App
+    /*
+     * Telegram Mini App
+     */
+
     const tg = window.Telegram.WebApp;
 
     tg.ready();
     tg.expand();
 
 
-    // Открытие страницы
+    /*
+     * Адрес нашего Backend
+     */
+
+    const BACKEND_URL =
+        "https://kawaii-chan-backend.onrender.com";
+
+
+    /*
+     * Открытие страницы
+     */
+
     function openPage(pageId) {
 
-        const pages = document.querySelectorAll(".page");
+        const pages =
+            document.querySelectorAll(".page");
 
         pages.forEach(function(page) {
             page.classList.remove("active");
         });
 
-        const selectedPage = document.getElementById(pageId);
+        const selectedPage =
+            document.getElementById(pageId);
 
         if (selectedPage) {
             selectedPage.classList.add("active");
@@ -573,10 +605,14 @@
     }
 
 
-    // Возврат на главный экран
+    /*
+     * Возвращение на главный экран
+     */
+
     function goHome() {
 
-        const pages = document.querySelectorAll(".page");
+        const pages =
+            document.querySelectorAll(".page");
 
         pages.forEach(function(page) {
             page.classList.remove("active");
@@ -587,6 +623,72 @@
             .classList.add("active");
 
         window.scrollTo(0, 0);
+    }
+
+
+    /*
+     * Проверка связи Mini App → Backend
+     */
+
+    async function testBackend() {
+
+        const status =
+            document.getElementById("backendStatus");
+
+        status.textContent =
+            "⏳ Проверяем соединение...";
+
+        try {
+
+            const response = await fetch(
+                BACKEND_URL + "/webapp",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        source: "Kawaii Chan Mini App",
+                        action: "test_connection"
+                    })
+                }
+            );
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "HTTP " + response.status
+                );
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                status.textContent =
+                    "🟢 Backend подключён!";
+
+            } else {
+
+                status.textContent =
+                    "🟠 Backend ответил, но возникла проблема.";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            status.textContent =
+                "🔴 Не удалось подключиться к Backend";
+
+        }
+
     }
 
 </script>
