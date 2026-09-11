@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Kawaii Chan</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -10,53 +11,229 @@
     <style>
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+            padding: 16px;
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
             background: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #222222);
         }
 
         .app {
-            max-width: 500px;
+            width: 100%;
+            max-width: 520px;
             margin: 0 auto;
         }
 
-        h1 {
+        .header {
             text-align: center;
-            margin-bottom: 8px;
+            padding: 12px 8px 24px;
+        }
+
+        .logo {
+            font-size: 46px;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 27px;
+            font-weight: 800;
         }
 
         .subtitle {
-            text-align: center;
-            opacity: 0.7;
-            margin-bottom: 25px;
+            margin-top: 7px;
+            opacity: 0.65;
+            font-size: 14px;
         }
 
-        .card {
-            padding: 20px;
-            border-radius: 18px;
-            background: var(--tg-theme-secondary-bg-color, #f2f2f2);
-            margin-bottom: 15px;
+        .channel {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f1f1f1
+            );
+
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        button {
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-button {
             width: 100%;
-            padding: 15px;
+            min-height: 68px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 14px 18px;
+
+            border: none;
+            border-radius: 18px;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f2f2f2
+            );
+
+            color: var(--tg-theme-text-color, #222222);
+
+            cursor: pointer;
+            text-align: left;
+
+            transition:
+                transform 0.1s ease,
+                opacity 0.1s ease;
+        }
+
+        .menu-button:active {
+            transform: scale(0.97);
+            opacity: 0.8;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-right: 14px;
+
+            border-radius: 14px;
+
+            background: var(
+                --tg-theme-bg-color,
+                #ffffff
+            );
+
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .button-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .button-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .button-description {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            width: 42px;
+            height: 42px;
+
             border: none;
             border-radius: 14px;
-            font-size: 16px;
-            font-weight: bold;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f2f2f2
+            );
+
+            color: var(--tg-theme-text-color, #222222);
+
+            font-size: 20px;
             cursor: pointer;
-            background: var(--tg-theme-button-color, #2481cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
+            margin-right: 12px;
         }
 
-        button:active {
-            transform: scale(0.98);
+        .page-title {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            padding: 20px;
+            margin-bottom: 14px;
+
+            border-radius: 18px;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f2f2f2
+            );
+        }
+
+        .info-card h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .info-card p {
+            margin: 0;
+            opacity: 0.7;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .status {
+            margin-top: 18px;
+            padding: 12px 15px;
+
+            border-radius: 14px;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f2f2f2
+            );
+
+            text-align: center;
+
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .footer {
+            padding: 25px 0 10px;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.45;
         }
     </style>
 </head>
@@ -65,47 +242,353 @@
 
 <div class="app">
 
-    <h1>🌸 Kawaii Chan</h1>
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <div id="homePage" class="page active">
 
-    <div class="subtitle">
-        Панель управления каналом
+        <div class="header">
+
+            <div class="logo">🌸</div>
+
+            <h1>Kawaii Chan</h1>
+
+            <div class="subtitle">
+                Панель управления каналом
+            </div>
+
+            <div class="channel">
+                📢 Kawaii_Chan
+            </div>
+
+        </div>
+
+        <div class="menu">
+
+            <button class="menu-button" onclick="openPage('createPage')">
+
+                <div class="icon">📝</div>
+
+                <div class="button-text">
+                    <div class="button-title">
+                        Создать пост
+                    </div>
+
+                    <div class="button-description">
+                        Создание новой публикации
+                    </div>
+                </div>
+
+            </button>
+
+
+            <button class="menu-button" onclick="openPage('scheduledPage')">
+
+                <div class="icon">⏰</div>
+
+                <div class="button-text">
+                    <div class="button-title">
+                        Отложенные
+                    </div>
+
+                    <div class="button-description">
+                        Запланированные публикации
+                    </div>
+                </div>
+
+            </button>
+
+
+            <button class="menu-button" onclick="openPage('editPage')">
+
+                <div class="icon">✏️</div>
+
+                <div class="button-text">
+                    <div class="button-title">
+                        Редактировать
+                    </div>
+
+                    <div class="button-description">
+                        Управление публикациями
+                    </div>
+                </div>
+
+            </button>
+
+
+            <button class="menu-button" onclick="openPage('statsPage')">
+
+                <div class="icon">📊</div>
+
+                <div class="button-text">
+                    <div class="button-title">
+                        Статистика
+                    </div>
+
+                    <div class="button-description">
+                        Статистика канала
+                    </div>
+                </div>
+
+            </button>
+
+
+            <button class="menu-button" onclick="openPage('settingsPage')">
+
+                <div class="icon">⚙️</div>
+
+                <div class="button-text">
+                    <div class="button-title">
+                        Настройки
+                    </div>
+
+                    <div class="button-description">
+                        Настройки Kawaii Chan
+                    </div>
+                </div>
+
+            </button>
+
+        </div>
+
+        <div class="footer">
+            Kawaii Chan • Mini App
+        </div>
+
     </div>
 
-    <div class="card">
-        <h2>👋 Добро пожаловать!</h2>
-        <p>
-            Это наша первая Telegram Mini App.
-        </p>
-        <p>
-            Здесь постепенно появятся инструменты
-            для управления каналом.
-        </p>
+
+    <!-- СОЗДАТЬ ПОСТ -->
+    <div id="createPage" class="page">
+
+        <div class="page-header">
+
+            <button class="back-button" onclick="goHome()">
+                ←
+            </button>
+
+            <div class="page-title">
+                📝 Создать пост
+            </div>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                Создание публикации
+            </h3>
+
+            <p>
+                Здесь появится редактор постов,
+                предпросмотр и публикация через бота.
+            </p>
+
+        </div>
+
+        <div class="status">
+            🔧 Функция подключения находится в разработке
+        </div>
+
     </div>
 
-    <div class="card">
-        <h3>🛠 Что здесь будет</h3>
-        <p>📝 Создание постов</p>
-        <p>⏰ Отложенные публикации</p>
-        <p>✏️ Редактирование постов</p>
-        <p>📊 Статистика</p>
-        <p>⚙️ Настройки канала</p>
+
+    <!-- ОТЛОЖЕННЫЕ -->
+    <div id="scheduledPage" class="page">
+
+        <div class="page-header">
+
+            <button class="back-button" onclick="goHome()">
+                ←
+            </button>
+
+            <div class="page-title">
+                ⏰ Отложенные
+            </div>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                Запланированные публикации
+            </h3>
+
+            <p>
+                Здесь будут отображаться посты,
+                которые бот запланировал к публикации.
+            </p>
+
+        </div>
+
+        <div class="status">
+            🔧 Подключение к боту будет добавлено следующим этапом
+        </div>
+
     </div>
 
-    <button onclick="hello()">
-        💖 Проверить Mini App
-    </button>
+
+    <!-- РЕДАКТИРОВАНИЕ -->
+    <div id="editPage" class="page">
+
+        <div class="page-header">
+
+            <button class="back-button" onclick="goHome()">
+                ←
+            </button>
+
+            <div class="page-title">
+                ✏️ Редактирование
+            </div>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                Управление публикациями
+            </h3>
+
+            <p>
+                Здесь появится список постов
+                и инструменты для их редактирования.
+            </p>
+
+        </div>
+
+        <div class="status">
+            🔧 Функция подключения находится в разработке
+        </div>
+
+    </div>
+
+
+    <!-- СТАТИСТИКА -->
+    <div id="statsPage" class="page">
+
+        <div class="page-header">
+
+            <button class="back-button" onclick="goHome()">
+                ←
+            </button>
+
+            <div class="page-title">
+                📊 Статистика
+            </div>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                Статистика Kawaii_Chan
+            </h3>
+
+            <p>
+                Здесь появятся просмотры, подписчики,
+                публикации и другие показатели канала.
+            </p>
+
+        </div>
+
+        <div class="status">
+            🔧 Получение статистики будет подключено следующим этапом
+        </div>
+
+    </div>
+
+
+    <!-- НАСТРОЙКИ -->
+    <div id="settingsPage" class="page">
+
+        <div class="page-header">
+
+            <button class="back-button" onclick="goHome()">
+                ←
+            </button>
+
+            <div class="page-title">
+                ⚙️ Настройки
+            </div>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                Настройки канала
+            </h3>
+
+            <p>
+                Здесь будут настройки публикаций,
+                оформления и поведения Kawaii Chan.
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>
+                🤖 Telegram Bot
+            </h3>
+
+            <p>
+                Бот подключён к Mini App.
+            </p>
+
+        </div>
+
+        <div class="status">
+            🟢 Mini App работает
+        </div>
+
+    </div>
 
 </div>
 
+
 <script>
+
+    // Telegram Web App
     const tg = window.Telegram.WebApp;
 
     tg.ready();
     tg.expand();
 
-    function hello() {
-        tg.showAlert("Mini App работает! 🌸");
+
+    // Открытие страницы
+    function openPage(pageId) {
+
+        const pages = document.querySelectorAll(".page");
+
+        pages.forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+        const selectedPage = document.getElementById(pageId);
+
+        if (selectedPage) {
+            selectedPage.classList.add("active");
+        }
+
+        window.scrollTo(0, 0);
     }
+
+
+    // Возврат на главный экран
+    function goHome() {
+
+        const pages = document.querySelectorAll(".page");
+
+        pages.forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+        document
+            .getElementById("homePage")
+            .classList.add("active");
+
+        window.scrollTo(0, 0);
+    }
+
 </script>
 
 </body>
