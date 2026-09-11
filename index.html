@@ -1,842 +1,2116 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
-
-    <title>Kawaii Chan</title>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            margin: 0;
-            padding: 16px;
-            min-height: 100vh;
-
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
-
-            background: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #222222);
-        }
-
-        .app {
-            width: 100%;
-            max-width: 520px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            padding: 12px 8px 24px;
-        }
-
-        .logo {
-            font-size: 46px;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 27px;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            margin-top: 7px;
-            opacity: 0.65;
-            font-size: 14px;
-        }
-
-        .channel {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 12px;
-            border-radius: 20px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f1f1f1
-            );
-
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .menu-button {
-            width: 100%;
-            min-height: 68px;
-
-            display: flex;
-            align-items: center;
-
-            padding: 14px 18px;
-
-            border: none;
-            border-radius: 18px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            cursor: pointer;
-            text-align: left;
-
-            transition:
-                transform 0.1s ease,
-                opacity 0.1s ease;
-        }
-
-        .menu-button:active {
-            transform: scale(0.97);
-            opacity: 0.8;
-        }
-
-        .icon {
-            width: 44px;
-            height: 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-right: 14px;
-
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-bg-color,
-                #ffffff
-            );
-
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .button-text {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .button-title {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .button-description {
-            font-size: 12px;
-            opacity: 0.6;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .back-button {
-            width: 42px;
-            height: 42px;
-
-            border: none;
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            font-size: 20px;
-            cursor: pointer;
-            margin-right: 12px;
-        }
-
-        .page-title {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .info-card {
-            padding: 20px;
-            margin-bottom: 14px;
-
-            border-radius: 18px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-        }
-
-        .info-card h3 {
-            margin: 0 0 8px;
-            font-size: 17px;
-        }
-
-        .info-card p {
-            margin: 0;
-            opacity: 0.7;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .status {
-            margin-top: 18px;
-            padding: 12px 15px;
-
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            text-align: center;
-
-            font-size: 13px;
-            opacity: 0.7;
-        }
-
-        .test-button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 14px;
-
-            border: none;
-            border-radius: 16px;
-
-            background: #2481cc;
-            color: white;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-        .test-button:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
-
-        .post-text {
-            width: 100%;
-            min-height: 180px;
-
-            padding: 15px;
-
-            border: none;
-            border-radius: 16px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            font-family: inherit;
-            font-size: 15px;
-
-            resize: vertical;
-            outline: none;
-        }
-
-        .post-text::placeholder {
-            color: var(--tg-theme-hint-color, #888888);
-        }
-
-        .publish-button {
-            background: #22a559;
-        }
-
-        .footer {
-            padding: 25px 0 10px;
-            text-align: center;
-            font-size: 12px;
-            opacity: 0.45;
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
+
+<title>Kawaii Chan</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root {
+    --bg: #0f0f14;
+    --card: #181820;
+    --card2: #20202a;
+    --text: #f5f5f7;
+    --muted: #9b9ba8;
+    --accent: #ff5ca8;
+    --accent2: #ff78b8;
+    --danger: #ff4f67;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --border: rgba(255,255,255,.08);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top, rgba(255,92,168,.12), transparent 35%),
+        var(--bg);
+    color: var(--text);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+}
+
+.app {
+    min-height: 100vh;
+    padding-bottom: 86px;
+}
+
+.header {
+    padding: 20px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(15,15,20,.88);
+    backdrop-filter: blur(14px);
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.header-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.page {
+    display: none;
+    padding: 10px 14px 20px;
+}
+
+.page.active {
+    display: block;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: 17px;
+    font-weight: 750;
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 12px 0 7px;
+}
+
+textarea,
+input[type="datetime-local"],
+input[type="text"] {
+    width: 100%;
+    background: var(--card2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    outline: none;
+    padding: 13px;
+}
+
+textarea {
+    min-height: 170px;
+    resize: vertical;
+}
+
+textarea:focus,
+input:focus {
+    border-color: rgba(255,92,168,.6);
+}
+
+.counter {
+    text-align: right;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.button {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 13px;
+    background: var(--accent);
+    color: white;
+    font-weight: 750;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.button:active {
+    transform: scale(.98);
+}
+
+.button.secondary {
+    background: var(--card2);
+    border: 1px solid var(--border);
+}
+
+.button.danger {
+    background: var(--danger);
+}
+
+.button.success {
+    background: #16a34a;
+}
+
+.button.small {
+    width: auto;
+    padding: 9px 12px;
+    margin: 0;
+    font-size: 13px;
+}
+
+.file-picker {
+    display: block;
+    background: var(--card2);
+    border: 1px dashed rgba(255,92,168,.55);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.file-picker strong {
+    display: block;
+    font-size: 15px;
+}
+
+.file-picker span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+#photoInput {
+    display: none;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+    margin-top: 12px;
+}
+
+.photo-item {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 11px;
+    overflow: hidden;
+    background: #111;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.75);
+    color: white;
+    font-weight: bold;
+}
+
+.status {
+    border-radius: 12px;
+    padding: 11px 12px;
+    font-size: 13px;
+    margin-top: 10px;
+    background: var(--card2);
+    color: var(--muted);
+    word-break: break-word;
+}
+
+.status.success {
+    color: var(--success);
+}
+
+.status.error {
+    color: #ff7183;
+}
+
+.status.warning {
+    color: var(--warning);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    background: var(--card2);
+    border-radius: 14px;
+    padding: 13px;
+    border: 1px solid var(--border);
+}
+
+.item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.item-title {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.item-meta {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.item-text {
+    margin-top: 10px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.item-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 11px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    background: rgba(255,255,255,.08);
+}
+
+.badge.pending {
+    color: var(--warning);
+}
+
+.badge.done {
+    color: var(--success);
+}
+
+.badge.error {
+    color: #ff7183;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+}
+
+.stat {
+    background: var(--card2);
+    border-radius: 14px;
+    padding: 15px;
+}
+
+.stat-value {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: rgba(20,20,27,.94);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid var(--border);
+    padding: 7px 4px calc(7px + env(safe-area-inset-bottom));
+}
+
+.nav-button {
+    background: transparent;
+    color: var(--muted);
+    padding: 7px 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.nav-button .icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.nav-button.active {
+    color: var(--accent2);
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px 10px;
+    font-size: 13px;
+}
+
+.loading {
+    text-align: center;
+    padding: 25px;
+    color: var(--muted);
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,.72);
+    display: none;
+    align-items: flex-end;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card);
+    border-radius: 22px 22px 0 0;
+    padding: 18px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.close {
+    float: right;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--card2);
+    color: white;
+}
+
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: 14px 0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 9px 0;
+    font-size: 13px;
+}
+
+.info-row span:first-child {
+    color: var(--muted);
+}
+
+.hidden {
+    display: none !important;
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <header class="header">
+        <div class="header-title">🌸 Kawaii Chan</div>
+        <div class="header-subtitle" id="headerSubtitle">
+            Панель управления каналом
+        </div>
+    </header>
 
-    <div id="homePage" class="page active">
+    <!-- ================================================= -->
+    <!-- CREATE -->
+    <!-- ================================================= -->
 
-        <div class="header">
+    <section class="page active" id="page-create">
 
-            <div class="logo">🌸</div>
+        <div class="card">
+            <div class="card-title">📝 Создать пост</div>
 
-            <h1>Kawaii Chan</h1>
+            <label for="postText">Текст публикации</label>
 
-            <div class="subtitle">
-                Панель управления каналом
+            <textarea
+                id="postText"
+                maxlength="4096"
+                placeholder="Напиши текст поста..."
+            ></textarea>
+
+            <div class="counter">
+                <span id="textCounter">0</span> / 4096
             </div>
 
-            <div class="channel">
-                📢 Kawaii_Chan
+            <label>Фотографии</label>
+
+            <label class="file-picker" for="photoInput">
+                <strong>📷 Выбрать фотографии</strong>
+                <span>
+                    До 100 фотографий • можно выбрать несколько
+                </span>
+            </label>
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+                multiple
+            >
+
+            <div
+                id="photoGrid"
+                class="photo-grid"
+            ></div>
+
+            <div
+                id="createStatus"
+                class="status"
+            >
+                Готово к созданию публикации.
             </div>
 
+            <button
+                class="button"
+                id="publishButton"
+                onclick="publishPost()"
+            >
+                🚀 Опубликовать сейчас
+            </button>
+
+            <button
+                class="button secondary"
+                onclick="clearCreateForm()"
+            >
+                🗑 Очистить
+            </button>
         </div>
 
-        <div class="menu">
+        <div class="card">
+            <div class="card-title">⏰ Отложенная публикация</div>
+
+            <label for="scheduleTime">
+                Дата и время публикации
+            </label>
+
+            <input
+                id="scheduleTime"
+                type="datetime-local"
+            >
 
             <button
-                class="menu-button"
-                onclick="openPage('createPage')"
+                class="button"
+                onclick="schedulePost()"
             >
-                <div class="icon">📝</div>
-
-                <div class="button-text">
-                    <div class="button-title">
-                        Создать пост
-                    </div>
-
-                    <div class="button-description">
-                        Создание новой публикации
-                    </div>
-                </div>
+                ⏰ Запланировать
             </button>
 
-
-            <button
-                class="menu-button"
-                onclick="openPage('scheduledPage')"
-            >
-                <div class="icon">⏰</div>
-
-                <div class="button-text">
-                    <div class="button-title">
-                        Отложенные
-                    </div>
-
-                    <div class="button-description">
-                        Запланированные публикации
-                    </div>
-                </div>
-            </button>
-
-
-            <button
-                class="menu-button"
-                onclick="openPage('editPage')"
-            >
-                <div class="icon">✏️</div>
-
-                <div class="button-text">
-                    <div class="button-title">
-                        Редактировать
-                    </div>
-
-                    <div class="button-description">
-                        Управление публикациями
-                    </div>
-                </div>
-            </button>
-
-
-            <button
-                class="menu-button"
-                onclick="openPage('statsPage')"
-            >
-                <div class="icon">📊</div>
-
-                <div class="button-text">
-                    <div class="button-title">
-                        Статистика
-                    </div>
-
-                    <div class="button-description">
-                        Статистика канала
-                    </div>
-                </div>
-            </button>
-
-
-            <button
-                class="menu-button"
-                onclick="openPage('settingsPage')"
-            >
-                <div class="icon">⚙️</div>
-
-                <div class="button-text">
-                    <div class="button-title">
-                        Настройки
-                    </div>
-
-                    <div class="button-description">
-                        Настройки Kawaii Chan
-                    </div>
-                </div>
-            </button>
-
+            <div class="status">
+                Время отправляется на сервер как UTC.
+                Сервер сам проверяет, что оно находится в будущем.
+            </div>
         </div>
 
-        <div class="footer">
-            Kawaii Chan • Mini App
-        </div>
+    </section>
 
-    </div>
+    <!-- ================================================= -->
+    <!-- SCHEDULED -->
+    <!-- ================================================= -->
 
+    <section class="page" id="page-scheduled">
 
-    <!-- СОЗДАТЬ ПОСТ -->
-
-    <div id="createPage" class="page">
-
-        <div class="page-header">
+        <div class="card">
+            <div class="card-title">⏰ Отложенные публикации</div>
 
             <button
-                class="back-button"
-                onclick="goHome()"
+                class="button secondary"
+                onclick="loadScheduled()"
             >
-                ←
+                🔄 Обновить
             </button>
+        </div>
 
-            <div class="page-title">
-                📝 Создать пост
+        <div id="scheduledList" class="list">
+            <div class="loading">
+                Загружаем...
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ================================================= -->
+    <!-- EDIT -->
+    <!-- ================================================= -->
+
+    <section class="page" id="page-edit">
+
+        <div class="card">
+            <div class="card-title">✏️ Опубликованные посты</div>
+
+            <div class="status">
+                Здесь отображаются последние 100 публикаций,
+                созданных через этот Mini App.
             </div>
 
+            <button
+                class="button secondary"
+                onclick="loadPosts()"
+            >
+                🔄 Обновить
+            </button>
         </div>
 
-
-        <div class="info-card">
-
-            <h3>
-                Создание публикации
-            </h3>
-
-            <p>
-                Напиши текст поста и опубликуй его
-                прямо в Telegram-канал.
-            </p>
-
+        <div id="postsList" class="list">
+            <div class="loading">
+                Загружаем...
+            </div>
         </div>
 
+    </section>
+
+    <!-- ================================================= -->
+    <!-- STATS -->
+    <!-- ================================================= -->
+
+    <section class="page" id="page-stats">
+
+        <div class="card">
+            <div class="card-title">📊 Статистика</div>
+
+            <div
+                id="statsGrid"
+                class="stat-grid"
+            ></div>
+
+            <div
+                id="statsStatus"
+                class="status"
+            >
+                Нажми «Обновить».
+            </div>
+
+            <button
+                class="button"
+                onclick="loadStats()"
+            >
+                🔄 Обновить статистику
+            </button>
+        </div>
+
+    </section>
+
+    <!-- ================================================= -->
+    <!-- SETTINGS -->
+    <!-- ================================================= -->
+
+    <section class="page" id="page-settings">
+
+        <div class="card">
+            <div class="card-title">⚙️ Настройки</div>
+
+            <div class="info-row">
+                <span>Канал</span>
+                <strong id="settingChannel">—</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Backend</span>
+                <strong id="settingBackend">—</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Планировщик</span>
+                <strong id="settingScheduler">—</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Макс. фотографий</span>
+                <strong id="settingMaxPhotos">—</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Макс. фото в альбоме</span>
+                <strong id="settingAlbumLimit">—</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Лимит текста</span>
+                <strong id="settingTextLimit">—</strong>
+            </div>
+
+            <button
+                class="button secondary"
+                onclick="loadSettings()"
+            >
+                🔄 Загрузить настройки
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                🔌 Проверка соединения
+            </div>
+
+            <div
+                id="backendStatus"
+                class="status"
+            >
+                Соединение ещё не проверялось.
+            </div>
+
+            <button
+                class="button"
+                onclick="testBackend()"
+            >
+                🔌 Проверить Backend
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">ℹ️ О Mini App</div>
+
+            <div class="info-row">
+                <span>Frontend</span>
+                <strong>GitHub Pages</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Backend</span>
+                <strong>Render</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Telegram</span>
+                <strong>Web App</strong>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- BOTTOM NAV -->
+<!-- ===================================================== -->
+
+<nav class="bottom-nav">
+
+    <button
+        class="nav-button active"
+        data-page="create"
+        onclick="showPage('create')"
+    >
+        <span class="icon">📝</span>
+        Создать
+    </button>
+
+    <button
+        class="nav-button"
+        data-page="scheduled"
+        onclick="showPage('scheduled')"
+    >
+        <span class="icon">⏰</span>
+        Отложенные
+    </button>
+
+    <button
+        class="nav-button"
+        data-page="edit"
+        onclick="showPage('edit')"
+    >
+        <span class="icon">✏️</span>
+        Редактировать
+    </button>
+
+    <button
+        class="nav-button"
+        data-page="stats"
+        onclick="showPage('stats')"
+    >
+        <span class="icon">📊</span>
+        Статистика
+    </button>
+
+    <button
+        class="nav-button"
+        data-page="settings"
+        onclick="showPage('settings')"
+    >
+        <span class="icon">⚙️</span>
+        Настройки
+    </button>
+
+</nav>
+
+<!-- ===================================================== -->
+<!-- EDIT MODAL -->
+<!-- ===================================================== -->
+
+<div
+    id="editModal"
+    class="modal"
+    onclick="closeModalOutside(event)"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeEditModal()"
+        >
+            ✕
+        </button>
+
+        <div class="modal-title">
+            ✏️ Редактирование поста
+        </div>
+
+        <input
+            id="editPostId"
+            type="hidden"
+        >
+
+        <label for="editPostText">
+            Новый текст
+        </label>
 
         <textarea
-            id="postText"
-            class="post-text"
-            placeholder="Напиши текст поста здесь..."
+            id="editPostText"
+            maxlength="4096"
         ></textarea>
 
-
-        <button
-            class="test-button publish-button"
-            onclick="publishPost()"
-        >
-            📢 Опубликовать
-        </button>
-
-
-        <button
-            class="test-button"
-            onclick="testBackend()"
-        >
-            🔌 Проверить связь с Backend
-        </button>
-
+        <div class="counter">
+            <span id="editTextCounter">0</span> / 4096
+        </div>
 
         <div
-            id="backendStatus"
-            class="status"
+            id="editPhotoNotice"
+            class="status warning"
         >
-            ⚪ Готов к работе
+            Если это пост с фотографиями,
+            Telegram позволяет этому backend изменять только подпись.
+            Сами фотографии здесь не изменяются.
         </div>
 
-    </div>
-
-
-    <!-- ОТЛОЖЕННЫЕ -->
-
-    <div id="scheduledPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                ⏰ Отложенные
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Запланированные публикации
-            </h3>
-
-            <p>
-                Здесь будут отображаться посты,
-                которые бот запланировал к публикации.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Подключение к боту будет добавлено следующим этапом
-        </div>
-
-    </div>
-
-
-    <!-- РЕДАКТИРОВАНИЕ -->
-
-    <div id="editPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                ✏️ Редактирование
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Управление публикациями
-            </h3>
-
-            <p>
-                Здесь появится список постов
-                и инструменты для их редактирования.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Функция подключения находится в разработке
-        </div>
-
-    </div>
-
-
-    <!-- СТАТИСТИКА -->
-
-    <div id="statsPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                📊 Статистика
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Статистика Kawaii_Chan
-            </h3>
-
-            <p>
-                Здесь появятся просмотры, подписчики,
-                публикации и другие показатели канала.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Получение статистики будет подключено следующим этапом
-        </div>
-
-    </div>
-
-
-    <!-- НАСТРОЙКИ -->
-
-    <div id="settingsPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                ⚙️ Настройки
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Настройки канала
-            </h3>
-
-            <p>
-                Здесь будут настройки публикаций,
-                оформления и поведения Kawaii Chan.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                🤖 Telegram Bot
-            </h3>
-
-            <p>
-                Бот подключён к Mini App.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🟢 Mini App работает
-        </div>
+        <button
+            class="button"
+            onclick="saveEditedPost()"
+        >
+            💾 Сохранить изменения
+        </button>
+
+        <button
+            class="button secondary"
+            onclick="closeEditModal()"
+        >
+            Отмена
+        </button>
 
     </div>
 
 </div>
 
-
 <script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
 
-    /* Telegram Mini App */
+const BACKEND_URL =
+    "https://kawaii-chan-backend.onrender.com";
 
-    const tg = window.Telegram.WebApp;
-
-    tg.ready();
-    tg.expand();
-
-
-    /* Наш Backend */
-
-    const BACKEND_URL =
-        "https://kawaii-chan-backend.onrender.com";
+const tg =
+    window.Telegram &&
+    window.Telegram.WebApp
+        ? window.Telegram.WebApp
+        : null;
 
 
-    /* Открытие страницы */
+/* =========================================================
+   STATE
+   ========================================================= */
 
-    function openPage(pageId) {
+let selectedPhotos = [];
 
-        const pages =
-            document.querySelectorAll(".page");
 
-        pages.forEach(function(page) {
-            page.classList.remove("active");
-        });
+/* =========================================================
+   TELEGRAM INIT
+   ========================================================= */
 
-        const selectedPage =
-            document.getElementById(pageId);
+if (tg) {
+    try {
+        tg.ready();
+        tg.expand();
+        tg.enableClosingConfirmation();
+    } catch (error) {
+        console.log("Telegram WebApp init:", error);
+    }
+}
 
-        if (selectedPage) {
-            selectedPage.classList.add("active");
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+
+function setStatus(
+    elementId,
+    message,
+    type = ""
+) {
+    const element = $(elementId);
+
+    if (!element) return;
+
+    element.textContent = message;
+
+    element.className =
+        "status" +
+        (type ? " " + type : "");
+}
+
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatDate(value) {
+    if (!value) return "—";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleString(
+        "ru-RU",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
+}
+
+
+async function apiJson(
+    url,
+    options = {}
+) {
+    const response = await fetch(
+        url,
+        options
+    );
+
+    let data = null;
+
+    try {
+        data = await response.json();
+    } catch (error) {
+        throw new Error(
+            "Backend вернул некорректный ответ."
+        );
+    }
+
+    if (!response.ok || !data.ok) {
+        throw new Error(
+            data.error ||
+            data.message ||
+            ("HTTP " + response.status)
+        );
+    }
+
+    return data;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function showPage(page) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            element =>
+                element.classList.remove("active")
+        );
+
+    const target =
+        $("page-" + page);
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(
+            button => {
+                button.classList.toggle(
+                    "active",
+                    button.dataset.page === page
+                );
+            }
+        );
+
+    const titles = {
+        create: "Создание публикаций",
+        scheduled: "Отложенные публикации",
+        edit: "Редактирование публикаций",
+        stats: "Статистика канала",
+        settings: "Настройки"
+    };
+
+    $("headerSubtitle").textContent =
+        titles[page] ||
+        "Панель управления каналом";
+
+
+    if (page === "scheduled") {
+        loadScheduled();
+    }
+
+    if (page === "edit") {
+        loadPosts();
+    }
+
+    if (page === "stats") {
+        loadStats();
+    }
+
+    if (page === "settings") {
+        loadSettings();
+    }
+}
+
+
+/* =========================================================
+   TEXT COUNTERS
+   ========================================================= */
+
+$("postText").addEventListener(
+    "input",
+    function () {
+        $("textCounter").textContent =
+            this.value.length;
+    }
+);
+
+
+$("editPostText").addEventListener(
+    "input",
+    function () {
+        $("editTextCounter").textContent =
+            this.value.length;
+    }
+);
+
+
+/* =========================================================
+   PHOTO PICKER
+   ========================================================= */
+
+$("photoInput").addEventListener(
+    "change",
+    function () {
+
+        const incoming =
+            Array.from(this.files || []);
+
+        if (!incoming.length) {
+            return;
         }
 
-        window.scrollTo(0, 0);
-    }
+        const combined =
+            selectedPhotos.concat(incoming);
 
+        if (combined.length > 100) {
 
-    /* Возвращение домой */
-
-    function goHome() {
-
-        const pages =
-            document.querySelectorAll(".page");
-
-        pages.forEach(function(page) {
-            page.classList.remove("active");
-        });
-
-        document
-            .getElementById("homePage")
-            .classList.add("active");
-
-        window.scrollTo(0, 0);
-    }
-
-
-    /* Проверка Backend */
-
-    async function testBackend() {
-
-        const status =
-            document.getElementById("backendStatus");
-
-        status.textContent =
-            "⏳ Проверяем соединение...";
-
-        try {
-
-            const response = await fetch(
-                BACKEND_URL + "/test"
+            setStatus(
+                "createStatus",
+                "Можно выбрать максимум 100 фотографий.",
+                "warning"
             );
 
-            const data =
-                await response.json();
+            selectedPhotos =
+                combined.slice(0, 100);
 
-            if (response.ok && data.ok === true) {
+        } else {
 
-                status.textContent =
-                    "🟢 Backend подключён!";
+            selectedPhotos = combined;
 
-            } else {
-
-                status.textContent =
-                    "🟠 Backend вернул ошибку.";
-
-                console.error(data);
-            }
-
-        } catch (error) {
-
-            console.error(error);
-
-            status.textContent =
-                "🔴 Не удалось подключиться к Backend";
         }
+
+        this.value = "";
+
+        renderPhotos();
+    }
+);
+
+
+function renderPhotos() {
+
+    const grid =
+        $("photoGrid");
+
+    grid.innerHTML = "";
+
+    selectedPhotos.forEach(
+        (file, index) => {
+
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "photo-item";
+
+            const image =
+                document.createElement("img");
+
+            image.alt =
+                "Фото " + (index + 1);
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function (event) {
+                    image.src =
+                        event.target.result;
+                };
+
+            reader.readAsDataURL(file);
+
+            const remove =
+                document.createElement("button");
+
+            remove.className =
+                "photo-remove";
+
+            remove.textContent =
+                "✕";
+
+            remove.type =
+                "button";
+
+            remove.onclick =
+                function () {
+                    selectedPhotos.splice(
+                        index,
+                        1
+                    );
+
+                    renderPhotos();
+                };
+
+            wrapper.appendChild(image);
+            wrapper.appendChild(remove);
+
+            grid.appendChild(wrapper);
+        }
+    );
+}
+
+
+/* =========================================================
+   CREATE FORM
+   ========================================================= */
+
+function clearCreateForm() {
+
+    $("postText").value = "";
+
+    $("textCounter").textContent =
+        "0";
+
+    $("scheduleTime").value = "";
+
+    selectedPhotos = [];
+
+    renderPhotos();
+
+    setStatus(
+        "createStatus",
+        "Форма очищена."
+    );
+}
+
+
+function createFormData() {
+
+    const formData =
+        new FormData();
+
+    const text =
+        $("postText").value.trim();
+
+    formData.append(
+        "text",
+        text
+    );
+
+    selectedPhotos.forEach(
+        file => {
+            formData.append(
+                "photos",
+                file,
+                file.name
+            );
+        }
+    );
+
+    return formData;
+}
+
+
+/* =========================================================
+   PUBLISH NOW
+   ========================================================= */
+
+async function publishPost() {
+
+    const text =
+        $("postText").value.trim();
+
+    if (!text && !selectedPhotos.length) {
+
+        setStatus(
+            "createStatus",
+            "Пост пустой. Добавь текст или фотографию.",
+            "warning"
+        );
+
+        return;
     }
 
+    if (text.length > 4096) {
 
-    /* Публикация поста */
+        setStatus(
+            "createStatus",
+            "Текст превышает лимит 4096 символов.",
+            "error"
+        );
 
-    async function publishPost() {
+        return;
+    }
 
-        const text =
-            document
-                .getElementById("postText")
-                .value
-                .trim();
+    const button =
+        $("publishButton");
 
-        const status =
-            document.getElementById("backendStatus");
+    button.disabled =
+        true;
 
-        if (!text) {
+    button.textContent =
+        "⏳ Публикуем...";
 
-            status.textContent =
-                "🟠 Сначала напиши текст поста.";
+    setStatus(
+        "createStatus",
+        "Отправляем публикацию в Telegram..."
+    );
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL + "/publish",
+                {
+                    method: "POST",
+                    body: createFormData()
+                }
+            );
+
+        setStatus(
+            "createStatus",
+            data.message ||
+            "Пост успешно опубликован.",
+            "success"
+        );
+
+        $("postText").value = "";
+
+        $("textCounter").textContent =
+            "0";
+
+        selectedPhotos = [];
+
+        renderPhotos();
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "createStatus",
+            "❌ " + error.message,
+            "error"
+        );
+
+    } finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "🚀 Опубликовать сейчас";
+    }
+}
+
+
+/* =========================================================
+   SCHEDULE
+   ========================================================= */
+
+function getScheduleIso() {
+
+    const input =
+        $("scheduleTime").value;
+
+    if (!input) {
+        throw new Error(
+            "Выбери дату и время."
+        );
+    }
+
+    const localDate =
+        new Date(input);
+
+    if (Number.isNaN(
+        localDate.getTime()
+    )) {
+        throw new Error(
+            "Некорректная дата."
+        );
+    }
+
+    return localDate.toISOString();
+}
+
+
+async function schedulePost() {
+
+    const text =
+        $("postText").value.trim();
+
+    if (!text && !selectedPhotos.length) {
+
+        setStatus(
+            "createStatus",
+            "Нельзя запланировать пустой пост.",
+            "warning"
+        );
+
+        return;
+    }
+
+    let runAt;
+
+    try {
+
+        runAt =
+            getScheduleIso();
+
+    } catch (error) {
+
+        setStatus(
+            "createStatus",
+            "❌ " + error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "text",
+        text
+    );
+
+    formData.append(
+        "run_at",
+        runAt
+    );
+
+    selectedPhotos.forEach(
+        file => {
+            formData.append(
+                "photos",
+                file,
+                file.name
+            );
+        }
+    );
+
+    setStatus(
+        "createStatus",
+        "⏳ Ставим пост в очередь..."
+    );
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL + "/schedule",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        setStatus(
+            "createStatus",
+            "⏰ " +
+            (data.message ||
+                "Пост запланирован.") +
+            " ID: " +
+            data.id,
+            "success"
+        );
+
+        $("postText").value = "";
+
+        $("textCounter").textContent =
+            "0";
+
+        $("scheduleTime").value =
+            "";
+
+        selectedPhotos = [];
+
+        renderPhotos();
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "createStatus",
+            "❌ " + error.message,
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   SCHEDULED LIST
+   ========================================================= */
+
+async function loadScheduled() {
+
+    const container =
+        $("scheduledList");
+
+    container.innerHTML =
+        '<div class="loading">⏳ Загружаем...</div>';
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL + "/scheduled"
+            );
+
+        const items =
+            data.items || [];
+
+        if (!items.length) {
+
+            container.innerHTML =
+                '<div class="empty">Отложенных публикаций пока нет.</div>';
 
             return;
         }
 
-        status.textContent =
-            "⏳ Публикуем пост...";
+        container.innerHTML =
+            items.map(
+                item => {
 
-        try {
+                    const statusClass =
+                        item.status === "pending"
+                            ? "pending"
+                            : item.status === "done"
+                                ? "done"
+                                : "error";
 
-            const response = await fetch(
-                BACKEND_URL + "/publish",
+                    const statusText =
+                        item.status === "pending"
+                            ? "ожидает"
+                            : item.status === "done"
+                                ? "опубликовано"
+                                : item.status;
+
+                    return `
+                        <div class="item">
+
+                            <div class="item-top">
+
+                                <div>
+                                    <div class="item-title">
+                                        ⏰ Пост #${item.id}
+                                    </div>
+
+                                    <div class="item-meta">
+                                        ${formatDate(item.run_at)}
+                                    </div>
+                                </div>
+
+                                <span class="badge ${statusClass}">
+                                    ${escapeHtml(statusText)}
+                                </span>
+
+                            </div>
+
+                            <div class="item-meta">
+                                📷 ${item.photo_count || 0} фото
+                            </div>
+
+                            <div class="item-text">
+                                ${escapeHtml(item.text || "Без текста")}
+                            </div>
+
+                            ${
+                                item.error
+                                ? `
+                                    <div class="status error">
+                                        ${escapeHtml(item.error)}
+                                    </div>
+                                `
+                                : ""
+                            }
+
+                            ${
+                                item.status === "pending"
+                                ? `
+                                    <div class="item-actions">
+                                        <button
+                                            class="button small danger"
+                                            onclick="cancelScheduled(${item.id})"
+                                        >
+                                            Отменить
+                                        </button>
+                                    </div>
+                                `
+                                : ""
+                            }
+
+                        </div>
+                    `;
+                }
+            ).join("");
+
+    } catch (error) {
+
+        container.innerHTML =
+            `
+            <div class="status error">
+                ❌ ${escapeHtml(error.message)}
+            </div>
+            `;
+    }
+}
+
+
+async function cancelScheduled(id) {
+
+    if (!confirm(
+        "Отменить эту отложенную публикацию?"
+    )) {
+        return;
+    }
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL +
+                "/scheduled/" +
+                id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        alert(
+            data.message ||
+            "Публикация отменена."
+        );
+
+        loadScheduled();
+
+    } catch (error) {
+
+        alert(
+            "Ошибка: " +
+            error.message
+        );
+    }
+}
+
+
+/* =========================================================
+   POSTS
+   ========================================================= */
+
+async function loadPosts() {
+
+    const container =
+        $("postsList");
+
+    container.innerHTML =
+        '<div class="loading">⏳ Загружаем...</div>';
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL + "/posts"
+            );
+
+        const items =
+            data.items || [];
+
+        if (!items.length) {
+
+            container.innerHTML =
+                '<div class="empty">Публикаций пока нет.</div>';
+
+            return;
+        }
+
+        container.innerHTML =
+            items.map(
+                item => `
+
+                    <div class="item">
+
+                        <div class="item-top">
+
+                            <div>
+                                <div class="item-title">
+                                    📝 Пост #${item.id}
+                                </div>
+
+                                <div class="item-meta">
+                                    ${formatDate(item.created_at)}
+                                </div>
+                            </div>
+
+                            <span class="badge">
+                                ${
+                                    item.post_type === "photo"
+                                    ? "📷 фото"
+                                    : "📝 текст"
+                                }
+                            </span>
+
+                        </div>
+
+                        <div class="item-meta">
+                            📷 ${item.photo_count || 0} фото
+                        </div>
+
+                        <div class="item-text">
+                            ${escapeHtml(item.text || "Без текста")}
+                        </div>
+
+                        <div class="item-actions">
+
+                            <button
+                                class="button small"
+                                onclick="openEditModal(${item.id})"
+                            >
+                                ✏️ Изменить
+                            </button>
+
+                            <button
+                                class="button small danger"
+                                onclick="deletePost(${item.id})"
+                            >
+                                🗑 Удалить
+                            </button>
+
+                        </div>
+
+                    </div>
+                `
+            ).join("");
+
+    } catch (error) {
+
+        container.innerHTML =
+            `
+            <div class="status error">
+                ❌ ${escapeHtml(error.message)}
+            </div>
+            `;
+    }
+}
+
+
+/* =========================================================
+   GET SINGLE POST
+   ========================================================= */
+
+async function openEditModal(id) {
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL +
+                "/posts/" +
+                id
+            );
+
+        const post =
+            data.post;
+
+        $("editPostId").value =
+            post.id;
+
+        $("editPostText").value =
+            post.text || "";
+
+        $("editTextCounter").textContent =
+            (post.text || "").length;
+
+        $("editModal").classList.add(
+            "show"
+        );
+
+    } catch (error) {
+
+        alert(
+            "Ошибка загрузки поста: " +
+            error.message
+        );
+    }
+}
+
+
+function closeEditModal() {
+
+    $("editModal").classList.remove(
+        "show"
+    );
+}
+
+
+function closeModalOutside(event) {
+
+    if (
+        event.target ===
+        $("editModal")
+    ) {
+        closeEditModal();
+    }
+}
+
+
+/* =========================================================
+   EDIT POST
+   ========================================================= */
+
+async function saveEditedPost() {
+
+    const id =
+        $("editPostId").value;
+
+    const text =
+        $("editPostText").value.trim();
+
+    if (!id) {
+
+        alert(
+            "ID поста не найден."
+        );
+
+        return;
+    }
+
+    if (!text) {
+
+        alert(
+            "Новый текст не может быть пустым."
+        );
+
+        return;
+    }
+
+    if (text.length > 4096) {
+
+        alert(
+            "Текст превышает 4096 символов."
+        );
+
+        return;
+    }
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL +
+                "/posts/edit",
                 {
                     method: "POST",
-
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
-
                     body: JSON.stringify({
+                        id: Number(id),
                         text: text
                     })
                 }
             );
 
-            const data =
+        alert(
+            data.message ||
+            "Пост обновлён."
+        );
+
+        closeEditModal();
+
+        loadPosts();
+
+    } catch (error) {
+
+        alert(
+            "Ошибка: " +
+            error.message
+        );
+    }
+}
+
+
+/* =========================================================
+   DELETE POST
+   ========================================================= */
+
+async function deletePost(id) {
+
+    if (!confirm(
+        "Удалить этот пост из канала Telegram?\n\n" +
+        "Backend попытается удалить все связанные сообщения."
+    )) {
+        return;
+    }
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL +
+                "/posts/" +
+                id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        alert(
+            data.message ||
+            "Пост удалён."
+        );
+
+        loadPosts();
+
+    } catch (error) {
+
+        alert(
+            "Ошибка удаления: " +
+            error.message
+        );
+    }
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+async function loadStats() {
+
+    setStatus(
+        "statsStatus",
+        "⏳ Загружаем статистику..."
+    );
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL + "/stats"
+            );
+
+        $("statsGrid").innerHTML = `
+
+            <div class="stat">
+                <div class="stat-value">
+                    ${data.members ?? "—"}
+                </div>
+                <div class="stat-label">
+                    Подписчики
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">
+                    ${data.posts_published_by_app ?? 0}
+                </div>
+                <div class="stat-label">
+                    Постов через Mini App
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">
+                    ${data.photos_published_by_app ?? 0}
+                </div>
+                <div class="stat-label">
+                    Фото опубликовано
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-value">
+                    ${data.scheduled_pending ?? 0}
+                </div>
+                <div class="stat-label">
+                    В очереди
+                </div>
+            </div>
+
+        `;
+
+        setStatus(
+            "statsStatus",
+            data.note ||
+            "Статистика обновлена.",
+            "success"
+        );
+
+    } catch (error) {
+
+        $("statsGrid").innerHTML =
+            "";
+
+        setStatus(
+            "statsStatus",
+            "❌ " + error.message,
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+async function loadSettings() {
+
+    try {
+
+        const data =
+            await apiJson(
+                BACKEND_URL +
+                "/settings"
+            );
+
+        $("settingChannel").textContent =
+            data.channel || "—";
+
+        $("settingBackend").textContent =
+            data.backend || "—";
+
+        $("settingScheduler").textContent =
+            data.scheduler || "—";
+
+        $("settingMaxPhotos").textContent =
+            data.max_photos_per_publication ??
+            "—";
+
+        $("settingAlbumLimit").textContent =
+            data.max_photos_per_album ??
+            "—";
+
+        $("settingTextLimit").textContent =
+            data.max_text_length ??
+            "—";
+
+    } catch (error) {
+
+        $("settingBackend").textContent =
+            "Ошибка";
+
+        console.error(error);
+    }
+}
+
+
+/* =========================================================
+   BACKEND TEST
+   ========================================================= */
+
+async function testBackend() {
+
+    setStatus(
+        "backendStatus",
+        "⏳ Проверяем соединение..."
+    );
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL + "/test",
+                {
+                    method: "GET"
+                }
+            );
+
+        let data;
+
+        try {
+
+            data =
                 await response.json();
-
-            if (response.ok && data.ok === true) {
-
-                status.textContent =
-                    "🟢 Пост успешно опубликован!";
-
-                document
-                    .getElementById("postText")
-                    .value = "";
-
-            } else {
-
-                status.textContent =
-                    "🔴 " +
-                    (data.message || "Ошибка публикации.");
-
-                console.error(data);
-            }
 
         } catch (error) {
 
-            console.error(error);
-
-            status.textContent =
-                "🔴 Ошибка соединения с Backend";
+            throw new Error(
+                "Backend вернул не JSON."
+            );
         }
-    }
 
+        if (
+            !response.ok ||
+            data.ok !== true
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Backend ответил с ошибкой."
+            );
+        }
+
+        const botName =
+            data.bot &&
+            data.bot.username
+                ? "@" + data.bot.username
+                : "Telegram Bot";
+
+        setStatus(
+            "backendStatus",
+            "🟢 Backend подключён. " +
+            botName +
+            " доступен.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "backendStatus",
+            "🔴 Не удалось подключиться: " +
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadSettings();
+
+        // Не нагружаем Render сразу всеми запросами.
+        // Остальные разделы загружаются при открытии.
+
+        const now =
+            new Date();
+
+        now.setMinutes(
+            now.getMinutes() + 10
+        );
+
+        // datetime-local ожидает локальное время
+        const local =
+            new Date(
+                now.getTime() -
+                now.getTimezoneOffset() * 60000
+            )
+            .toISOString()
+            .slice(0, 16);
+
+        $("scheduleTime").value =
+            local;
+    }
+);
 </script>
 
 </body>
