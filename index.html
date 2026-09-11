@@ -2,157 +2,50 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Kawaii Chan</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
-
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             margin: 0;
-            padding: 16px;
-            min-height: 100vh;
-
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
-
-            background: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #222222);
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f7;
+            color: #222;
         }
 
         .app {
-            width: 100%;
-            max-width: 520px;
-            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 30px;
         }
 
         .header {
+            background: white;
+            padding: 22px 18px;
             text-align: center;
-            padding: 12px 8px 24px;
+            border-bottom: 1px solid #e5e5e5;
         }
 
-        .logo {
-            font-size: 46px;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        h1 {
+        .header h1 {
             margin: 0;
-            font-size: 27px;
-            font-weight: 800;
+            font-size: 24px;
         }
 
-        .subtitle {
-            margin-top: 7px;
-            opacity: 0.65;
+        .header p {
+            margin: 6px 0 0;
+            color: #777;
             font-size: 14px;
         }
 
-        .channel {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 12px;
-            border-radius: 20px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f1f1f1
-            );
-
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .menu-button {
-            width: 100%;
-            min-height: 68px;
-
-            display: flex;
-            align-items: center;
-
-            padding: 14px 18px;
-
-            border: none;
-            border-radius: 18px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            cursor: pointer;
-            text-align: left;
-
-            transition:
-                transform 0.1s ease,
-                opacity 0.1s ease;
-        }
-
-        .menu-button:active {
-            transform: scale(0.97);
-            opacity: 0.8;
-        }
-
-        .icon {
-            width: 44px;
-            height: 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-right: 14px;
-
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-bg-color,
-                #ffffff
-            );
-
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .button-text {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .button-title {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .button-description {
-            font-size: 12px;
-            opacity: 0.6;
+        .content {
+            padding: 18px;
         }
 
         .page {
@@ -163,137 +56,204 @@
             display: block;
         }
 
-        .page-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .card p {
+            margin: 0;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .menu {
+            display: grid;
+            gap: 12px;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .menu button {
+            text-align: left;
+        }
+
+        .primary {
+            background: #111;
+            color: white;
+        }
+
+        .success {
+            background: #24a148;
+            color: white;
+        }
+
+        .danger {
+            background: #e53935;
+            color: white;
+        }
+
+        .secondary {
+            background: #eeeeef;
+            color: #222;
         }
 
         .back-button {
-            width: 42px;
-            height: 42px;
-
-            border: none;
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            font-size: 20px;
-            cursor: pointer;
-            margin-right: 12px;
-        }
-
-        .page-title {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .info-card {
-            padding: 20px;
             margin-bottom: 14px;
-
-            border-radius: 18px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-        }
-
-        .info-card h3 {
-            margin: 0 0 8px;
-            font-size: 17px;
-        }
-
-        .info-card p {
-            margin: 0;
-            opacity: 0.7;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .status {
-            margin-top: 18px;
-            padding: 12px 15px;
-
-            border-radius: 14px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            text-align: center;
-
-            font-size: 13px;
-            opacity: 0.7;
-        }
-
-        .test-button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 14px;
-
-            border: none;
-            border-radius: 16px;
-
-            background: #2481cc;
-            color: white;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-        .test-button:active {
-            opacity: 0.8;
-            transform: scale(0.98);
+            text-align: left;
         }
 
         .post-text {
             width: 100%;
-            min-height: 180px;
-
-            padding: 15px;
-
-            border: none;
-            border-radius: 16px;
-
-            background: var(
-                --tg-theme-secondary-bg-color,
-                #f2f2f2
-            );
-
-            color: var(--tg-theme-text-color, #222222);
-
-            font-family: inherit;
-            font-size: 15px;
-
+            min-height: 220px;
             resize: vertical;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: Arial, sans-serif;
             outline: none;
+            background: #fafafa;
         }
 
-        .post-text::placeholder {
-            color: var(--tg-theme-hint-color, #888888);
+        .post-text:focus {
+            border-color: #999;
+            background: white;
         }
 
-        .publish-button {
-            background: #22a559;
+        .counter {
+            text-align: right;
+            color: #888;
+            font-size: 13px;
+            margin-top: 7px;
+            margin-bottom: 12px;
         }
 
-        .footer {
-            padding: 25px 0 10px;
-            text-align: center;
+        .editor-buttons {
+            display: grid;
+            gap: 10px;
+        }
+
+        .preview-box {
+            background: #e7e7e7;
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .telegram-post {
+            background: white;
+            border-radius: 14px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .telegram-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .channel-name {
+            font-weight: 700;
+        }
+
+        .channel-label {
             font-size: 12px;
-            opacity: 0.45;
+            color: #888;
+            margin-top: 2px;
         }
 
+        .preview-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+
+        .status {
+            display: none;
+            padding: 13px;
+            border-radius: 12px;
+            margin-top: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .status.success-status {
+            background: #e8f7ed;
+            color: #16733a;
+        }
+
+        .status.error-status {
+            background: #fdeaea;
+            color: #a51d1d;
+        }
+
+        .status.info-status {
+            background: #eaf2ff;
+            color: #245ca8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .home-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .small-text {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px 15px;
+            color: #888;
+        }
     </style>
 </head>
 
@@ -301,393 +261,274 @@
 
 <div class="app">
 
+    <div class="header">
+        <h1>🌸 Kawaii Chan</h1>
+        <p>Панель управления каналом</p>
+    </div>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <div class="content">
 
-    <div id="homePage" class="page active">
+        <!-- ГЛАВНАЯ -->
+        <div id="homePage" class="page active">
 
-        <div class="header">
-
-            <div class="logo">🌸</div>
-
-            <h1>Kawaii Chan</h1>
-
-            <div class="subtitle">
-                Панель управления каналом
+            <div class="card">
+                <div class="home-title">Добро пожаловать! 🌸</div>
+                <p>
+                    Управляй публикациями канала прямо из Telegram.
+                </p>
             </div>
 
-            <div class="channel">
-                📢 Kawaii_Chan
+            <div class="menu">
+
+                <button onclick="openPage('createPage')">
+                    📝 Создать пост
+                </button>
+
+                <button onclick="openPage('scheduledPage')">
+                    ⏰ Отложенные
+                </button>
+
+                <button onclick="openPage('editPage')">
+                    ✏️ Редактировать
+                </button>
+
+                <button onclick="openPage('statsPage')">
+                    📊 Статистика
+                </button>
+
+                <button onclick="openPage('settingsPage')">
+                    ⚙️ Настройки
+                </button>
+
             </div>
 
         </div>
 
 
-        <div class="menu">
+        <!-- СОЗДАТЬ ПОСТ -->
+        <div id="createPage" class="page">
 
-            <button
-                class="menu-button"
-                onclick="openPage('createPage')"
-            >
+            <button class="secondary back-button" onclick="goHome()">
+                ← Назад
+            </button>
 
-                <div class="icon">📝</div>
+            <div class="card">
 
-                <div class="button-text">
+                <h2>📝 Создать пост</h2>
 
-                    <div class="button-title">
-                        Создать пост
-                    </div>
+                <p style="margin-bottom:15px;">
+                    Напиши текст публикации. Перед отправкой можно посмотреть,
+                    как пост будет выглядеть.
+                </p>
 
-                    <div class="button-description">
-                        Создание новой публикации
+                <textarea
+                    id="postText"
+                    class="post-text"
+                    maxlength="4096"
+                    placeholder="Напиши текст поста здесь..."
+                    oninput="updateCounter()"
+                ></textarea>
+
+                <div id="counter" class="counter">
+                    0 / 4096
+                </div>
+
+                <div class="editor-buttons">
+
+                    <button
+                        class="secondary"
+                        onclick="showPreview()"
+                    >
+                        👁 Предпросмотр
+                    </button>
+
+                    <button
+                        class="success"
+                        onclick="publishPost()"
+                    >
+                        📢 Опубликовать
+                    </button>
+
+                    <button
+                        class="secondary"
+                        onclick="clearPost()"
+                    >
+                        🗑 Очистить
+                    </button>
+
+                    <button
+                        class="secondary"
+                        onclick="cancelPost()"
+                    >
+                        ❌ Отмена
+                    </button>
+
+                </div>
+
+                <div id="publishStatus" class="status"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ПРЕДПРОСМОТР -->
+        <div id="previewPage" class="page">
+
+            <button class="secondary back-button" onclick="backToEditor()">
+                ← Вернуться к редактированию
+            </button>
+
+            <div class="card">
+
+                <h2>👁 Предпросмотр</h2>
+
+                <p style="margin-bottom:15px;">
+                    Так примерно будет выглядеть твой пост в канале.
+                </p>
+
+                <div class="preview-box">
+
+                    <div class="telegram-post">
+
+                        <div class="telegram-header">
+
+                            <div class="avatar">
+                                K
+                            </div>
+
+                            <div>
+                                <div class="channel-name">
+                                    Kawaii Chan
+                                </div>
+
+                                <div class="channel-label">
+                                    канал
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="previewText"
+                            class="preview-text"
+                        ></div>
+
                     </div>
 
                 </div>
 
+                <div style="height:12px;"></div>
+
+                <button
+                    class="success"
+                    onclick="publishFromPreview()"
+                >
+                    📢 Опубликовать
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ОТЛОЖЕННЫЕ -->
+        <div id="scheduledPage" class="page">
+
+            <button class="secondary back-button" onclick="goHome()">
+                ← Назад
             </button>
 
+            <div class="card">
 
-            <button
-                class="menu-button"
-                onclick="openPage('scheduledPage')"
-            >
+                <h2>⏰ Отложенные</h2>
 
-                <div class="icon">⏰</div>
-
-                <div class="button-text">
-
-                    <div class="button-title">
-                        Отложенные
-                    </div>
-
-                    <div class="button-description">
-                        Запланированные публикации
-                    </div>
-
+                <div class="empty">
+                    <div style="font-size:35px;">⏰</div>
+                    <p>
+                        Раздел отложенных публикаций будет подключён
+                        следующим этапом.
+                    </p>
                 </div>
 
+            </div>
+
+        </div>
+
+
+        <!-- РЕДАКТИРОВАТЬ -->
+        <div id="editPage" class="page">
+
+            <button class="secondary back-button" onclick="goHome()">
+                ← Назад
             </button>
 
+            <div class="card">
 
-            <button
-                class="menu-button"
-                onclick="openPage('editPage')"
-            >
+                <h2>✏️ Редактировать</h2>
 
-                <div class="icon">✏️</div>
-
-                <div class="button-text">
-
-                    <div class="button-title">
-                        Редактировать
-                    </div>
-
-                    <div class="button-description">
-                        Управление публикациями
-                    </div>
-
+                <div class="empty">
+                    <div style="font-size:35px;">✏️</div>
+                    <p>
+                        Управление опубликованными постами
+                        подключим следующим этапом.
+                    </p>
                 </div>
 
+            </div>
+
+        </div>
+
+
+        <!-- СТАТИСТИКА -->
+        <div id="statsPage" class="page">
+
+            <button class="secondary back-button" onclick="goHome()">
+                ← Назад
             </button>
 
+            <div class="card">
 
-            <button
-                class="menu-button"
-                onclick="openPage('statsPage')"
-            >
+                <h2>📊 Статистика</h2>
 
-                <div class="icon">📊</div>
-
-                <div class="button-text">
-
-                    <div class="button-title">
-                        Статистика
-                    </div>
-
-                    <div class="button-description">
-                        Статистика канала
-                    </div>
-
+                <div class="empty">
+                    <div style="font-size:35px;">📊</div>
+                    <p>
+                        Статистика будет подключена следующим этапом.
+                    </p>
                 </div>
 
-            </button>
-
-
-            <button
-                class="menu-button"
-                onclick="openPage('settingsPage')"
-            >
-
-                <div class="icon">⚙️</div>
-
-                <div class="button-text">
-
-                    <div class="button-title">
-                        Настройки
-                    </div>
-
-                    <div class="button-description">
-                        Настройки Kawaii Chan
-                    </div>
-
-                </div>
-
-            </button>
-
-        </div>
-
-
-        <div class="footer">
-            Kawaii Chan • Mini App
-        </div>
-
-    </div>
-
-
-
-    <!-- СОЗДАТЬ ПОСТ -->
-
-    <div id="createPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                📝 Создать пост
             </div>
 
         </div>
 
 
-        <div class="info-card">
+        <!-- НАСТРОЙКИ -->
+        <div id="settingsPage" class="page">
 
-            <h3>
-                Создание публикации
-            </h3>
-
-            <p>
-                Напиши текст поста и опубликуй его
-                прямо в Telegram-канал.
-            </p>
-
-        </div>
-
-
-        <textarea
-            id="postText"
-            class="post-text"
-            placeholder="Напиши текст поста здесь..."
-        ></textarea>
-
-
-        <button
-            class="test-button publish-button"
-            onclick="publishPost()"
-        >
-            📢 Опубликовать
-        </button>
-
-
-        <button
-            class="test-button"
-            onclick="testBackend()"
-        >
-            🔌 Проверить связь с Backend
-        </button>
-
-
-        <div
-            id="backendStatus"
-            class="status"
-        >
-            ⚪ Готов к работе
-        </div>
-
-    </div>
-
-
-
-    <!-- ОТЛОЖЕННЫЕ -->
-
-    <div id="scheduledPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
+            <button class="secondary back-button" onclick="goHome()">
+                ← Назад
             </button>
 
-            <div class="page-title">
-                ⏰ Отложенные
+            <div class="card">
+
+                <h2>⚙️ Настройки</h2>
+
+                <p style="margin-bottom:15px;">
+                    Настройки Mini App.
+                </p>
+
+                <button
+                    class="secondary"
+                    onclick="testBackend()"
+                >
+                    🔌 Проверить связь с Backend
+                </button>
+
+                <div id="backendStatus" class="status"></div>
+
             </div>
 
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Запланированные публикации
-            </h3>
-
-            <p>
-                Здесь будут отображаться посты,
-                которые бот запланировал к публикации.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Подключение к боту будет добавлено следующим этапом
-        </div>
-
-    </div>
-
-
-
-    <!-- РЕДАКТИРОВАНИЕ -->
-
-    <div id="editPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                ✏️ Редактирование
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Управление публикациями
-            </h3>
-
-            <p>
-                Здесь появится список постов
-                и инструменты для их редактирования.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Функция подключения находится в разработке
-        </div>
-
-    </div>
-
-
-
-    <!-- СТАТИСТИКА -->
-
-    <div id="statsPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                📊 Статистика
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Статистика Kawaii_Chan
-            </h3>
-
-            <p>
-                Здесь появятся просмотры, подписчики,
-                публикации и другие показатели канала.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🔧 Получение статистики будет подключено следующим этапом
-        </div>
-
-    </div>
-
-
-
-    <!-- НАСТРОЙКИ -->
-
-    <div id="settingsPage" class="page">
-
-        <div class="page-header">
-
-            <button
-                class="back-button"
-                onclick="goHome()"
-            >
-                ←
-            </button>
-
-            <div class="page-title">
-                ⚙️ Настройки
-            </div>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                Настройки канала
-            </h3>
-
-            <p>
-                Здесь будут настройки публикаций,
-                оформления и поведения Kawaii Chan.
-            </p>
-
-        </div>
-
-
-        <div class="info-card">
-
-            <h3>
-                🤖 Telegram Bot
-            </h3>
-
-            <p>
-                Бот подключён к Mini App.
-            </p>
-
-        </div>
-
-
-        <div class="status">
-            🟢 Mini App работает
         </div>
 
     </div>
@@ -695,11 +536,7 @@
 </div>
 
 
-
 <script>
-
-
-    /* Telegram Mini App */
 
     const tg = window.Telegram.WebApp;
 
@@ -707,209 +544,381 @@
     tg.expand();
 
 
-
-    /* Наш Backend */
-
     const BACKEND_URL =
         "https://kawaii-chan-backend.onrender.com";
 
 
+    let lastPostText = "";
 
-    /* Открытие страницы */
+
+    // -----------------------------
+    // НАВИГАЦИЯ
+    // -----------------------------
 
     function openPage(pageId) {
 
-        const pages =
-            document.querySelectorAll(".page");
+        document
+            .querySelectorAll(".page")
+            .forEach(page => {
+                page.classList.remove("active");
+            });
 
-        pages.forEach(function(page) {
-
-            page.classList.remove("active");
-
-        });
-
-
-        const selectedPage =
+        const page =
             document.getElementById(pageId);
 
-
-        if (selectedPage) {
-
-            selectedPage.classList.add("active");
-
+        if (page) {
+            page.classList.add("active");
         }
 
-
         window.scrollTo(0, 0);
-
     }
 
-
-
-    /* Возвращение домой */
 
     function goHome() {
 
-        const pages =
-            document.querySelectorAll(".page");
-
-
-        pages.forEach(function(page) {
-
-            page.classList.remove("active");
-
-        });
-
-
-        document
-            .getElementById("homePage")
-            .classList.add("active");
-
-
-        window.scrollTo(0, 0);
+        openPage("homePage");
 
     }
 
 
+    // -----------------------------
+    // СЧЁТЧИК
+    // -----------------------------
 
-    /* Проверка Backend */
+    function updateCounter() {
 
-    async function testBackend() {
+        const textarea =
+            document.getElementById("postText");
 
-        const status =
-            document.getElementById("backendStatus");
+        const counter =
+            document.getElementById("counter");
+
+        if (!textarea || !counter) {
+            return;
+        }
+
+        counter.textContent =
+            textarea.value.length + " / 4096";
+
+    }
 
 
-        status.textContent =
-            "⏳ Проверяем соединение...";
+    // -----------------------------
+    // СТАТУС
+    // -----------------------------
+
+    function showStatus(
+        elementId,
+        message,
+        type
+    ) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent = message;
+
+        element.className =
+            "status show " + type;
+
+    }
+
+
+    function hideStatus(elementId) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (!element) {
+            return;
+        }
+
+        element.className = "status";
+
+        element.textContent = "";
+
+    }
+
+
+    // -----------------------------
+    // ПРЕДПРОСМОТР
+    // -----------------------------
+
+    function showPreview() {
+
+        const textarea =
+            document.getElementById("postText");
+
+        const text =
+            textarea.value.trim();
+
+        if (!text) {
+
+            showStatus(
+                "publishStatus",
+                "⚠️ Сначала напиши текст поста.",
+                "error-status"
+            );
+
+            return;
+        }
+
+        lastPostText = text;
+
+        document
+            .getElementById("previewText")
+            .textContent = text;
+
+        openPage("previewPage");
+
+    }
+
+
+    function backToEditor() {
+
+        openPage("createPage");
+
+    }
+
+
+    function publishFromPreview() {
+
+        const textarea =
+            document.getElementById("postText");
+
+        if (lastPostText) {
+            textarea.value = lastPostText;
+            updateCounter();
+        }
+
+        publishPost();
+
+    }
+
+
+    // -----------------------------
+    // ПУБЛИКАЦИЯ
+    // -----------------------------
+
+    async function publishPost() {
+
+        const textarea =
+            document.getElementById("postText");
+
+        const text =
+            textarea.value.trim();
+
+
+        if (!text) {
+
+            openPage("createPage");
+
+            showStatus(
+                "publishStatus",
+                "⚠️ Текст поста пустой.",
+                "error-status"
+            );
+
+            return;
+        }
+
+
+        if (text.length > 4096) {
+
+            openPage("createPage");
+
+            showStatus(
+                "publishStatus",
+                "⚠️ Пост слишком длинный. Максимум — 4096 символов.",
+                "error-status"
+            );
+
+            return;
+        }
+
+
+        openPage("createPage");
+
+        showStatus(
+            "publishStatus",
+            "⏳ Публикуем пост...",
+            "info-status"
+        );
 
 
         try {
 
-            const response = await fetch(
-                BACKEND_URL + "/webapp",
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    BACKEND_URL + "/publish",
+                    {
+                        method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
 
-                    body: JSON.stringify({
-                        source: "Kawaii Chan Mini App",
-                        action: "test_connection"
-                    })
-                }
-            );
+                        body: JSON.stringify({
+                            text: text
+                        })
+                    }
+                );
 
 
-            if (!response.ok) {
+            let result;
+
+            try {
+                result = await response.json();
+            } catch (jsonError) {
 
                 throw new Error(
-                    "HTTP " + response.status
+                    "Backend вернул некорректный ответ."
                 );
 
             }
 
 
-            const data =
-                await response.json();
+            if (
+                response.ok &&
+                result.success
+            ) {
+
+                showStatus(
+                    "publishStatus",
+                    "🟢 Пост успешно опубликован!",
+                    "success-status"
+                );
+
+                textarea.value = "";
+
+                updateCounter();
+
+                lastPostText = "";
+
+                return;
+            }
 
 
-            if (data.success) {
+            let errorMessage =
+                result.message ||
+                "Не удалось опубликовать пост.";
 
-                status.textContent =
-                    "🟢 Backend подключён!";
 
-            } else {
+            if (result.telegram) {
 
-                status.textContent =
-                    "🟠 Backend ответил с ошибкой.";
+                if (result.telegram.description) {
+
+                    errorMessage +=
+                        " Telegram: " +
+                        result.telegram.description;
+
+                }
 
             }
+
+
+            showStatus(
+                "publishStatus",
+                "🔴 " + errorMessage,
+                "error-status"
+            );
 
 
         } catch (error) {
 
             console.error(error);
 
-            status.textContent =
-                "🔴 Не удалось подключиться к Backend";
+            showStatus(
+                "publishStatus",
+                "🔴 Ошибка соединения с Backend. Проверь, что Render работает.",
+                "error-status"
+            );
 
         }
 
     }
 
 
+    // -----------------------------
+    // ОЧИСТКА
+    // -----------------------------
 
-    /* Публикация поста */
+    function clearPost() {
 
-    async function publishPost() {
+        const textarea =
+            document.getElementById("postText");
 
-        const text =
-            document
-                .getElementById("postText")
-                .value
-                .trim();
+        textarea.value = "";
 
+        lastPostText = "";
 
-        const status =
-            document.getElementById("backendStatus");
+        updateCounter();
 
+        hideStatus("publishStatus");
 
-        if (!text) {
+        textarea.focus();
 
-            status.textContent =
-                "🟠 Сначала напиши текст поста.";
-
-            return;
-
-        }
+    }
 
 
-        status.textContent =
-            "⏳ Публикуем пост...";
+    // -----------------------------
+    // ОТМЕНА
+    // -----------------------------
+
+    function cancelPost() {
+
+        clearPost();
+
+        goHome();
+
+    }
+
+
+    // -----------------------------
+    // ПРОВЕРКА BACKEND
+    // -----------------------------
+
+    async function testBackend() {
+
+        showStatus(
+            "backendStatus",
+            "⏳ Проверяем соединение...",
+            "info-status"
+        );
 
 
         try {
 
-            const response = await fetch(
-                BACKEND_URL + "/publish",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        text: text
-                    })
-                }
-            );
+            const response =
+                await fetch(
+                    BACKEND_URL + "/test"
+                );
 
 
-            const data =
+            const result =
                 await response.json();
 
 
-            if (data.success) {
+            if (result.success) {
 
-                status.textContent =
-                    "🟢 Пост успешно опубликован!";
-
-
-                document
-                    .getElementById("postText")
-                    .value = "";
-
+                showStatus(
+                    "backendStatus",
+                    "🟢 Backend подключён и работает!",
+                    "success-status"
+                );
 
             } else {
 
-                status.textContent =
-                    "🔴 " + data.message;
-
-                console.error(data);
+                showStatus(
+                    "backendStatus",
+                    "🔴 Backend вернул ошибку.",
+                    "error-status"
+                );
 
             }
 
@@ -918,13 +927,22 @@
 
             console.error(error);
 
-            status.textContent =
-                "🔴 Ошибка соединения с Backend";
+            showStatus(
+                "backendStatus",
+                "🔴 Не удалось подключиться к Backend.",
+                "error-status"
+            );
 
         }
 
     }
 
+
+    // -----------------------------
+    // ПЕРВОНАЧАЛЬНЫЙ СЧЁТЧИК
+    // -----------------------------
+
+    updateCounter();
 
 </script>
 
