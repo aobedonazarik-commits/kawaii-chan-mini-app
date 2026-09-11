@@ -2,13 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
     <title>Kawaii Chan</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -251,12 +256,44 @@
             transform: scale(0.98);
         }
 
+        .post-text {
+            width: 100%;
+            min-height: 180px;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 16px;
+
+            background: var(
+                --tg-theme-secondary-bg-color,
+                #f2f2f2
+            );
+
+            color: var(--tg-theme-text-color, #222222);
+
+            font-family: inherit;
+            font-size: 15px;
+
+            resize: vertical;
+            outline: none;
+        }
+
+        .post-text::placeholder {
+            color: var(--tg-theme-hint-color, #888888);
+        }
+
+        .publish-button {
+            background: #22a559;
+        }
+
         .footer {
             padding: 25px 0 10px;
             text-align: center;
             font-size: 12px;
             opacity: 0.45;
         }
+
     </style>
 </head>
 
@@ -264,7 +301,9 @@
 
 <div class="app">
 
+
     <!-- ГЛАВНЫЙ ЭКРАН -->
+
     <div id="homePage" class="page active">
 
         <div class="header">
@@ -283,12 +322,18 @@
 
         </div>
 
+
         <div class="menu">
 
-            <button class="menu-button" onclick="openPage('createPage')">
+            <button
+                class="menu-button"
+                onclick="openPage('createPage')"
+            >
+
                 <div class="icon">📝</div>
 
                 <div class="button-text">
+
                     <div class="button-title">
                         Создать пост
                     </div>
@@ -296,14 +341,21 @@
                     <div class="button-description">
                         Создание новой публикации
                     </div>
+
                 </div>
+
             </button>
 
 
-            <button class="menu-button" onclick="openPage('scheduledPage')">
+            <button
+                class="menu-button"
+                onclick="openPage('scheduledPage')"
+            >
+
                 <div class="icon">⏰</div>
 
                 <div class="button-text">
+
                     <div class="button-title">
                         Отложенные
                     </div>
@@ -311,14 +363,21 @@
                     <div class="button-description">
                         Запланированные публикации
                     </div>
+
                 </div>
+
             </button>
 
 
-            <button class="menu-button" onclick="openPage('editPage')">
+            <button
+                class="menu-button"
+                onclick="openPage('editPage')"
+            >
+
                 <div class="icon">✏️</div>
 
                 <div class="button-text">
+
                     <div class="button-title">
                         Редактировать
                     </div>
@@ -326,14 +385,21 @@
                     <div class="button-description">
                         Управление публикациями
                     </div>
+
                 </div>
+
             </button>
 
 
-            <button class="menu-button" onclick="openPage('statsPage')">
+            <button
+                class="menu-button"
+                onclick="openPage('statsPage')"
+            >
+
                 <div class="icon">📊</div>
 
                 <div class="button-text">
+
                     <div class="button-title">
                         Статистика
                     </div>
@@ -341,14 +407,21 @@
                     <div class="button-description">
                         Статистика канала
                     </div>
+
                 </div>
+
             </button>
 
 
-            <button class="menu-button" onclick="openPage('settingsPage')">
+            <button
+                class="menu-button"
+                onclick="openPage('settingsPage')"
+            >
+
                 <div class="icon">⚙️</div>
 
                 <div class="button-text">
+
                     <div class="button-title">
                         Настройки
                     </div>
@@ -356,10 +429,13 @@
                     <div class="button-description">
                         Настройки Kawaii Chan
                     </div>
+
                 </div>
+
             </button>
 
         </div>
+
 
         <div class="footer">
             Kawaii Chan • Mini App
@@ -368,12 +444,17 @@
     </div>
 
 
+
     <!-- СОЗДАТЬ ПОСТ -->
+
     <div id="createPage" class="page">
 
         <div class="page-header">
 
-            <button class="back-button" onclick="goHome()">
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
                 ←
             </button>
 
@@ -383,6 +464,7 @@
 
         </div>
 
+
         <div class="info-card">
 
             <h3>
@@ -390,29 +472,57 @@
             </h3>
 
             <p>
-                Здесь появится редактор постов,
-                предпросмотр и публикация через бота.
+                Напиши текст поста и опубликуй его
+                прямо в Telegram-канал.
             </p>
 
         </div>
 
-        <button class="test-button" onclick="testBackend()">
+
+        <textarea
+            id="postText"
+            class="post-text"
+            placeholder="Напиши текст поста здесь..."
+        ></textarea>
+
+
+        <button
+            class="test-button publish-button"
+            onclick="publishPost()"
+        >
+            📢 Опубликовать
+        </button>
+
+
+        <button
+            class="test-button"
+            onclick="testBackend()"
+        >
             🔌 Проверить связь с Backend
         </button>
 
-        <div id="backendStatus" class="status">
-            ⚪ Backend ещё не проверен
+
+        <div
+            id="backendStatus"
+            class="status"
+        >
+            ⚪ Готов к работе
         </div>
 
     </div>
 
 
+
     <!-- ОТЛОЖЕННЫЕ -->
+
     <div id="scheduledPage" class="page">
 
         <div class="page-header">
 
-            <button class="back-button" onclick="goHome()">
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
                 ←
             </button>
 
@@ -421,6 +531,7 @@
             </div>
 
         </div>
+
 
         <div class="info-card">
 
@@ -435,6 +546,7 @@
 
         </div>
 
+
         <div class="status">
             🔧 Подключение к боту будет добавлено следующим этапом
         </div>
@@ -442,12 +554,17 @@
     </div>
 
 
+
     <!-- РЕДАКТИРОВАНИЕ -->
+
     <div id="editPage" class="page">
 
         <div class="page-header">
 
-            <button class="back-button" onclick="goHome()">
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
                 ←
             </button>
 
@@ -456,6 +573,7 @@
             </div>
 
         </div>
+
 
         <div class="info-card">
 
@@ -470,6 +588,7 @@
 
         </div>
 
+
         <div class="status">
             🔧 Функция подключения находится в разработке
         </div>
@@ -477,12 +596,17 @@
     </div>
 
 
+
     <!-- СТАТИСТИКА -->
+
     <div id="statsPage" class="page">
 
         <div class="page-header">
 
-            <button class="back-button" onclick="goHome()">
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
                 ←
             </button>
 
@@ -491,6 +615,7 @@
             </div>
 
         </div>
+
 
         <div class="info-card">
 
@@ -505,6 +630,7 @@
 
         </div>
 
+
         <div class="status">
             🔧 Получение статистики будет подключено следующим этапом
         </div>
@@ -512,12 +638,17 @@
     </div>
 
 
+
     <!-- НАСТРОЙКИ -->
+
     <div id="settingsPage" class="page">
 
         <div class="page-header">
 
-            <button class="back-button" onclick="goHome()">
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
                 ←
             </button>
 
@@ -526,6 +657,7 @@
             </div>
 
         </div>
+
 
         <div class="info-card">
 
@@ -540,6 +672,7 @@
 
         </div>
 
+
         <div class="info-card">
 
             <h3>
@@ -552,6 +685,7 @@
 
         </div>
 
+
         <div class="status">
             🟢 Mini App работает
         </div>
@@ -561,11 +695,11 @@
 </div>
 
 
+
 <script>
 
-    /*
-     * Telegram Mini App
-     */
+
+    /* Telegram Mini App */
 
     const tg = window.Telegram.WebApp;
 
@@ -573,17 +707,15 @@
     tg.expand();
 
 
-    /*
-     * Адрес нашего Backend
-     */
+
+    /* Наш Backend */
 
     const BACKEND_URL =
         "https://kawaii-chan-backend.onrender.com";
 
 
-    /*
-     * Открытие страницы
-     */
+
+    /* Открытие страницы */
 
     function openPage(pageId) {
 
@@ -591,52 +723,66 @@
             document.querySelectorAll(".page");
 
         pages.forEach(function(page) {
+
             page.classList.remove("active");
+
         });
+
 
         const selectedPage =
             document.getElementById(pageId);
 
+
         if (selectedPage) {
+
             selectedPage.classList.add("active");
+
         }
 
+
         window.scrollTo(0, 0);
+
     }
 
 
-    /*
-     * Возвращение на главный экран
-     */
+
+    /* Возвращение домой */
 
     function goHome() {
 
         const pages =
             document.querySelectorAll(".page");
 
+
         pages.forEach(function(page) {
+
             page.classList.remove("active");
+
         });
+
 
         document
             .getElementById("homePage")
             .classList.add("active");
 
+
         window.scrollTo(0, 0);
+
     }
 
 
-    /*
-     * Проверка связи Mini App → Backend
-     */
+
+    /* Проверка Backend */
 
     async function testBackend() {
 
         const status =
             document.getElementById("backendStatus");
 
+
         status.textContent =
             "⏳ Проверяем соединение...";
+
 
         try {
 
@@ -658,9 +804,11 @@
 
 
             if (!response.ok) {
+
                 throw new Error(
                     "HTTP " + response.status
                 );
+
             }
 
 
@@ -676,9 +824,10 @@
             } else {
 
                 status.textContent =
-                    "🟠 Backend ответил, но возникла проблема.";
+                    "🟠 Backend ответил с ошибкой.";
 
             }
+
 
         } catch (error) {
 
@@ -690,6 +839,92 @@
         }
 
     }
+
+
+
+    /* Публикация поста */
+
+    async function publishPost() {
+
+        const text =
+            document
+                .getElementById("postText")
+                .value
+                .trim();
+
+
+        const status =
+            document.getElementById("backendStatus");
+
+
+        if (!text) {
+
+            status.textContent =
+                "🟠 Сначала напиши текст поста.";
+
+            return;
+
+        }
+
+
+        status.textContent =
+            "⏳ Публикуем пост...";
+
+
+        try {
+
+            const response = await fetch(
+                BACKEND_URL + "/publish",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        text: text
+                    })
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                status.textContent =
+                    "🟢 Пост успешно опубликован!";
+
+
+                document
+                    .getElementById("postText")
+                    .value = "";
+
+
+            } else {
+
+                status.textContent =
+                    "🔴 " + data.message;
+
+                console.error(data);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            status.textContent =
+                "🔴 Ошибка соединения с Backend";
+
+        }
+
+    }
+
 
 </script>
 
