@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 />
 
 <title>Kawaii Chan</title>
@@ -13,439 +13,307 @@
 
 <style>
 :root {
-    --bg: #0f0f14;
-    --card: #181820;
-    --card2: #20202a;
-    --text: #f5f5f7;
-    --muted: #9b9ba8;
-    --accent: #ff5ca8;
-    --accent2: #ff78b8;
-    --danger: #ff4f67;
-    --success: #4ade80;
-    --warning: #fbbf24;
-    --border: rgba(255,255,255,.08);
+  --bg: var(--tg-theme-bg-color, #111111);
+  --secondary: var(--tg-theme-secondary-bg-color, #1b1b1b);
+  --text: var(--tg-theme-text-color, #ffffff);
+  --hint: var(--tg-theme-hint-color, #999999);
+  --button: var(--tg-theme-button-color, #ff4fa3);
+  --button-text: var(--tg-theme-button-text-color, #ffffff);
+  --danger: #ff4d67;
+  --border: rgba(255,255,255,.08);
 }
 
 * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    margin: 0;
-    background:
-        radial-gradient(circle at top, rgba(255,92,168,.12), transparent 35%),
-        var(--bg);
-    color: var(--text);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 button,
 input,
 textarea {
-    font: inherit;
+  font: inherit;
 }
 
 button {
-    border: 0;
+  border: 0;
+  cursor: pointer;
 }
 
 .app {
-    min-height: 100vh;
-    padding-bottom: 86px;
+  max-width: 720px;
+  margin: auto;
+  padding: 14px 14px 90px;
 }
 
 .header {
-    padding: 20px 16px 12px;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(15,15,20,.88);
-    backdrop-filter: blur(14px);
+  padding: 8px 4px 18px;
 }
 
-.header-title {
-    font-size: 24px;
-    font-weight: 800;
+.title {
+  font-size: 25px;
+  font-weight: 800;
 }
 
-.header-subtitle {
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 3px;
+.subtitle {
+  margin-top: 5px;
+  color: var(--hint);
+  font-size: 14px;
 }
 
-.page {
-    display: none;
-    padding: 10px 14px 20px;
+.section {
+  display: none;
 }
 
-.page.active {
-    display: block;
+.section.active {
+  display: block;
 }
 
 .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 12px;
+  background: var(--secondary);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
 }
 
-.card-title {
-    font-size: 17px;
-    font-weight: 750;
-    margin-bottom: 12px;
-}
-
-label {
-    display: block;
-    color: var(--muted);
-    font-size: 13px;
-    margin: 12px 0 7px;
+.label {
+  display: block;
+  font-size: 13px;
+  color: var(--hint);
+  margin-bottom: 8px;
 }
 
 textarea,
-input[type="datetime-local"],
-input[type="text"] {
-    width: 100%;
-    background: var(--card2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    outline: none;
-    padding: 13px;
+input[type="text"],
+input[type="datetime-local"] {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border-radius: 13px;
+  padding: 13px;
 }
 
 textarea {
-    min-height: 170px;
-    resize: vertical;
-}
-
-textarea:focus,
-input:focus {
-    border-color: rgba(255,92,168,.6);
+  min-height: 150px;
+  resize: vertical;
 }
 
 .counter {
-    text-align: right;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 6px;
+  text-align: right;
+  color: var(--hint);
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-.button {
-    width: 100%;
-    padding: 13px 15px;
-    border-radius: 13px;
-    background: var(--accent);
-    color: white;
-    font-weight: 750;
-    margin-top: 10px;
-    cursor: pointer;
+.primary {
+  width: 100%;
+  background: var(--button);
+  color: var(--button-text);
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-top: 10px;
 }
 
-.button:active {
-    transform: scale(.98);
+.secondary {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+  padding: 13px;
+  border-radius: 14px;
+  margin-top: 8px;
 }
 
-.button.secondary {
-    background: var(--card2);
-    border: 1px solid var(--border);
+.danger {
+  background: var(--danger);
+  color: white;
 }
 
-.button.danger {
-    background: var(--danger);
+.file-button {
+  display: block;
+  text-align: center;
+  background: rgba(255,255,255,.08);
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 700;
 }
 
-.button.success {
-    background: #16a34a;
+.file-button input {
+  display: none;
 }
 
-.button.small {
-    width: auto;
-    padding: 9px 12px;
-    margin: 0;
-    font-size: 13px;
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 12px;
 }
 
-.file-picker {
-    display: block;
-    background: var(--card2);
-    border: 1px dashed rgba(255,92,168,.55);
-    border-radius: 14px;
-    padding: 18px;
-    text-align: center;
-    cursor: pointer;
+.preview {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #222;
 }
 
-.file-picker strong {
-    display: block;
-    font-size: 15px;
+.preview img,
+.preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.file-picker span {
-    display: block;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 5px;
+.remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.75);
+  color: white;
+  font-size: 17px;
 }
 
-#photoInput {
-    display: none;
+.file-info {
+  padding: 10px 0 0;
+  font-size: 13px;
+  color: var(--hint);
 }
 
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
-    margin-top: 12px;
+.progress-wrap {
+  display: none;
+  margin-top: 12px;
 }
 
-.photo-item {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border-radius: 11px;
-    overflow: hidden;
-    background: #111;
+.progress {
+  width: 100%;
+  height: 9px;
+  background: rgba(255,255,255,.08);
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.photo-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--button);
+  transition: width .2s;
 }
 
-.photo-remove {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.75);
-    color: white;
-    font-weight: bold;
-}
-
-.status {
-    border-radius: 12px;
-    padding: 11px 12px;
-    font-size: 13px;
-    margin-top: 10px;
-    background: var(--card2);
-    color: var(--muted);
-    word-break: break-word;
-}
-
-.status.success {
-    color: var(--success);
-}
-
-.status.error {
-    color: #ff7183;
-}
-
-.status.warning {
-    color: var(--warning);
-}
-
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.item {
-    background: var(--card2);
-    border-radius: 14px;
-    padding: 13px;
-    border: 1px solid var(--border);
-}
-
-.item-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: flex-start;
-}
-
-.item-title {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.item-meta {
-    color: var(--muted);
-    font-size: 11px;
-    margin-top: 5px;
-}
-
-.item-text {
-    margin-top: 10px;
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 13px;
-    line-height: 1.45;
-}
-
-.item-actions {
-    display: flex;
-    gap: 7px;
-    margin-top: 11px;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 999px;
-    font-size: 10px;
-    background: rgba(255,255,255,.08);
-}
-
-.badge.pending {
-    color: var(--warning);
-}
-
-.badge.done {
-    color: var(--success);
-}
-
-.badge.error {
-    color: #ff7183;
-}
-
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
-}
-
-.stat {
-    background: var(--card2);
-    border-radius: 14px;
-    padding: 15px;
-}
-
-.stat-value {
-    font-size: 25px;
-    font-weight: 800;
-}
-
-.stat-label {
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 4px;
+.progress-text {
+  margin-top: 7px;
+  font-size: 12px;
+  color: var(--hint);
+  text-align: center;
 }
 
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    background: rgba(20,20,27,.94);
-    backdrop-filter: blur(15px);
-    border-top: 1px solid var(--border);
-    padding: 7px 4px calc(7px + env(safe-area-inset-bottom));
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--secondary);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 7px 5px calc(7px + env(safe-area-inset-bottom));
+  z-index: 100;
 }
 
-.nav-button {
-    background: transparent;
-    color: var(--muted);
-    padding: 7px 2px;
-    font-size: 10px;
-    text-align: center;
+.nav-btn {
+  background: transparent;
+  color: var(--hint);
+  padding: 6px 2px;
+  font-size: 11px;
 }
 
-.nav-button .icon {
-    display: block;
-    font-size: 20px;
-    margin-bottom: 2px;
+.nav-btn.active {
+  color: var(--button);
+  font-weight: 700;
 }
 
-.nav-button.active {
-    color: var(--accent2);
+.nav-icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.post {
+  background: var(--secondary);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.post-title {
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.post-meta {
+  color: var(--hint);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.status {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  margin-top: 10px;
+  font-size: 13px;
+  display: none;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.ok {
+  border: 1px solid rgba(60,220,120,.3);
+}
+
+.status.error {
+  border: 1px solid rgba(255,70,90,.4);
 }
 
 .empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 30px 10px;
-    font-size: 13px;
+  text-align: center;
+  padding: 35px 15px;
+  color: var(--hint);
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.stat:last-child {
+  border-bottom: 0;
 }
 
 .loading {
-    text-align: center;
-    padding: 25px;
-    color: var(--muted);
-}
-
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: rgba(0,0,0,.72);
-    display: none;
-    align-items: flex-end;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-box {
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: var(--card);
-    border-radius: 22px 22px 0 0;
-    padding: 18px;
-}
-
-.modal-title {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.close {
-    float: right;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--card2);
-    color: white;
-}
-
-.divider {
-    height: 1px;
-    background: var(--border);
-    margin: 14px 0;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 9px 0;
-    font-size: 13px;
-}
-
-.info-row span:first-child {
-    color: var(--muted);
-}
-
-.hidden {
-    display: none !important;
+  text-align: center;
+  padding: 25px;
+  color: var(--hint);
 }
 </style>
 </head>
@@ -454,1663 +322,1521 @@ input:focus {
 
 <div class="app">
 
-    <header class="header">
-        <div class="header-title">🌸 Kawaii Chan</div>
-        <div class="header-subtitle" id="headerSubtitle">
-            Панель управления каналом
-        </div>
-    </header>
+  <div class="header">
+    <div class="title">Kawaii_Chan</div>
+    <div class="subtitle">Панель управления каналом</div>
+  </div>
 
-    <!-- ================================================= -->
-    <!-- CREATE -->
-    <!-- ================================================= -->
+  <!-- CREATE -->
+  <section id="create" class="section active">
 
-    <section class="page active" id="page-create">
+    <div class="card">
+      <label class="label">Текст публикации</label>
 
-        <div class="card">
-            <div class="card-title">📝 Создать пост</div>
+      <textarea
+        id="postText"
+        maxlength="4096"
+        placeholder="Напиши текст поста..."
+      ></textarea>
 
-            <label for="postText">Текст публикации</label>
+      <div class="counter">
+        <span id="textCount">0</span> / 4096
+      </div>
+    </div>
 
-            <textarea
-                id="postText"
-                maxlength="4096"
-                placeholder="Напиши текст поста..."
-            ></textarea>
+    <div class="card">
 
-            <div class="counter">
-                <span id="textCounter">0</span> / 4096
-            </div>
+      <label class="label">Фото и видео</label>
 
-            <label>Фотографии</label>
-
-            <label class="file-picker" for="photoInput">
-                <strong>📷 Выбрать фотографии</strong>
-                <span>
-                    До 100 фотографий • можно выбрать несколько
-                </span>
-            </label>
-
-            <input
-                id="photoInput"
-                type="file"
-                accept="image/*"
-                multiple
-            >
-
-            <div
-                id="photoGrid"
-                class="photo-grid"
-            ></div>
-
-            <div
-                id="createStatus"
-                class="status"
-            >
-                Готово к созданию публикации.
-            </div>
-
-            <button
-                class="button"
-                id="publishButton"
-                onclick="publishPost()"
-            >
-                🚀 Опубликовать сейчас
-            </button>
-
-            <button
-                class="button secondary"
-                onclick="clearCreateForm()"
-            >
-                🗑 Очистить
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="card-title">⏰ Отложенная публикация</div>
-
-            <label for="scheduleTime">
-                Дата и время публикации
-            </label>
-
-            <input
-                id="scheduleTime"
-                type="datetime-local"
-            >
-
-            <button
-                class="button"
-                onclick="schedulePost()"
-            >
-                ⏰ Запланировать
-            </button>
-
-            <div class="status">
-                Время отправляется на сервер как UTC.
-                Сервер сам проверяет, что оно находится в будущем.
-            </div>
-        </div>
-
-    </section>
-
-    <!-- ================================================= -->
-    <!-- SCHEDULED -->
-    <!-- ================================================= -->
-
-    <section class="page" id="page-scheduled">
-
-        <div class="card">
-            <div class="card-title">⏰ Отложенные публикации</div>
-
-            <button
-                class="button secondary"
-                onclick="loadScheduled()"
-            >
-                🔄 Обновить
-            </button>
-        </div>
-
-        <div id="scheduledList" class="list">
-            <div class="loading">
-                Загружаем...
-            </div>
-        </div>
-
-    </section>
-
-    <!-- ================================================= -->
-    <!-- EDIT -->
-    <!-- ================================================= -->
-
-    <section class="page" id="page-edit">
-
-        <div class="card">
-            <div class="card-title">✏️ Опубликованные посты</div>
-
-            <div class="status">
-                Здесь отображаются последние 100 публикаций,
-                созданных через этот Mini App.
-            </div>
-
-            <button
-                class="button secondary"
-                onclick="loadPosts()"
-            >
-                🔄 Обновить
-            </button>
-        </div>
-
-        <div id="postsList" class="list">
-            <div class="loading">
-                Загружаем...
-            </div>
-        </div>
-
-    </section>
-
-    <!-- ================================================= -->
-    <!-- STATS -->
-    <!-- ================================================= -->
-
-    <section class="page" id="page-stats">
-
-        <div class="card">
-            <div class="card-title">📊 Статистика</div>
-
-            <div
-                id="statsGrid"
-                class="stat-grid"
-            ></div>
-
-            <div
-                id="statsStatus"
-                class="status"
-            >
-                Нажми «Обновить».
-            </div>
-
-            <button
-                class="button"
-                onclick="loadStats()"
-            >
-                🔄 Обновить статистику
-            </button>
-        </div>
-
-    </section>
-
-    <!-- ================================================= -->
-    <!-- SETTINGS -->
-    <!-- ================================================= -->
-
-    <section class="page" id="page-settings">
-
-        <div class="card">
-            <div class="card-title">⚙️ Настройки</div>
-
-            <div class="info-row">
-                <span>Канал</span>
-                <strong id="settingChannel">—</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Backend</span>
-                <strong id="settingBackend">—</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Планировщик</span>
-                <strong id="settingScheduler">—</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Макс. фотографий</span>
-                <strong id="settingMaxPhotos">—</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Макс. фото в альбоме</span>
-                <strong id="settingAlbumLimit">—</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Лимит текста</span>
-                <strong id="settingTextLimit">—</strong>
-            </div>
-
-            <button
-                class="button secondary"
-                onclick="loadSettings()"
-            >
-                🔄 Загрузить настройки
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                🔌 Проверка соединения
-            </div>
-
-            <div
-                id="backendStatus"
-                class="status"
-            >
-                Соединение ещё не проверялось.
-            </div>
-
-            <button
-                class="button"
-                onclick="testBackend()"
-            >
-                🔌 Проверить Backend
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="card-title">ℹ️ О Mini App</div>
-
-            <div class="info-row">
-                <span>Frontend</span>
-                <strong>GitHub Pages</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Backend</span>
-                <strong>Render</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Telegram</span>
-                <strong>Web App</strong>
-            </div>
-        </div>
-
-    </section>
-
-</div>
-
-<!-- ===================================================== -->
-<!-- BOTTOM NAV -->
-<!-- ===================================================== -->
-
-<nav class="bottom-nav">
-
-    <button
-        class="nav-button active"
-        data-page="create"
-        onclick="showPage('create')"
-    >
-        <span class="icon">📝</span>
-        Создать
-    </button>
-
-    <button
-        class="nav-button"
-        data-page="scheduled"
-        onclick="showPage('scheduled')"
-    >
-        <span class="icon">⏰</span>
-        Отложенные
-    </button>
-
-    <button
-        class="nav-button"
-        data-page="edit"
-        onclick="showPage('edit')"
-    >
-        <span class="icon">✏️</span>
-        Редактировать
-    </button>
-
-    <button
-        class="nav-button"
-        data-page="stats"
-        onclick="showPage('stats')"
-    >
-        <span class="icon">📊</span>
-        Статистика
-    </button>
-
-    <button
-        class="nav-button"
-        data-page="settings"
-        onclick="showPage('settings')"
-    >
-        <span class="icon">⚙️</span>
-        Настройки
-    </button>
-
-</nav>
-
-<!-- ===================================================== -->
-<!-- EDIT MODAL -->
-<!-- ===================================================== -->
-
-<div
-    id="editModal"
-    class="modal"
-    onclick="closeModalOutside(event)"
->
-
-    <div class="modal-box">
-
-        <button
-            class="close"
-            onclick="closeEditModal()"
-        >
-            ✕
-        </button>
-
-        <div class="modal-title">
-            ✏️ Редактирование поста
-        </div>
-
+      <label class="file-button">
+        📎 Выбрать файлы
         <input
-            id="editPostId"
-            type="hidden"
+          id="mediaInput"
+          type="file"
+          accept="image/*,video/*"
+          multiple
         >
+      </label>
 
-        <label for="editPostText">
-            Новый текст
-        </label>
+      <div id="fileInfo" class="file-info">
+        Файлы не выбраны
+      </div>
 
-        <textarea
-            id="editPostText"
-            maxlength="4096"
-        ></textarea>
+      <div id="previewGrid" class="preview-grid"></div>
 
-        <div class="counter">
-            <span id="editTextCounter">0</span> / 4096
+      <div id="progressWrap" class="progress-wrap">
+        <div class="progress">
+          <div id="progressBar" class="progress-bar"></div>
         </div>
 
-        <div
-            id="editPhotoNotice"
-            class="status warning"
-        >
-            Если это пост с фотографиями,
-            Telegram позволяет этому backend изменять только подпись.
-            Сами фотографии здесь не изменяются.
+        <div id="progressText" class="progress-text">
+          Подготовка...
         </div>
-
-        <button
-            class="button"
-            onclick="saveEditedPost()"
-        >
-            💾 Сохранить изменения
-        </button>
-
-        <button
-            class="button secondary"
-            onclick="closeEditModal()"
-        >
-            Отмена
-        </button>
+      </div>
 
     </div>
 
+    <div class="card">
+
+      <button
+        class="primary"
+        id="publishBtn"
+        onclick="publishPost()"
+      >
+        📤 Опубликовать
+      </button>
+
+      <button
+        class="secondary"
+        onclick="scheduleMode()"
+      >
+        ⏰ Отложить публикацию
+      </button>
+
+      <div id="scheduleBox" style="display:none;margin-top:12px">
+
+        <label class="label">
+          Дата и время публикации
+        </label>
+
+        <input
+          id="scheduleTime"
+          type="datetime-local"
+        >
+
+        <button
+          class="primary"
+          onclick="schedulePost()"
+        >
+          ⏰ Запланировать
+        </button>
+
+      </div>
+
+      <div id="createStatus" class="status"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SCHEDULED -->
+  <section id="scheduled" class="section">
+
+    <div class="card">
+      <button
+        class="primary"
+        onclick="loadScheduled()"
+      >
+        🔄 Обновить
+      </button>
+    </div>
+
+    <div id="scheduledList"></div>
+
+  </section>
+
+
+  <!-- EDIT -->
+  <section id="edit" class="section">
+
+    <div class="card">
+      <button
+        class="primary"
+        onclick="loadPosts()"
+      >
+        🔄 Загрузить публикации
+      </button>
+    </div>
+
+    <div id="postsList"></div>
+
+  </section>
+
+
+  <!-- STATS -->
+  <section id="stats" class="section">
+
+    <div class="card">
+
+      <button
+        class="primary"
+        onclick="loadStats()"
+      >
+        📊 Обновить статистику
+      </button>
+
+      <div id="statsContent" style="margin-top:12px">
+        Нажми «Обновить статистику».
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SETTINGS -->
+  <section id="settings" class="section">
+
+    <div class="card">
+
+      <div style="font-size:18px;font-weight:700">
+        ⚙️ Настройки
+      </div>
+
+      <div
+        style="color:var(--hint);font-size:13px;margin-top:6px"
+      >
+        Подключение Mini App к серверу
+      </div>
+
+      <button
+        class="primary"
+        onclick="testBackend()"
+      >
+        🔌 Проверить backend
+      </button>
+
+      <div id="backendStatus" class="status"></div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="stat">
+        <span>Канал</span>
+        <strong>@ahegao_hetai_hub</strong>
+      </div>
+
+      <div class="stat">
+        <span>Максимум файлов</span>
+        <strong>100</strong>
+      </div>
+
+      <div class="stat">
+        <span>Размер Telegram-альбома</span>
+        <strong>10</strong>
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
 
+
+<!-- NAVIGATION -->
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-btn active"
+    onclick="showSection('create',this)"
+  >
+    <span class="nav-icon">📝</span>
+    Создать
+  </button>
+
+  <button
+    class="nav-btn"
+    onclick="showSection('scheduled',this);loadScheduled()"
+  >
+    <span class="nav-icon">⏰</span>
+    Отложенные
+  </button>
+
+  <button
+    class="nav-btn"
+    onclick="showSection('edit',this);loadPosts()"
+  >
+    <span class="nav-icon">✏️</span>
+    Редактировать
+  </button>
+
+  <button
+    class="nav-btn"
+    onclick="showSection('stats',this);loadStats()"
+  >
+    <span class="nav-icon">📊</span>
+    Статистика
+  </button>
+
+  <button
+    class="nav-btn"
+    onclick="showSection('settings',this)"
+  >
+    <span class="nav-icon">⚙️</span>
+    Настройки
+  </button>
+
+</nav>
+
+
 <script>
-/* =========================================================
-   CONFIG
-   ========================================================= */
 
-const BACKEND_URL =
-    "https://kawaii-chan-backend.onrender.com";
-
-const tg =
-    window.Telegram &&
-    window.Telegram.WebApp
-        ? window.Telegram.WebApp
-        : null;
-
-
-/* =========================================================
-   STATE
-   ========================================================= */
-
-let selectedPhotos = [];
-
-
-/* =========================================================
-   TELEGRAM INIT
-   ========================================================= */
+const tg = window.Telegram?.WebApp;
 
 if (tg) {
-    try {
-        tg.ready();
-        tg.expand();
-        tg.enableClosingConfirmation();
-    } catch (error) {
-        console.log("Telegram WebApp init:", error);
+  tg.ready();
+  tg.expand();
+}
+
+
+/*
+============================================================
+BACKEND
+============================================================
+*/
+
+const API =
+  "https://kawaii-chan-backend.onrender.com";
+
+
+/*
+============================================================
+STATE
+============================================================
+*/
+
+let selectedFiles = [];
+
+
+/*
+============================================================
+NAVIGATION
+============================================================
+*/
+
+function showSection(id, button) {
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section => {
+      section.classList.remove("active");
+    });
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/*
+============================================================
+TEXT COUNTER
+============================================================
+*/
+
+const textArea =
+  document.getElementById("postText");
+
+textArea.addEventListener("input", () => {
+
+  document.getElementById("textCount")
+    .textContent =
+    textArea.value.length;
+
+});
+
+
+/*
+============================================================
+FILE SELECT
+============================================================
+*/
+
+document
+  .getElementById("mediaInput")
+  .addEventListener("change", event => {
+
+    const incoming =
+      Array.from(event.target.files);
+
+    if (
+      selectedFiles.length +
+      incoming.length >
+      100
+    ) {
+
+      showStatus(
+        "createStatus",
+        "Можно выбрать максимум 100 файлов.",
+        false
+      );
+
+      event.target.value = "";
+      return;
     }
+
+    selectedFiles =
+      selectedFiles.concat(incoming);
+
+    event.target.value = "";
+
+    renderPreviews();
+
+  });
+
+
+/*
+============================================================
+PREVIEWS
+============================================================
+*/
+
+function renderPreviews() {
+
+  const grid =
+    document.getElementById("previewGrid");
+
+  grid.innerHTML = "";
+
+  selectedFiles.forEach((file,index) => {
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className = "preview";
+
+    const remove =
+      document.createElement("button");
+
+    remove.className = "remove";
+    remove.textContent = "×";
+
+    remove.onclick = () => {
+
+      selectedFiles.splice(index,1);
+
+      renderPreviews();
+
+    };
+
+    if (
+      file.type.startsWith("video/")
+    ) {
+
+      const video =
+        document.createElement("video");
+
+      video.src =
+        URL.createObjectURL(file);
+
+      video.muted = true;
+      video.playsInline = true;
+
+      wrapper.appendChild(video);
+
+    } else {
+
+      const img =
+        document.createElement("img");
+
+      img.src =
+        URL.createObjectURL(file);
+
+      wrapper.appendChild(img);
+
+    }
+
+    wrapper.appendChild(remove);
+
+    grid.appendChild(wrapper);
+
+  });
+
+  const info =
+    document.getElementById("fileInfo");
+
+  if (!selectedFiles.length) {
+
+    info.textContent =
+      "Файлы не выбраны";
+
+    return;
+
+  }
+
+  const photos =
+    selectedFiles.filter(
+      f => f.type.startsWith("image/")
+    ).length;
+
+  const videos =
+    selectedFiles.filter(
+      f => f.type.startsWith("video/")
+    ).length;
+
+  info.textContent =
+    `Выбрано: ${selectedFiles.length} • `
+    + `фото: ${photos} • `
+    + `видео: ${videos}`;
+
 }
 
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+/*
+============================================================
+STATUS
+============================================================
+*/
 
-function $(id) {
-    return document.getElementById(id);
-}
-
-
-function setStatus(
-    elementId,
-    message,
-    type = ""
+function showStatus(
+  elementId,
+  message,
+  ok = true
 ) {
-    const element = $(elementId);
 
-    if (!element) return;
+  const element =
+    document.getElementById(elementId);
 
-    element.textContent = message;
+  element.textContent = message;
 
-    element.className =
-        "status" +
-        (type ? " " + type : "");
+  element.className =
+    "status show " +
+    (ok ? "ok" : "error");
+
 }
 
 
-function escapeHtml(value) {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+/*
+============================================================
+UPLOAD PROGRESS
+============================================================
+*/
+
+function setProgress(
+  percent,
+  text
+) {
+
+  document
+    .getElementById("progressWrap")
+    .style.display = "block";
+
+  document
+    .getElementById("progressBar")
+    .style.width =
+    percent + "%";
+
+  document
+    .getElementById("progressText")
+    .textContent =
+    text;
+}
+
+
+/*
+============================================================
+PUBLISH
+============================================================
+*/
+
+async function publishPost() {
+
+  const text =
+    document.getElementById("postText")
+      .value.trim();
+
+  if (!text && !selectedFiles.length) {
+
+    showStatus(
+      "createStatus",
+      "Добавь текст или хотя бы один файл.",
+      false
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById("publishBtn");
+
+  button.disabled = true;
+
+  try {
+
+    if (!selectedFiles.length) {
+
+      setProgress(
+        30,
+        "Отправляем текст..."
+      );
+
+      const response =
+        await fetch(API + "/publish", {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+          body: JSON.stringify({
+            text: text
+          })
+        });
+
+      const data =
+        await response.json();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.error ||
+          "Ошибка публикации"
+        );
+      }
+
+      setProgress(
+        100,
+        "Готово!"
+      );
+
+      showStatus(
+        "createStatus",
+        "✅ Пост опубликован.",
+        true
+      );
+
+      clearComposer();
+
+      return;
+    }
+
+
+    /*
+      Делим файлы на группы:
+      10 + 10 + 9 ...
+    */
+
+    const groups = [];
+
+    for (
+      let i = 0;
+      i < selectedFiles.length;
+      i += 10
+    ) {
+
+      groups.push(
+        selectedFiles.slice(i, i + 10)
+      );
+
+    }
+
+
+    for (
+      let groupIndex = 0;
+      groupIndex < groups.length;
+      groupIndex++
+    ) {
+
+      const group =
+        groups[groupIndex];
+
+      const form =
+        new FormData();
+
+      /*
+        Текст передаём только
+        вместе с первой группой.
+      */
+
+      if (groupIndex === 0) {
+        form.append("text", text);
+      }
+
+      group.forEach(file => {
+
+        form.append(
+          "photos",
+          file,
+          file.name
+        );
+
+      });
+
+      const startPercent =
+        Math.round(
+          (groupIndex /
+           groups.length) * 100
+        );
+
+      setProgress(
+        startPercent,
+        `Загружаем группу ${groupIndex + 1} из ${groups.length}...`
+      );
+
+      const response =
+        await fetch(
+          API + "/publish",
+          {
+            method: "POST",
+            body: form
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok || !data.ok) {
+
+        throw new Error(
+          data.error ||
+          "Ошибка публикации"
+        );
+
+      }
+
+      const percent =
+        Math.round(
+          ((groupIndex + 1) /
+           groups.length) * 100
+        );
+
+      setProgress(
+        percent,
+        `Группа ${groupIndex + 1} из ${groups.length} готова`
+      );
+
+      /*
+        Небольшая пауза между
+        альбомами Telegram.
+      */
+
+      if (
+        groupIndex <
+        groups.length - 1
+      ) {
+
+        await sleep(1000);
+
+      }
+
+    }
+
+    showStatus(
+      "createStatus",
+      `✅ Публикация завершена. Отправлено ${selectedFiles.length} файлов.`,
+      true
+    );
+
+    clearComposer();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showStatus(
+      "createStatus",
+      "❌ " + error.message,
+      false
+    );
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+
+}
+
+
+/*
+============================================================
+SCHEDULE MODE
+============================================================
+*/
+
+function scheduleMode() {
+
+  const box =
+    document.getElementById("scheduleBox");
+
+  box.style.display =
+    box.style.display === "none"
+      ? "block"
+      : "none";
+
+}
+
+
+/*
+============================================================
+SCHEDULE
+============================================================
+*/
+
+async function schedulePost() {
+
+  const text =
+    document.getElementById("postText")
+      .value.trim();
+
+  const time =
+    document.getElementById("scheduleTime")
+      .value;
+
+  if (!text && !selectedFiles.length) {
+
+    showStatus(
+      "createStatus",
+      "Добавь текст или файл.",
+      false
+    );
+
+    return;
+
+  }
+
+  if (!time) {
+
+    showStatus(
+      "createStatus",
+      "Выбери дату и время.",
+      false
+    );
+
+    return;
+
+  }
+
+
+  const runAt =
+    new Date(time)
+      .toISOString();
+
+
+  const form =
+    new FormData();
+
+  form.append(
+    "text",
+    text
+  );
+
+  form.append(
+    "run_at",
+    runAt
+  );
+
+
+  selectedFiles.forEach(file => {
+
+    form.append(
+      "photos",
+      file,
+      file.name
+    );
+
+  });
+
+
+  try {
+
+    setProgress(
+      20,
+      "Сохраняем отложенный пост..."
+    );
+
+
+    const response =
+      await fetch(
+        API + "/schedule",
+        {
+          method: "POST",
+          body: form
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok || !data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Не удалось поставить пост в очередь."
+      );
+
+    }
+
+
+    setProgress(
+      100,
+      "Пост сохранён!"
+    );
+
+
+    showStatus(
+      "createStatus",
+      "✅ Пост поставлен в очередь.",
+      true
+    );
+
+
+    clearComposer();
+
+
+  } catch (error) {
+
+    showStatus(
+      "createStatus",
+      "❌ " + error.message,
+      false
+    );
+
+  }
+
+}
+
+
+/*
+============================================================
+SCHEDULED LIST
+============================================================
+*/
+
+async function loadScheduled() {
+
+  const container =
+    document.getElementById(
+      "scheduledList"
+    );
+
+  container.innerHTML =
+    '<div class="loading">Загрузка...</div>';
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/scheduled"
+      );
+
+    const data =
+      await response.json();
+
+
+    if (!data.ok) {
+      throw new Error(
+        data.error ||
+        "Ошибка загрузки"
+      );
+    }
+
+
+    if (!data.items.length) {
+
+      container.innerHTML =
+        '<div class="empty">Отложенных постов пока нет.</div>';
+
+      return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    data.items.forEach(item => {
+
+      const post =
+        document.createElement("div");
+
+      post.className = "post";
+
+
+      const date =
+        formatDate(item.run_at);
+
+
+      post.innerHTML = `
+        <div class="post-title">
+          ⏰ ${escapeHtml(date)}
+        </div>
+
+        <div class="post-meta">
+          Статус: ${escapeHtml(item.status)}<br>
+          Файлов: ${item.photo_count || 0}
+          ${item.error
+            ? "<br>Ошибка: " +
+              escapeHtml(item.error)
+            : ""}
+        </div>
+
+        ${
+          item.status === "pending"
+          ? `
+            <button
+              class="secondary danger"
+              onclick="cancelScheduled(${item.id})"
+            >
+              Отменить
+            </button>
+          `
+          : ""
+        }
+      `;
+
+
+      container.appendChild(post);
+
+    });
+
+
+  } catch (error) {
+
+    container.innerHTML =
+      `<div class="empty">
+        ❌ ${escapeHtml(error.message)}
+      </div>`;
+
+  }
+
+}
+
+
+/*
+============================================================
+CANCEL SCHEDULED
+============================================================
+*/
+
+async function cancelScheduled(id) {
+
+  if (
+    !confirm(
+      "Отменить этот отложенный пост?"
+    )
+  ) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API +
+        "/scheduled/" +
+        id,
+        {
+          method: "DELETE"
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok || !data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Не удалось отменить пост."
+      );
+
+    }
+
+
+    loadScheduled();
+
+
+  } catch (error) {
+
+    alert(
+      "Ошибка: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/*
+============================================================
+POST HISTORY
+============================================================
+*/
+
+async function loadPosts() {
+
+  const container =
+    document.getElementById(
+      "postsList"
+    );
+
+
+  container.innerHTML =
+    '<div class="loading">Загрузка...</div>';
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/posts"
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.ok) {
+      throw new Error(
+        data.error ||
+        "Ошибка загрузки"
+      );
+    }
+
+
+    if (!data.items.length) {
+
+      container.innerHTML =
+        '<div class="empty">Опубликованных постов пока нет.</div>';
+
+      return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    data.items.forEach(item => {
+
+      const post =
+        document.createElement("div");
+
+      post.className = "post";
+
+
+      const safeText =
+        escapeHtml(
+          item.text || "(без текста)"
+        );
+
+
+      post.innerHTML = `
+        <div class="post-title">
+          #${item.id}
+        </div>
+
+        <div class="post-meta">
+          ${safeText}<br><br>
+          Файлов: ${item.photo_count || 0}<br>
+          Тип: ${escapeHtml(item.post_type || "text")}<br>
+          ${escapeHtml(formatDate(item.created_at))}
+        </div>
+
+        ${
+          item.text
+          ? `
+            <button
+              class="secondary"
+              onclick="editPost(${item.id}, ${JSON.stringify(item.text)})"
+            >
+              ✏️ Изменить текст
+            </button>
+          `
+          : ""
+        }
+      `;
+
+
+      container.appendChild(post);
+
+    });
+
+
+  } catch (error) {
+
+    container.innerHTML =
+      `<div class="empty">
+        ❌ ${escapeHtml(error.message)}
+      </div>`;
+
+  }
+
+}
+
+
+/*
+============================================================
+EDIT POST TEXT
+============================================================
+*/
+
+async function editPost(
+  id,
+  currentText
+) {
+
+  const newText =
+    prompt(
+      "Новый текст публикации:",
+      currentText
+    );
+
+
+  if (
+    newText === null ||
+    !newText.trim()
+  ) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/posts/edit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+          body: JSON.stringify({
+            id: id,
+            text: newText.trim()
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok || !data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Не удалось изменить пост."
+      );
+
+    }
+
+
+    alert(
+      "Пост изменён."
+    );
+
+
+    loadPosts();
+
+
+  } catch (error) {
+
+    alert(
+      "Ошибка: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/*
+============================================================
+STATS
+============================================================
+*/
+
+async function loadStats() {
+
+  const container =
+    document.getElementById(
+      "statsContent"
+    );
+
+
+  container.innerHTML =
+    "Загрузка...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/stats"
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok || !data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Не удалось получить статистику."
+      );
+
+    }
+
+
+    const stats =
+      data.stats ||
+      data;
+
+
+    container.innerHTML =
+      renderStats(stats);
+
+
+  } catch (error) {
+
+    container.innerHTML =
+      `<div class="status show error">
+        ❌ ${escapeHtml(error.message)}
+      </div>`;
+
+  }
+
+}
+
+
+function renderStats(stats) {
+
+  const entries =
+    Object.entries(stats);
+
+
+  if (!entries.length) {
+
+    return `
+      <div class="empty">
+        Статистика пока пустая.
+      </div>
+    `;
+
+  }
+
+
+  return entries
+    .map(([key,value]) => `
+      <div class="stat">
+        <span>${escapeHtml(
+          prettifyKey(key)
+        )}</span>
+
+        <strong>${escapeHtml(
+          String(value)
+        )}</strong>
+      </div>
+    `)
+    .join("");
+
+}
+
+
+/*
+============================================================
+BACKEND TEST
+============================================================
+*/
+
+async function testBackend() {
+
+  const box =
+    document.getElementById(
+      "backendStatus"
+    );
+
+
+  box.className =
+    "status show";
+
+
+  box.textContent =
+    "Проверяем подключение...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        API + "/test",
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok || !data.ok) {
+
+      throw new Error(
+        data.error ||
+        "Backend не отвечает."
+      );
+
+    }
+
+
+    box.className =
+      "status show ok";
+
+
+    box.textContent =
+      "✅ Backend подключён. Бот: @" +
+      (
+        data.bot?.username ||
+        "неизвестно"
+      );
+
+
+  } catch (error) {
+
+    box.className =
+      "status show error";
+
+
+    box.textContent =
+      "❌ " +
+      error.message;
+
+  }
+
+}
+
+
+/*
+============================================================
+CLEAR
+============================================================
+*/
+
+function clearComposer() {
+
+  document.getElementById(
+    "postText"
+  ).value = "";
+
+  document.getElementById(
+    "textCount"
+  ).textContent = "0";
+
+  document.getElementById(
+    "scheduleTime"
+  ).value = "";
+
+  selectedFiles = [];
+
+  renderPreviews();
+
+  document.getElementById(
+    "scheduleBox"
+  ).style.display = "none";
+
+}
+
+
+/*
+============================================================
+HELPERS
+============================================================
+*/
+
+function sleep(ms) {
+
+  return new Promise(
+    resolve => setTimeout(
+      resolve,
+      ms
+    )
+  );
+
 }
 
 
 function formatDate(value) {
-    if (!value) return "—";
 
-    const date = new Date(value);
+  if (!value) {
+    return "—";
+  }
 
-    if (Number.isNaN(date.getTime())) {
-        return value;
-    }
+  try {
 
-    return date.toLocaleString(
+    return new Date(value)
+      .toLocaleString(
         "ru-RU",
         {
-            dateStyle: "short",
-            timeStyle: "short"
+          dateStyle: "short",
+          timeStyle: "short"
         }
-    );
+      );
+
+  } catch {
+
+    return value;
+
+  }
+
 }
 
 
-async function apiJson(
-    url,
-    options = {}
-) {
-    const response = await fetch(
-        url,
-        options
-    );
+function escapeHtml(value) {
 
-    let data = null;
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
-    try {
-        data = await response.json();
-    } catch (error) {
-        throw new Error(
-            "Backend вернул некорректный ответ."
-        );
-    }
-
-    if (!response.ok || !data.ok) {
-        throw new Error(
-            data.error ||
-            data.message ||
-            ("HTTP " + response.status)
-        );
-    }
-
-    return data;
 }
 
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function showPage(page) {
-
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            element =>
-                element.classList.remove("active")
-        );
-
-    const target =
-        $("page-" + page);
-
-    if (target) {
-        target.classList.add("active");
-    }
-
-    document
-        .querySelectorAll(".nav-button")
-        .forEach(
-            button => {
-                button.classList.toggle(
-                    "active",
-                    button.dataset.page === page
-                );
-            }
-        );
-
-    const titles = {
-        create: "Создание публикаций",
-        scheduled: "Отложенные публикации",
-        edit: "Редактирование публикаций",
-        stats: "Статистика канала",
-        settings: "Настройки"
-    };
-
-    $("headerSubtitle").textContent =
-        titles[page] ||
-        "Панель управления каналом";
-
-
-    if (page === "scheduled") {
-        loadScheduled();
-    }
-
-    if (page === "edit") {
-        loadPosts();
-    }
-
-    if (page === "stats") {
-        loadStats();
-    }
-
-    if (page === "settings") {
-        loadSettings();
-    }
-}
-
-
-/* =========================================================
-   TEXT COUNTERS
-   ========================================================= */
-
-$("postText").addEventListener(
-    "input",
-    function () {
-        $("textCounter").textContent =
-            this.value.length;
-    }
-);
-
-
-$("editPostText").addEventListener(
-    "input",
-    function () {
-        $("editTextCounter").textContent =
-            this.value.length;
-    }
-);
-
-
-/* =========================================================
-   PHOTO PICKER
-   ========================================================= */
-
-$("photoInput").addEventListener(
-    "change",
-    function () {
-
-        const incoming =
-            Array.from(this.files || []);
-
-        if (!incoming.length) {
-            return;
-        }
-
-        const combined =
-            selectedPhotos.concat(incoming);
-
-        if (combined.length > 100) {
-
-            setStatus(
-                "createStatus",
-                "Можно выбрать максимум 100 фотографий.",
-                "warning"
-            );
-
-            selectedPhotos =
-                combined.slice(0, 100);
-
-        } else {
-
-            selectedPhotos = combined;
-
-        }
-
-        this.value = "";
-
-        renderPhotos();
-    }
-);
-
-
-function renderPhotos() {
-
-    const grid =
-        $("photoGrid");
-
-    grid.innerHTML = "";
-
-    selectedPhotos.forEach(
-        (file, index) => {
-
-            const wrapper =
-                document.createElement("div");
-
-            wrapper.className =
-                "photo-item";
-
-            const image =
-                document.createElement("img");
-
-            image.alt =
-                "Фото " + (index + 1);
-
-            const reader =
-                new FileReader();
-
-            reader.onload =
-                function (event) {
-                    image.src =
-                        event.target.result;
-                };
-
-            reader.readAsDataURL(file);
-
-            const remove =
-                document.createElement("button");
-
-            remove.className =
-                "photo-remove";
-
-            remove.textContent =
-                "✕";
-
-            remove.type =
-                "button";
-
-            remove.onclick =
-                function () {
-                    selectedPhotos.splice(
-                        index,
-                        1
-                    );
-
-                    renderPhotos();
-                };
-
-            wrapper.appendChild(image);
-            wrapper.appendChild(remove);
-
-            grid.appendChild(wrapper);
-        }
-    );
-}
-
-
-/* =========================================================
-   CREATE FORM
-   ========================================================= */
-
-function clearCreateForm() {
-
-    $("postText").value = "";
-
-    $("textCounter").textContent =
-        "0";
-
-    $("scheduleTime").value = "";
-
-    selectedPhotos = [];
-
-    renderPhotos();
-
-    setStatus(
-        "createStatus",
-        "Форма очищена."
-    );
-}
-
-
-function createFormData() {
-
-    const formData =
-        new FormData();
-
-    const text =
-        $("postText").value.trim();
-
-    formData.append(
-        "text",
-        text
+function prettifyKey(key) {
+
+  return String(key)
+    .replaceAll("_"," ")
+    .replace(
+      /^./,
+      c => c.toUpperCase()
     );
 
-    selectedPhotos.forEach(
-        file => {
-            formData.append(
-                "photos",
-                file,
-                file.name
-            );
-        }
-    );
-
-    return formData;
 }
 
 
-/* =========================================================
-   PUBLISH NOW
-   ========================================================= */
+/*
+============================================================
+INITIALIZE
+============================================================
+*/
 
-async function publishPost() {
+renderPreviews();
 
-    const text =
-        $("postText").value.trim();
-
-    if (!text && !selectedPhotos.length) {
-
-        setStatus(
-            "createStatus",
-            "Пост пустой. Добавь текст или фотографию.",
-            "warning"
-        );
-
-        return;
-    }
-
-    if (text.length > 4096) {
-
-        setStatus(
-            "createStatus",
-            "Текст превышает лимит 4096 символов.",
-            "error"
-        );
-
-        return;
-    }
-
-    const button =
-        $("publishButton");
-
-    button.disabled =
-        true;
-
-    button.textContent =
-        "⏳ Публикуем...";
-
-    setStatus(
-        "createStatus",
-        "Отправляем публикацию в Telegram..."
-    );
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL + "/publish",
-                {
-                    method: "POST",
-                    body: createFormData()
-                }
-            );
-
-        setStatus(
-            "createStatus",
-            data.message ||
-            "Пост успешно опубликован.",
-            "success"
-        );
-
-        $("postText").value = "";
-
-        $("textCounter").textContent =
-            "0";
-
-        selectedPhotos = [];
-
-        renderPhotos();
-
-    } catch (error) {
-
-        console.error(error);
-
-        setStatus(
-            "createStatus",
-            "❌ " + error.message,
-            "error"
-        );
-
-    } finally {
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "🚀 Опубликовать сейчас";
-    }
-}
-
-
-/* =========================================================
-   SCHEDULE
-   ========================================================= */
-
-function getScheduleIso() {
-
-    const input =
-        $("scheduleTime").value;
-
-    if (!input) {
-        throw new Error(
-            "Выбери дату и время."
-        );
-    }
-
-    const localDate =
-        new Date(input);
-
-    if (Number.isNaN(
-        localDate.getTime()
-    )) {
-        throw new Error(
-            "Некорректная дата."
-        );
-    }
-
-    return localDate.toISOString();
-}
-
-
-async function schedulePost() {
-
-    const text =
-        $("postText").value.trim();
-
-    if (!text && !selectedPhotos.length) {
-
-        setStatus(
-            "createStatus",
-            "Нельзя запланировать пустой пост.",
-            "warning"
-        );
-
-        return;
-    }
-
-    let runAt;
-
-    try {
-
-        runAt =
-            getScheduleIso();
-
-    } catch (error) {
-
-        setStatus(
-            "createStatus",
-            "❌ " + error.message,
-            "error"
-        );
-
-        return;
-    }
-
-    const formData =
-        new FormData();
-
-    formData.append(
-        "text",
-        text
-    );
-
-    formData.append(
-        "run_at",
-        runAt
-    );
-
-    selectedPhotos.forEach(
-        file => {
-            formData.append(
-                "photos",
-                file,
-                file.name
-            );
-        }
-    );
-
-    setStatus(
-        "createStatus",
-        "⏳ Ставим пост в очередь..."
-    );
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL + "/schedule",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
-
-        setStatus(
-            "createStatus",
-            "⏰ " +
-            (data.message ||
-                "Пост запланирован.") +
-            " ID: " +
-            data.id,
-            "success"
-        );
-
-        $("postText").value = "";
-
-        $("textCounter").textContent =
-            "0";
-
-        $("scheduleTime").value =
-            "";
-
-        selectedPhotos = [];
-
-        renderPhotos();
-
-    } catch (error) {
-
-        console.error(error);
-
-        setStatus(
-            "createStatus",
-            "❌ " + error.message,
-            "error"
-        );
-    }
-}
-
-
-/* =========================================================
-   SCHEDULED LIST
-   ========================================================= */
-
-async function loadScheduled() {
-
-    const container =
-        $("scheduledList");
-
-    container.innerHTML =
-        '<div class="loading">⏳ Загружаем...</div>';
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL + "/scheduled"
-            );
-
-        const items =
-            data.items || [];
-
-        if (!items.length) {
-
-            container.innerHTML =
-                '<div class="empty">Отложенных публикаций пока нет.</div>';
-
-            return;
-        }
-
-        container.innerHTML =
-            items.map(
-                item => {
-
-                    const statusClass =
-                        item.status === "pending"
-                            ? "pending"
-                            : item.status === "done"
-                                ? "done"
-                                : "error";
-
-                    const statusText =
-                        item.status === "pending"
-                            ? "ожидает"
-                            : item.status === "done"
-                                ? "опубликовано"
-                                : item.status;
-
-                    return `
-                        <div class="item">
-
-                            <div class="item-top">
-
-                                <div>
-                                    <div class="item-title">
-                                        ⏰ Пост #${item.id}
-                                    </div>
-
-                                    <div class="item-meta">
-                                        ${formatDate(item.run_at)}
-                                    </div>
-                                </div>
-
-                                <span class="badge ${statusClass}">
-                                    ${escapeHtml(statusText)}
-                                </span>
-
-                            </div>
-
-                            <div class="item-meta">
-                                📷 ${item.photo_count || 0} фото
-                            </div>
-
-                            <div class="item-text">
-                                ${escapeHtml(item.text || "Без текста")}
-                            </div>
-
-                            ${
-                                item.error
-                                ? `
-                                    <div class="status error">
-                                        ${escapeHtml(item.error)}
-                                    </div>
-                                `
-                                : ""
-                            }
-
-                            ${
-                                item.status === "pending"
-                                ? `
-                                    <div class="item-actions">
-                                        <button
-                                            class="button small danger"
-                                            onclick="cancelScheduled(${item.id})"
-                                        >
-                                            Отменить
-                                        </button>
-                                    </div>
-                                `
-                                : ""
-                            }
-
-                        </div>
-                    `;
-                }
-            ).join("");
-
-    } catch (error) {
-
-        container.innerHTML =
-            `
-            <div class="status error">
-                ❌ ${escapeHtml(error.message)}
-            </div>
-            `;
-    }
-}
-
-
-async function cancelScheduled(id) {
-
-    if (!confirm(
-        "Отменить эту отложенную публикацию?"
-    )) {
-        return;
-    }
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL +
-                "/scheduled/" +
-                id,
-                {
-                    method: "DELETE"
-                }
-            );
-
-        alert(
-            data.message ||
-            "Публикация отменена."
-        );
-
-        loadScheduled();
-
-    } catch (error) {
-
-        alert(
-            "Ошибка: " +
-            error.message
-        );
-    }
-}
-
-
-/* =========================================================
-   POSTS
-   ========================================================= */
-
-async function loadPosts() {
-
-    const container =
-        $("postsList");
-
-    container.innerHTML =
-        '<div class="loading">⏳ Загружаем...</div>';
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL + "/posts"
-            );
-
-        const items =
-            data.items || [];
-
-        if (!items.length) {
-
-            container.innerHTML =
-                '<div class="empty">Публикаций пока нет.</div>';
-
-            return;
-        }
-
-        container.innerHTML =
-            items.map(
-                item => `
-
-                    <div class="item">
-
-                        <div class="item-top">
-
-                            <div>
-                                <div class="item-title">
-                                    📝 Пост #${item.id}
-                                </div>
-
-                                <div class="item-meta">
-                                    ${formatDate(item.created_at)}
-                                </div>
-                            </div>
-
-                            <span class="badge">
-                                ${
-                                    item.post_type === "photo"
-                                    ? "📷 фото"
-                                    : "📝 текст"
-                                }
-                            </span>
-
-                        </div>
-
-                        <div class="item-meta">
-                            📷 ${item.photo_count || 0} фото
-                        </div>
-
-                        <div class="item-text">
-                            ${escapeHtml(item.text || "Без текста")}
-                        </div>
-
-                        <div class="item-actions">
-
-                            <button
-                                class="button small"
-                                onclick="openEditModal(${item.id})"
-                            >
-                                ✏️ Изменить
-                            </button>
-
-                            <button
-                                class="button small danger"
-                                onclick="deletePost(${item.id})"
-                            >
-                                🗑 Удалить
-                            </button>
-
-                        </div>
-
-                    </div>
-                `
-            ).join("");
-
-    } catch (error) {
-
-        container.innerHTML =
-            `
-            <div class="status error">
-                ❌ ${escapeHtml(error.message)}
-            </div>
-            `;
-    }
-}
-
-
-/* =========================================================
-   GET SINGLE POST
-   ========================================================= */
-
-async function openEditModal(id) {
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL +
-                "/posts/" +
-                id
-            );
-
-        const post =
-            data.post;
-
-        $("editPostId").value =
-            post.id;
-
-        $("editPostText").value =
-            post.text || "";
-
-        $("editTextCounter").textContent =
-            (post.text || "").length;
-
-        $("editModal").classList.add(
-            "show"
-        );
-
-    } catch (error) {
-
-        alert(
-            "Ошибка загрузки поста: " +
-            error.message
-        );
-    }
-}
-
-
-function closeEditModal() {
-
-    $("editModal").classList.remove(
-        "show"
-    );
-}
-
-
-function closeModalOutside(event) {
-
-    if (
-        event.target ===
-        $("editModal")
-    ) {
-        closeEditModal();
-    }
-}
-
-
-/* =========================================================
-   EDIT POST
-   ========================================================= */
-
-async function saveEditedPost() {
-
-    const id =
-        $("editPostId").value;
-
-    const text =
-        $("editPostText").value.trim();
-
-    if (!id) {
-
-        alert(
-            "ID поста не найден."
-        );
-
-        return;
-    }
-
-    if (!text) {
-
-        alert(
-            "Новый текст не может быть пустым."
-        );
-
-        return;
-    }
-
-    if (text.length > 4096) {
-
-        alert(
-            "Текст превышает 4096 символов."
-        );
-
-        return;
-    }
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL +
-                "/posts/edit",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body: JSON.stringify({
-                        id: Number(id),
-                        text: text
-                    })
-                }
-            );
-
-        alert(
-            data.message ||
-            "Пост обновлён."
-        );
-
-        closeEditModal();
-
-        loadPosts();
-
-    } catch (error) {
-
-        alert(
-            "Ошибка: " +
-            error.message
-        );
-    }
-}
-
-
-/* =========================================================
-   DELETE POST
-   ========================================================= */
-
-async function deletePost(id) {
-
-    if (!confirm(
-        "Удалить этот пост из канала Telegram?\n\n" +
-        "Backend попытается удалить все связанные сообщения."
-    )) {
-        return;
-    }
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL +
-                "/posts/" +
-                id,
-                {
-                    method: "DELETE"
-                }
-            );
-
-        alert(
-            data.message ||
-            "Пост удалён."
-        );
-
-        loadPosts();
-
-    } catch (error) {
-
-        alert(
-            "Ошибка удаления: " +
-            error.message
-        );
-    }
-}
-
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-async function loadStats() {
-
-    setStatus(
-        "statsStatus",
-        "⏳ Загружаем статистику..."
-    );
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL + "/stats"
-            );
-
-        $("statsGrid").innerHTML = `
-
-            <div class="stat">
-                <div class="stat-value">
-                    ${data.members ?? "—"}
-                </div>
-                <div class="stat-label">
-                    Подписчики
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-value">
-                    ${data.posts_published_by_app ?? 0}
-                </div>
-                <div class="stat-label">
-                    Постов через Mini App
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-value">
-                    ${data.photos_published_by_app ?? 0}
-                </div>
-                <div class="stat-label">
-                    Фото опубликовано
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-value">
-                    ${data.scheduled_pending ?? 0}
-                </div>
-                <div class="stat-label">
-                    В очереди
-                </div>
-            </div>
-
-        `;
-
-        setStatus(
-            "statsStatus",
-            data.note ||
-            "Статистика обновлена.",
-            "success"
-        );
-
-    } catch (error) {
-
-        $("statsGrid").innerHTML =
-            "";
-
-        setStatus(
-            "statsStatus",
-            "❌ " + error.message,
-            "error"
-        );
-    }
-}
-
-
-/* =========================================================
-   SETTINGS
-   ========================================================= */
-
-async function loadSettings() {
-
-    try {
-
-        const data =
-            await apiJson(
-                BACKEND_URL +
-                "/settings"
-            );
-
-        $("settingChannel").textContent =
-            data.channel || "—";
-
-        $("settingBackend").textContent =
-            data.backend || "—";
-
-        $("settingScheduler").textContent =
-            data.scheduler || "—";
-
-        $("settingMaxPhotos").textContent =
-            data.max_photos_per_publication ??
-            "—";
-
-        $("settingAlbumLimit").textContent =
-            data.max_photos_per_album ??
-            "—";
-
-        $("settingTextLimit").textContent =
-            data.max_text_length ??
-            "—";
-
-    } catch (error) {
-
-        $("settingBackend").textContent =
-            "Ошибка";
-
-        console.error(error);
-    }
-}
-
-
-/* =========================================================
-   BACKEND TEST
-   ========================================================= */
-
-async function testBackend() {
-
-    setStatus(
-        "backendStatus",
-        "⏳ Проверяем соединение..."
-    );
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND_URL + "/test",
-                {
-                    method: "GET"
-                }
-            );
-
-        let data;
-
-        try {
-
-            data =
-                await response.json();
-
-        } catch (error) {
-
-            throw new Error(
-                "Backend вернул не JSON."
-            );
-        }
-
-        if (
-            !response.ok ||
-            data.ok !== true
-        ) {
-
-            throw new Error(
-                data.error ||
-                "Backend ответил с ошибкой."
-            );
-        }
-
-        const botName =
-            data.bot &&
-            data.bot.username
-                ? "@" + data.bot.username
-                : "Telegram Bot";
-
-        setStatus(
-            "backendStatus",
-            "🟢 Backend подключён. " +
-            botName +
-            " доступен.",
-            "success"
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        setStatus(
-            "backendStatus",
-            "🔴 Не удалось подключиться: " +
-            error.message,
-            "error"
-        );
-    }
-}
-
-
-/* =========================================================
-   INITIAL LOAD
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        loadSettings();
-
-        // Не нагружаем Render сразу всеми запросами.
-        // Остальные разделы загружаются при открытии.
-
-        const now =
-            new Date();
-
-        now.setMinutes(
-            now.getMinutes() + 10
-        );
-
-        // datetime-local ожидает локальное время
-        const local =
-            new Date(
-                now.getTime() -
-                now.getTimezoneOffset() * 60000
-            )
-            .toISOString()
-            .slice(0, 16);
-
-        $("scheduleTime").value =
-            local;
-    }
-);
 </script>
 
 </body>
