@@ -2,336 +2,529 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Kawaii Chan</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-:root {
-  --bg: var(--tg-theme-bg-color, #111111);
-  --secondary: var(--tg-theme-secondary-bg-color, #1b1b1b);
-  --text: var(--tg-theme-text-color, #ffffff);
-  --hint: var(--tg-theme-hint-color, #999999);
-  --button: var(--tg-theme-button-color, #ff4fa3);
-  --button-text: var(--tg-theme-button-text-color, #ffffff);
-  --danger: #ff4d67;
-  --border: rgba(255,255,255,.08);
+:root{
+  --bg:var(--tg-theme-bg-color,#111);
+  --secondary:var(--tg-theme-secondary-bg-color,#1b1b1b);
+  --text:var(--tg-theme-text-color,#fff);
+  --hint:var(--tg-theme-hint-color,#999);
+  --button:var(--tg-theme-button-color,#ff4fa3);
+  --button-text:var(--tg-theme-button-text-color,#fff);
+  --danger:#ff4d67;
+  --border:rgba(255,255,255,.08);
 }
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
 
-button,
-input,
-textarea {
-  font: inherit;
+button,input,textarea{
+  font:inherit;
 }
 
-button {
-  border: 0;
-  cursor: pointer;
+button{
+  border:0;
+  cursor:pointer;
 }
 
-.app {
-  max-width: 720px;
-  margin: auto;
-  padding: 14px 14px 90px;
+.app{
+  max-width:720px;
+  margin:auto;
+  padding:14px 14px 96px;
 }
 
-.header {
-  padding: 8px 4px 18px;
+.header{
+  padding:8px 4px 18px;
 }
 
-.title {
-  font-size: 25px;
-  font-weight: 800;
+.title{
+  font-size:25px;
+  font-weight:800;
 }
 
-.subtitle {
-  margin-top: 5px;
-  color: var(--hint);
-  font-size: 14px;
+.subtitle{
+  margin-top:5px;
+  color:var(--hint);
+  font-size:14px;
 }
 
-.section {
-  display: none;
+.section{
+  display:none;
 }
 
-.section.active {
-  display: block;
+.section.active{
+  display:block;
 }
 
-.card {
-  background: var(--secondary);
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
+.card{
+  background:var(--secondary);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+  border:1px solid var(--border);
 }
 
-.label {
-  display: block;
-  font-size: 13px;
-  color: var(--hint);
-  margin-bottom: 8px;
+.label{
+  display:block;
+  font-size:13px;
+  color:var(--hint);
+  margin-bottom:8px;
 }
 
 textarea,
-input[type="text"],
-input[type="datetime-local"] {
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  border-radius: 13px;
-  padding: 13px;
+input[type=text],
+input[type=datetime-local]{
+  width:100%;
+  border:0;
+  outline:none;
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  border-radius:13px;
+  padding:13px;
 }
 
-textarea {
-  min-height: 150px;
-  resize: vertical;
+textarea{
+  min-height:150px;
+  resize:vertical;
 }
 
-.counter {
-  text-align: right;
-  color: var(--hint);
-  font-size: 12px;
-  margin-top: 5px;
+.counter{
+  text-align:right;
+  color:var(--hint);
+  font-size:12px;
+  margin-top:5px;
 }
 
-.primary {
-  width: 100%;
-  background: var(--button);
-  color: var(--button-text);
-  padding: 14px;
-  border-radius: 14px;
-  font-weight: 700;
-  margin-top: 10px;
+.primary{
+  width:100%;
+  background:var(--button);
+  color:var(--button-text);
+  padding:14px;
+  border-radius:14px;
+  font-weight:700;
+  margin-top:10px;
 }
 
-.secondary {
-  width: 100%;
-  background: rgba(255,255,255,.08);
-  color: var(--text);
-  padding: 13px;
-  border-radius: 14px;
-  margin-top: 8px;
+.secondary{
+  width:100%;
+  background:rgba(255,255,255,.08);
+  color:var(--text);
+  padding:13px;
+  border-radius:14px;
+  margin-top:8px;
 }
 
-.danger {
-  background: var(--danger);
-  color: white;
+.danger{
+  background:var(--danger);
+  color:#fff;
 }
 
-.file-button {
-  display: block;
-  text-align: center;
-  background: rgba(255,255,255,.08);
-  padding: 14px;
-  border-radius: 14px;
-  font-weight: 700;
+.file-button{
+  display:block;
+  text-align:center;
+  background:rgba(255,255,255,.08);
+  padding:14px;
+  border-radius:14px;
+  font-weight:700;
 }
 
-.file-button input {
-  display: none;
+.file-button input{
+  display:none;
 }
 
-.preview-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-top: 12px;
+.preview-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:12px;
 }
 
-.preview {
-  position: relative;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 10px;
-  background: #222;
+.preview{
+  position:relative;
+  aspect-ratio:1;
+  overflow:hidden;
+  border-radius:10px;
+  background:#222;
 }
 
 .preview img,
-.preview video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.preview video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-.remove {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  background: rgba(0,0,0,.75);
-  color: white;
-  font-size: 17px;
+.remove{
+  position:absolute;
+  top:5px;
+  right:5px;
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  background:rgba(0,0,0,.75);
+  color:#fff;
+  font-size:17px;
 }
 
-.file-info {
-  padding: 10px 0 0;
-  font-size: 13px;
-  color: var(--hint);
+.file-info{
+  padding:10px 0 0;
+  font-size:13px;
+  color:var(--hint);
 }
 
-.progress-wrap {
-  display: none;
-  margin-top: 12px;
+.progress-wrap{
+  display:none;
+  margin-top:12px;
 }
 
-.progress {
-  width: 100%;
-  height: 9px;
-  background: rgba(255,255,255,.08);
-  border-radius: 20px;
-  overflow: hidden;
+.progress{
+  width:100%;
+  height:9px;
+  background:rgba(255,255,255,.08);
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: var(--button);
-  transition: width .2s;
+.progress-bar{
+  height:100%;
+  width:0;
+  background:var(--button);
+  transition:width .2s;
 }
 
-.progress-text {
-  margin-top: 7px;
-  font-size: 12px;
-  color: var(--hint);
-  text-align: center;
+.progress-text{
+  margin-top:7px;
+  font-size:12px;
+  color:var(--hint);
+  text-align:center;
 }
 
-.bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--secondary);
-  border-top: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 7px 5px calc(7px + env(safe-area-inset-bottom));
-  z-index: 100;
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--secondary);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  padding:7px 3px calc(7px + env(safe-area-inset-bottom));
+  z-index:100;
 }
 
-.nav-btn {
-  background: transparent;
-  color: var(--hint);
-  padding: 6px 2px;
-  font-size: 11px;
+.nav-btn{
+  background:transparent;
+  color:var(--hint);
+  padding:6px 1px;
+  font-size:10px;
 }
 
-.nav-btn.active {
-  color: var(--button);
-  font-weight: 700;
+.nav-btn.active{
+  color:var(--button);
+  font-weight:700;
 }
 
-.nav-icon {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 2px;
+.nav-icon{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
 }
 
-.post {
-  background: var(--secondary);
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 10px;
+.post{
+  background:var(--secondary);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:10px;
 }
 
-.post-title {
-  font-weight: 700;
-  margin-bottom: 7px;
+.post-title{
+  font-weight:700;
+  margin-bottom:7px;
 }
 
-.post-meta {
-  color: var(--hint);
-  font-size: 12px;
-  line-height: 1.5;
+.post-meta{
+  color:var(--hint);
+  font-size:12px;
+  line-height:1.5;
 }
 
-.status {
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.06);
-  margin-top: 10px;
-  font-size: 13px;
-  display: none;
+.status{
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  margin-top:10px;
+  font-size:13px;
+  display:none;
 }
 
-.status.show {
-  display: block;
+.status.show{
+  display:block;
 }
 
-.status.ok {
-  border: 1px solid rgba(60,220,120,.3);
+.status.ok{
+  border:1px solid rgba(60,220,120,.3);
 }
 
-.status.error {
-  border: 1px solid rgba(255,70,90,.4);
+.status.error{
+  border:1px solid rgba(255,70,90,.4);
 }
 
-.empty {
-  text-align: center;
-  padding: 35px 15px;
-  color: var(--hint);
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--hint);
 }
 
-.stat {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
+.loading{
+  text-align:center;
+  padding:25px;
+  color:var(--hint);
 }
 
-.stat:last-child {
-  border-bottom: 0;
+.stat{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
 }
 
-.loading {
-  text-align: center;
-  padding: 25px;
-  color: var(--hint);
+.stat:last-child{
+  border-bottom:0;
+}
+
+/* АЛЬБОМЫ */
+
+.album-card{
+  background:var(--secondary);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid var(--border);
+}
+
+.album-cover{
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:13px;
+  background:#222;
+  display:block;
+}
+
+.album-title{
+  font-size:18px;
+  font-weight:800;
+  margin-top:11px;
+}
+
+.album-description{
+  color:var(--hint);
+  font-size:13px;
+  margin-top:6px;
+  white-space:pre-wrap;
+}
+
+.album-meta{
+  color:var(--hint);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.album-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+/* ЧИТАЛКА */
+
+.reader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  display:none;
+  overflow:hidden;
+}
+
+.reader.show{
+  display:block;
+}
+
+.reader-top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:5;
+  padding:12px 14px;
+  padding-top:calc(12px + env(safe-area-inset-top));
+  background:linear-gradient(rgba(0,0,0,.75),transparent);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.reader-title{
+  font-weight:800;
+  font-size:15px;
+  max-width:70%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.reader-close{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  font-size:22px;
+}
+
+.reader-stage{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.reader-stage img,
+.reader-stage video{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+.reader-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:4;
+  width:46px;
+  height:70px;
+  border-radius:12px;
+  background:rgba(0,0,0,.38);
+  color:#fff;
+  font-size:34px;
+}
+
+.reader-prev{
+  left:8px;
+}
+
+.reader-next{
+  right:8px;
+}
+
+.reader-bottom{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:5;
+  text-align:center;
+  padding:12px 12px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(transparent,rgba(0,0,0,.8));
+  font-size:13px;
+  color:#fff;
+}
+
+.reader-error{
+  padding:30px;
+  color:#fff;
+  text-align:center;
+}
+
+@media(max-width:430px){
+  .bottom-nav{
+    grid-template-columns:repeat(6,1fr);
+  }
+
+  .nav-btn{
+    font-size:9px;
+  }
+
+  .nav-icon{
+    font-size:18px;
+  }
+
+  .album-actions{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<!-- Полноэкранная читалка альбома -->
+<div id="reader" class="reader">
+
+  <div class="reader-top">
+    <div id="readerTitle" class="reader-title">Альбом</div>
+
+    <button
+      class="reader-close"
+      onclick="closeReader()"
+    >×</button>
+  </div>
+
+  <div id="readerStage" class="reader-stage">
+    <div class="reader-error">
+      Загрузка альбома...
+    </div>
+  </div>
+
+  <button
+    class="reader-arrow reader-prev"
+    onclick="readerMove(-1)"
+  >‹</button>
+
+  <button
+    class="reader-arrow reader-next"
+    onclick="readerMove(1)"
+  >›</button>
+
+  <div id="readerBottom" class="reader-bottom">
+    1 / 1
+  </div>
+
+</div>
+
+<div class="app" id="managerApp">
 
   <div class="header">
     <div class="title">Kawaii_Chan</div>
-    <div class="subtitle">Панель управления каналом</div>
+    <div class="subtitle">
+      Панель управления каналом
+    </div>
   </div>
 
-  <!-- CREATE -->
+  <!-- СОЗДАТЬ -->
+
   <section id="create" class="section active">
 
     <div class="card">
-      <label class="label">Текст публикации</label>
+
+      <label class="label">
+        Текст публикации
+      </label>
 
       <textarea
         id="postText"
@@ -342,36 +535,56 @@ textarea {
       <div class="counter">
         <span id="textCount">0</span> / 4096
       </div>
+
     </div>
 
     <div class="card">
 
-      <label class="label">Фото и видео</label>
+      <label class="label">
+        Фото и видео
+      </label>
 
       <label class="file-button">
+
         📎 Выбрать файлы
+
         <input
           id="mediaInput"
           type="file"
           accept="image/*,video/*"
           multiple
         >
+
       </label>
 
       <div id="fileInfo" class="file-info">
         Файлы не выбраны
       </div>
 
-      <div id="previewGrid" class="preview-grid"></div>
+      <div
+        id="previewGrid"
+        class="preview-grid"
+      ></div>
 
-      <div id="progressWrap" class="progress-wrap">
+      <div
+        id="progressWrap"
+        class="progress-wrap"
+      >
+
         <div class="progress">
-          <div id="progressBar" class="progress-bar"></div>
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
         </div>
 
-        <div id="progressText" class="progress-text">
+        <div
+          id="progressText"
+          class="progress-text"
+        >
           Подготовка...
         </div>
+
       </div>
 
     </div>
@@ -393,7 +606,10 @@ textarea {
         ⏰ Отложить публикацию
       </button>
 
-      <div id="scheduleBox" style="display:none;margin-top:12px">
+      <div
+        id="scheduleBox"
+        style="display:none;margin-top:12px"
+      >
 
         <label class="label">
           Дата и время публикации
@@ -413,48 +629,55 @@ textarea {
 
       </div>
 
-      <div id="createStatus" class="status"></div>
+      <div
+        id="createStatus"
+        class="status"
+      ></div>
 
     </div>
 
   </section>
 
+  <!-- ОТЛОЖЕННЫЕ -->
 
-  <!-- SCHEDULED -->
   <section id="scheduled" class="section">
 
     <div class="card">
+
       <button
         class="primary"
         onclick="loadScheduled()"
       >
         🔄 Обновить
       </button>
+
     </div>
 
     <div id="scheduledList"></div>
 
   </section>
 
+  <!-- РЕДАКТИРОВАТЬ -->
 
-  <!-- EDIT -->
   <section id="edit" class="section">
 
     <div class="card">
+
       <button
         class="primary"
         onclick="loadPosts()"
       >
         🔄 Загрузить публикации
       </button>
+
     </div>
 
     <div id="postsList"></div>
 
   </section>
 
+  <!-- СТАТИСТИКА -->
 
-  <!-- STATS -->
   <section id="stats" class="section">
 
     <div class="card">
@@ -466,7 +689,10 @@ textarea {
         📊 Обновить статистику
       </button>
 
-      <div id="statsContent" style="margin-top:12px">
+      <div
+        id="statsContent"
+        style="margin-top:12px"
+      >
         Нажми «Обновить статистику».
       </div>
 
@@ -474,13 +700,125 @@ textarea {
 
   </section>
 
+  <!-- АЛЬБОМЫ -->
 
-  <!-- SETTINGS -->
+  <section id="albums" class="section">
+
+    <div class="card">
+
+      <div
+        style="font-size:19px;font-weight:800"
+      >
+        📚 Полные альбомы
+      </div>
+
+      <div
+        style="color:var(--hint);font-size:13px;margin-top:6px"
+      >
+        Для манги и больших подборок.
+        Можно загрузить до 100 страниц.
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <label class="label">
+        Название альбома
+      </label>
+
+      <input
+        id="albumTitle"
+        type="text"
+        maxlength="200"
+        placeholder="Например: Глава 1"
+      >
+
+      <label
+        class="label"
+        style="margin-top:12px"
+      >
+        Описание
+      </label>
+
+      <textarea
+        id="albumDescription"
+        style="min-height:100px"
+        maxlength="2000"
+        placeholder="Необязательно"
+      ></textarea>
+
+      <label
+        class="label"
+        style="margin-top:12px"
+      >
+        Страницы
+      </label>
+
+      <label class="file-button">
+
+        📚 Выбрать страницы
+
+        <input
+          id="albumInput"
+          type="file"
+          accept="image/*,video/*"
+          multiple
+        >
+
+      </label>
+
+      <div
+        id="albumFileInfo"
+        class="file-info"
+      >
+        Страницы не выбраны
+      </div>
+
+      <div
+        id="albumPreview"
+        class="preview-grid"
+      ></div>
+
+      <button
+        class="primary"
+        id="createAlbumBtn"
+        onclick="createAlbum()"
+      >
+        📚 Создать альбом
+      </button>
+
+      <div
+        id="albumStatus"
+        class="status"
+      ></div>
+
+    </div>
+
+    <div class="card">
+
+      <button
+        class="primary"
+        onclick="loadAlbums()"
+      >
+        🔄 Обновить альбомы
+      </button>
+
+    </div>
+
+    <div id="albumsList"></div>
+
+  </section>
+
+  <!-- НАСТРОЙКИ -->
+
   <section id="settings" class="section">
 
     <div class="card">
 
-      <div style="font-size:18px;font-weight:700">
+      <div
+        style="font-size:18px;font-weight:700"
+      >
         ⚙️ Настройки
       </div>
 
@@ -497,7 +835,10 @@ textarea {
         🔌 Проверить backend
       </button>
 
-      <div id="backendStatus" class="status"></div>
+      <div
+        id="backendStatus"
+        class="status"
+      ></div>
 
     </div>
 
@@ -518,16 +859,23 @@ textarea {
         <strong>10</strong>
       </div>
 
+      <div class="stat">
+        <span>Полный альбом</span>
+        <strong>до 100 страниц</strong>
+      </div>
+
     </div>
 
   </section>
 
 </div>
 
+<!-- НИЖНЕЕ МЕНЮ -->
 
-<!-- NAVIGATION -->
-
-<nav class="bottom-nav">
+<nav
+  class="bottom-nav"
+  id="bottomNav"
+>
 
   <button
     class="nav-btn active"
@@ -563,6 +911,14 @@ textarea {
 
   <button
     class="nav-btn"
+    onclick="showSection('albums',this);loadAlbums()"
+  >
+    <span class="nav-icon">📚</span>
+    Альбомы
+  </button>
+
+  <button
+    class="nav-btn"
     onclick="showSection('settings',this)"
   >
     <span class="nav-icon">⚙️</span>
@@ -571,109 +927,78 @@ textarea {
 
 </nav>
 
-
 <script>
-
 const tg = window.Telegram?.WebApp;
 
-if (tg) {
+if(tg){
   tg.ready();
   tg.expand();
 }
 
-
-/*
-============================================================
-BACKEND
-============================================================
-*/
-
-const API =
-  "https://kawaii-chan-backend.onrender.com";
-
-
-/*
-============================================================
-STATE
-============================================================
-*/
+const API = "https://kawaii-chan-backend.onrender.com";
 
 let selectedFiles = [];
+let albumFiles = [];
+
+let readerAlbum = null;
+let readerIndex = 0;
 
 
-/*
-============================================================
-NAVIGATION
-============================================================
-*/
+/* ================= ОБЩИЕ ПЕРЕКЛЮЧАТЕЛИ ================= */
 
-function showSection(id, button) {
+function showSection(id,button){
 
   document
     .querySelectorAll(".section")
-    .forEach(section => {
-      section.classList.remove("active");
-    });
+    .forEach(x => x.classList.remove("active"));
 
   const target = document.getElementById(id);
 
-  if (target) {
+  if(target){
     target.classList.add("active");
   }
 
   document
     .querySelectorAll(".nav-btn")
-    .forEach(btn => {
-      btn.classList.remove("active");
-    });
+    .forEach(x => x.classList.remove("active"));
 
-  if (button) {
+  if(button){
     button.classList.add("active");
   }
 
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
 }
 
 
-/*
-============================================================
-TEXT COUNTER
-============================================================
-*/
+/* ================= ТЕКСТ ПОСТА ================= */
 
 const textArea =
   document.getElementById("postText");
 
-textArea.addEventListener("input", () => {
+textArea.addEventListener("input",()=>{
 
   document.getElementById("textCount")
-    .textContent =
-    textArea.value.length;
+    .textContent = textArea.value.length;
 
 });
 
 
-/*
-============================================================
-FILE SELECT
-============================================================
-*/
+/* ================= ОБЫЧНЫЕ ФАЙЛЫ ================= */
 
 document
   .getElementById("mediaInput")
-  .addEventListener("change", event => {
+  .addEventListener("change",e=>{
 
     const incoming =
-      Array.from(event.target.files);
+      Array.from(e.target.files || []);
 
-    if (
+    if(
       selectedFiles.length +
-      incoming.length >
-      100
-    ) {
+      incoming.length > 100
+    ){
 
       showStatus(
         "createStatus",
@@ -681,34 +1006,28 @@ document
         false
       );
 
-      event.target.value = "";
+      e.target.value = "";
       return;
     }
 
     selectedFiles =
       selectedFiles.concat(incoming);
 
-    event.target.value = "";
+    e.target.value = "";
 
     renderPreviews();
 
   });
 
 
-/*
-============================================================
-PREVIEWS
-============================================================
-*/
-
-function renderPreviews() {
+function renderPreviews(){
 
   const grid =
     document.getElementById("previewGrid");
 
   grid.innerHTML = "";
 
-  selectedFiles.forEach((file,index) => {
+  selectedFiles.forEach((file,index)=>{
 
     const wrapper =
       document.createElement("div");
@@ -721,7 +1040,7 @@ function renderPreviews() {
     remove.className = "remove";
     remove.textContent = "×";
 
-    remove.onclick = () => {
+    remove.onclick = ()=>{
 
       selectedFiles.splice(index,1);
 
@@ -729,22 +1048,21 @@ function renderPreviews() {
 
     };
 
-    if (
-      file.type.startsWith("video/")
-    ) {
 
-      const video =
+    if(file.type.startsWith("video/")){
+
+      const v =
         document.createElement("video");
 
-      video.src =
+      v.src =
         URL.createObjectURL(file);
 
-      video.muted = true;
-      video.playsInline = true;
+      v.muted = true;
+      v.playsInline = true;
 
-      wrapper.appendChild(video);
+      wrapper.appendChild(v);
 
-    } else {
+    }else{
 
       const img =
         document.createElement("img");
@@ -762,16 +1080,16 @@ function renderPreviews() {
 
   });
 
+
   const info =
     document.getElementById("fileInfo");
 
-  if (!selectedFiles.length) {
+  if(!selectedFiles.length){
 
     info.textContent =
       "Файлы не выбраны";
 
     return;
-
   }
 
   const photos =
@@ -785,77 +1103,162 @@ function renderPreviews() {
     ).length;
 
   info.textContent =
-    `Выбрано: ${selectedFiles.length} • `
-    + `фото: ${photos} • `
-    + `видео: ${videos}`;
+    `Выбрано: ${selectedFiles.length} • фото: ${photos} • видео: ${videos}`;
 
 }
 
 
-/*
-============================================================
-STATUS
-============================================================
-*/
+/* ================= ФАЙЛЫ АЛЬБОМА ================= */
 
-function showStatus(
-  elementId,
-  message,
-  ok = true
-) {
+document
+  .getElementById("albumInput")
+  .addEventListener("change",e=>{
 
-  const element =
-    document.getElementById(elementId);
+    const incoming =
+      Array.from(e.target.files || []);
 
-  element.textContent = message;
+    if(
+      albumFiles.length +
+      incoming.length > 100
+    ){
 
-  element.className =
+      showStatus(
+        "albumStatus",
+        "Можно выбрать максимум 100 страниц.",
+        false
+      );
+
+      e.target.value = "";
+      return;
+    }
+
+    albumFiles =
+      albumFiles.concat(incoming);
+
+    e.target.value = "";
+
+    renderAlbumPreviews();
+
+  });
+
+
+function renderAlbumPreviews(){
+
+  const grid =
+    document.getElementById("albumPreview");
+
+  grid.innerHTML = "";
+
+  albumFiles.forEach((file,index)=>{
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className = "preview";
+
+    const remove =
+      document.createElement("button");
+
+    remove.className = "remove";
+    remove.textContent = "×";
+
+    remove.onclick = ()=>{
+
+      albumFiles.splice(index,1);
+
+      renderAlbumPreviews();
+
+    };
+
+
+    if(file.type.startsWith("video/")){
+
+      const v =
+        document.createElement("video");
+
+      v.src =
+        URL.createObjectURL(file);
+
+      v.muted = true;
+      v.playsInline = true;
+
+      wrapper.appendChild(v);
+
+    }else{
+
+      const img =
+        document.createElement("img");
+
+      img.src =
+        URL.createObjectURL(file);
+
+      wrapper.appendChild(img);
+
+    }
+
+    wrapper.appendChild(remove);
+
+    grid.appendChild(wrapper);
+
+  });
+
+
+  document.getElementById("albumFileInfo")
+    .textContent =
+      albumFiles.length
+        ? `Выбрано страниц: ${albumFiles.length}`
+        : "Страницы не выбраны";
+
+}
+
+
+/* ================= СТАТУСЫ ================= */
+
+function showStatus(id,message,ok=true){
+
+  const el =
+    document.getElementById(id);
+
+  if(!el){
+    return;
+  }
+
+  el.textContent = message;
+
+  el.className =
     "status show " +
     (ok ? "ok" : "error");
 
 }
 
 
-/*
-============================================================
-UPLOAD PROGRESS
-============================================================
-*/
+/* ================= ПРОГРЕСС ================= */
 
-function setProgress(
-  percent,
-  text
-) {
+function setProgress(percent,text){
 
-  document
-    .getElementById("progressWrap")
+  document.getElementById("progressWrap")
     .style.display = "block";
 
-  document
-    .getElementById("progressBar")
-    .style.width =
-    percent + "%";
+  document.getElementById("progressBar")
+    .style.width = percent + "%";
 
-  document
-    .getElementById("progressText")
-    .textContent =
-    text;
+  document.getElementById("progressText")
+    .textContent = text;
+
 }
 
 
-/*
-============================================================
-PUBLISH
-============================================================
-*/
+/* ================= ПУБЛИКАЦИЯ ================= */
 
-async function publishPost() {
+async function publishPost(){
 
   const text =
-    document.getElementById("postText")
-      .value.trim();
+    textArea.value.trim();
 
-  if (!text && !selectedFiles.length) {
+  if(
+    !text &&
+    !selectedFiles.length
+  ){
 
     showStatus(
       "createStatus",
@@ -867,768 +1270,391 @@ async function publishPost() {
   }
 
   const button =
-    document.getElementById("publishBtn");
+    document.getElementById("publishB
+                      /* ================= ОТЛОЖЕННЫЕ ================= */
 
-  button.disabled = true;
+async function loadScheduled(){
 
-  try {
+  const c = document.getElementById("scheduledList");
 
-    if (!selectedFiles.length) {
+  c.innerHTML = '<div class="loading">Загрузка...</div>';
 
-      setProgress(
-        30,
-        "Отправляем текст..."
-      );
+  try{
 
-      const response =
-        await fetch(API + "/publish", {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-          body: JSON.stringify({
-            text: text
-          })
-        });
+    const r = await fetch(API + "/scheduled");
+    const d = await r.json();
 
-      const data =
-        await response.json();
-
-      if (!response.ok || !data.ok) {
-        throw new Error(
-          data.error ||
-          "Ошибка публикации"
-        );
-      }
-
-      setProgress(
-        100,
-        "Готово!"
-      );
-
-      showStatus(
-        "createStatus",
-        "✅ Пост опубликован.",
-        true
-      );
-
-      clearComposer();
-
-      return;
+    if(!r.ok || !d.ok){
+      throw new Error(d.error || "Ошибка загрузки");
     }
 
+    if(!d.items || !d.items.length){
 
-    /*
-      Делим файлы на группы:
-      10 + 10 + 9 ...
-    */
-
-    const groups = [];
-
-    for (
-      let i = 0;
-      i < selectedFiles.length;
-      i += 10
-    ) {
-
-      groups.push(
-        selectedFiles.slice(i, i + 10)
-      );
-
-    }
-
-
-    for (
-      let groupIndex = 0;
-      groupIndex < groups.length;
-      groupIndex++
-    ) {
-
-      const group =
-        groups[groupIndex];
-
-      const form =
-        new FormData();
-
-      /*
-        Текст передаём только
-        вместе с первой группой.
-      */
-
-      if (groupIndex === 0) {
-        form.append("text", text);
-      }
-
-      group.forEach(file => {
-
-        form.append(
-          "photos",
-          file,
-          file.name
-        );
-
-      });
-
-      const startPercent =
-        Math.round(
-          (groupIndex /
-           groups.length) * 100
-        );
-
-      setProgress(
-        startPercent,
-        `Загружаем группу ${groupIndex + 1} из ${groups.length}...`
-      );
-
-      const response =
-        await fetch(
-          API + "/publish",
-          {
-            method: "POST",
-            body: form
-          }
-        );
-
-      const data =
-        await response.json();
-
-      if (!response.ok || !data.ok) {
-
-        throw new Error(
-          data.error ||
-          "Ошибка публикации"
-        );
-
-      }
-
-      const percent =
-        Math.round(
-          ((groupIndex + 1) /
-           groups.length) * 100
-        );
-
-      setProgress(
-        percent,
-        `Группа ${groupIndex + 1} из ${groups.length} готова`
-      );
-
-      /*
-        Небольшая пауза между
-        альбомами Telegram.
-      */
-
-      if (
-        groupIndex <
-        groups.length - 1
-      ) {
-
-        await sleep(1000);
-
-      }
-
-    }
-
-    showStatus(
-      "createStatus",
-      `✅ Публикация завершена. Отправлено ${selectedFiles.length} файлов.`,
-      true
-    );
-
-    clearComposer();
-
-  } catch (error) {
-
-    console.error(error);
-
-    showStatus(
-      "createStatus",
-      "❌ " + error.message,
-      false
-    );
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
-}
-
-
-/*
-============================================================
-SCHEDULE MODE
-============================================================
-*/
-
-function scheduleMode() {
-
-  const box =
-    document.getElementById("scheduleBox");
-
-  box.style.display =
-    box.style.display === "none"
-      ? "block"
-      : "none";
-
-}
-
-
-/*
-============================================================
-SCHEDULE
-============================================================
-*/
-
-async function schedulePost() {
-
-  const text =
-    document.getElementById("postText")
-      .value.trim();
-
-  const time =
-    document.getElementById("scheduleTime")
-      .value;
-
-  if (!text && !selectedFiles.length) {
-
-    showStatus(
-      "createStatus",
-      "Добавь текст или файл.",
-      false
-    );
-
-    return;
-
-  }
-
-  if (!time) {
-
-    showStatus(
-      "createStatus",
-      "Выбери дату и время.",
-      false
-    );
-
-    return;
-
-  }
-
-
-  const runAt =
-    new Date(time)
-      .toISOString();
-
-
-  const form =
-    new FormData();
-
-  form.append(
-    "text",
-    text
-  );
-
-  form.append(
-    "run_at",
-    runAt
-  );
-
-
-  selectedFiles.forEach(file => {
-
-    form.append(
-      "photos",
-      file,
-      file.name
-    );
-
-  });
-
-
-  try {
-
-    setProgress(
-      20,
-      "Сохраняем отложенный пост..."
-    );
-
-
-    const response =
-      await fetch(
-        API + "/schedule",
-        {
-          method: "POST",
-          body: form
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok || !data.ok) {
-
-      throw new Error(
-        data.error ||
-        "Не удалось поставить пост в очередь."
-      );
-
-    }
-
-
-    setProgress(
-      100,
-      "Пост сохранён!"
-    );
-
-
-    showStatus(
-      "createStatus",
-      "✅ Пост поставлен в очередь.",
-      true
-    );
-
-
-    clearComposer();
-
-
-  } catch (error) {
-
-    showStatus(
-      "createStatus",
-      "❌ " + error.message,
-      false
-    );
-
-  }
-
-}
-
-
-/*
-============================================================
-SCHEDULED LIST
-============================================================
-*/
-
-async function loadScheduled() {
-
-  const container =
-    document.getElementById(
-      "scheduledList"
-    );
-
-  container.innerHTML =
-    '<div class="loading">Загрузка...</div>';
-
-
-  try {
-
-    const response =
-      await fetch(
-        API + "/scheduled"
-      );
-
-    const data =
-      await response.json();
-
-
-    if (!data.ok) {
-      throw new Error(
-        data.error ||
-        "Ошибка загрузки"
-      );
-    }
-
-
-    if (!data.items.length) {
-
-      container.innerHTML =
+      c.innerHTML =
         '<div class="empty">Отложенных постов пока нет.</div>';
 
       return;
-
     }
 
+    c.innerHTML = "";
 
-    container.innerHTML = "";
+    d.items.forEach(item => {
 
-
-    data.items.forEach(item => {
-
-      const post =
-        document.createElement("div");
+      const post = document.createElement("div");
 
       post.className = "post";
 
-
-      const date =
-        formatDate(item.run_at);
-
+      const mediaCount =
+        item.media_count ??
+        item.photo_count ??
+        0;
 
       post.innerHTML = `
+
         <div class="post-title">
-          ⏰ ${escapeHtml(date)}
+          ⏰ ${escapeHtml(formatDate(item.run_at))}
         </div>
 
         <div class="post-meta">
-          Статус: ${escapeHtml(item.status)}<br>
-          Файлов: ${item.photo_count || 0}
-          ${item.error
-            ? "<br>Ошибка: " +
-              escapeHtml(item.error)
-            : ""}
+
+          Статус:
+          ${escapeHtml(item.status || "unknown")}
+          <br>
+
+          Файлов:
+          ${escapeHtml(String(mediaCount))}
+
+          ${
+            item.video_count
+              ? ` • видео: ${escapeHtml(String(item.video_count))}`
+              : ""
+          }
+
+          ${
+            item.error
+              ? `<br>Ошибка: ${escapeHtml(item.error)}`
+              : ""
+          }
+
         </div>
 
         ${
           item.status === "pending"
-          ? `
-            <button
-              class="secondary danger"
-              onclick="cancelScheduled(${item.id})"
-            >
-              Отменить
-            </button>
-          `
-          : ""
+            ? `
+              <button
+                class="secondary danger"
+                onclick="cancelScheduled(${Number(item.id)})"
+              >
+                Отменить
+              </button>
+            `
+            : ""
         }
+
       `;
 
-
-      container.appendChild(post);
+      c.appendChild(post);
 
     });
 
+  }catch(e){
 
-  } catch (error) {
-
-    container.innerHTML =
-      `<div class="empty">
-        ❌ ${escapeHtml(error.message)}
-      </div>`;
+    c.innerHTML =
+      `<div class="empty">❌ ${escapeHtml(e.message)}</div>`;
 
   }
 
 }
 
 
-/*
-============================================================
-CANCEL SCHEDULED
-============================================================
-*/
+async function cancelScheduled(id){
 
-async function cancelScheduled(id) {
-
-  if (
-    !confirm(
-      "Отменить этот отложенный пост?"
-    )
-  ) {
+  if(!confirm("Отменить этот отложенный пост?")){
     return;
   }
 
+  try{
 
-  try {
+    const r = await fetch(
+      API + "/scheduled/" + id,
+      {
+        method:"DELETE"
+      }
+    );
 
-    const response =
-      await fetch(
-        API +
-        "/scheduled/" +
-        id,
-        {
-          method: "DELETE"
-        }
-      );
+    const d = await r.json();
 
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok || !data.ok) {
-
+    if(!r.ok || !d.ok){
       throw new Error(
-        data.error ||
-        "Не удалось отменить пост."
+        d.error || "Не удалось отменить пост."
       );
-
     }
 
+    await loadScheduled();
 
-    loadScheduled();
+  }catch(e){
 
-
-  } catch (error) {
-
-    alert(
-      "Ошибка: " +
-      error.message
-    );
+    alert("Ошибка: " + e.message);
 
   }
 
 }
 
 
-/*
-============================================================
-POST HISTORY
-============================================================
-*/
+/* ================= ИСТОРИЯ ПОСТОВ ================= */
 
-async function loadPosts() {
+async function loadPosts(){
 
-  const container =
-    document.getElementById(
-      "postsList"
-    );
+  const c = document.getElementById("postsList");
 
-
-  container.innerHTML =
+  c.innerHTML =
     '<div class="loading">Загрузка...</div>';
 
+  try{
 
-  try {
+    const r = await fetch(API + "/posts");
+    const d = await r.json();
 
-    const response =
-      await fetch(
-        API + "/posts"
-      );
+    if(!r.ok || !d.ok){
 
-
-    const data =
-      await response.json();
-
-
-    if (!data.ok) {
       throw new Error(
-        data.error ||
-        "Ошибка загрузки"
+        d.error || "Ошибка загрузки"
       );
+
     }
 
+    if(!d.items || !d.items.length){
 
-    if (!data.items.length) {
-
-      container.innerHTML =
+      c.innerHTML =
         '<div class="empty">Опубликованных постов пока нет.</div>';
 
       return;
 
     }
 
+    c.innerHTML = "";
 
-    container.innerHTML = "";
+    d.items.forEach(item => {
 
-
-    data.items.forEach(item => {
-
-      const post =
-        document.createElement("div");
+      const post = document.createElement("div");
 
       post.className = "post";
 
-
-      const safeText =
-        escapeHtml(
-          item.text || "(без текста)"
-        );
-
+      const mediaCount =
+        item.media_count ??
+        item.photo_count ??
+        0;
 
       post.innerHTML = `
+
         <div class="post-title">
-          #${item.id}
+          #${escapeHtml(String(item.id))}
         </div>
 
         <div class="post-meta">
-          ${safeText}<br><br>
-          Файлов: ${item.photo_count || 0}<br>
-          Тип: ${escapeHtml(item.post_type || "text")}<br>
-          ${escapeHtml(formatDate(item.created_at))}
+
+          ${escapeHtml(
+            item.text || "(без текста)"
+          )}
+
+          <br><br>
+
+          Файлов:
+          ${escapeHtml(String(mediaCount))}
+
+          <br>
+
+          Тип:
+          ${escapeHtml(item.post_type || "text")}
+
+          <br>
+
+          ${escapeHtml(
+            formatDate(item.created_at)
+          )}
+
         </div>
 
         ${
           item.text
-          ? `
-            <button
-              class="secondary"
-              onclick="editPost(${item.id}, ${JSON.stringify(item.text)})"
-            >
-              ✏️ Изменить текст
-            </button>
-          `
-          : ""
+            ? `
+              <button
+                class="secondary"
+                onclick='editPost(
+                  ${Number(item.id)},
+                  ${JSON.stringify(item.text)}
+                )'
+              >
+                ✏️ Изменить текст
+              </button>
+            `
+            : ""
         }
+
+        <button
+          class="secondary danger"
+          onclick="deletePost(${Number(item.id)})"
+        >
+          🗑 Удалить
+        </button>
+
       `;
 
-
-      container.appendChild(post);
+      c.appendChild(post);
 
     });
 
+  }catch(e){
 
-  } catch (error) {
-
-    container.innerHTML =
-      `<div class="empty">
-        ❌ ${escapeHtml(error.message)}
-      </div>`;
+    c.innerHTML =
+      `<div class="empty">❌ ${escapeHtml(e.message)}</div>`;
 
   }
 
 }
 
 
-/*
-============================================================
-EDIT POST TEXT
-============================================================
-*/
+async function editPost(id, oldText){
 
-async function editPost(
-  id,
-  currentText
-) {
+  const newText = prompt(
+    "Новый текст поста:",
+    oldText
+  );
 
-  const newText =
-    prompt(
-      "Новый текст публикации:",
-      currentText
-    );
-
-
-  if (
-    newText === null ||
-    !newText.trim()
-  ) {
+  if(newText === null){
     return;
   }
 
+  try{
 
-  try {
+    const r = await fetch(
+      API + "/posts/edit",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          id:id,
+          text:newText.trim()
+        })
+      }
+    );
 
-    const response =
-      await fetch(
-        API + "/posts/edit",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-          body: JSON.stringify({
-            id: id,
-            text: newText.trim()
-          })
-        }
-      );
+    const d = await r.json();
 
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok || !data.ok) {
+    if(!r.ok || !d.ok){
 
       throw new Error(
-        data.error ||
+        d.error ||
         "Не удалось изменить пост."
       );
 
     }
 
+    alert("Пост изменён.");
 
-    alert(
-      "Пост изменён."
-    );
+    await loadPosts();
 
+  }catch(e){
 
-    loadPosts();
-
-
-  } catch (error) {
-
-    alert(
-      "Ошибка: " +
-      error.message
-    );
+    alert("Ошибка: " + e.message);
 
   }
 
 }
 
 
-/*
-============================================================
-STATS
-============================================================
-*/
+async function deletePost(id){
 
-async function loadStats() {
+  if(!confirm(
+    "Удалить этот пост из канала?"
+  )){
+    return;
+  }
 
-  const container =
-    document.getElementById(
-      "statsContent"
+  try{
+
+    const r = await fetch(
+      API + "/posts/" + id,
+      {
+        method:"DELETE"
+      }
     );
 
+    const d = await r.json();
 
-  container.innerHTML =
-    "Загрузка...";
-
-
-  try {
-
-    const response =
-      await fetch(
-        API + "/stats"
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok || !data.ok) {
+    if(!r.ok || !d.ok){
 
       throw new Error(
-        data.error ||
+        d.error ||
+        "Не удалось удалить пост."
+      );
+
+    }
+
+    await loadPosts();
+
+  }catch(e){
+
+    alert("Ошибка: " + e.message);
+
+  }
+
+}
+
+
+/* ================= СТАТИСТИКА ================= */
+
+async function loadStats(){
+
+  const c =
+    document.getElementById("statsContent");
+
+  c.innerHTML = "Загрузка...";
+
+  try{
+
+    const r = await fetch(
+      API + "/stats",
+      {
+        cache:"no-store"
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
         "Не удалось получить статистику."
       );
 
     }
 
+    c.innerHTML =
+      renderStats(d.stats || d);
 
-    const stats =
-      data.stats ||
-      data;
+  }catch(e){
 
-
-    container.innerHTML =
-      renderStats(stats);
-
-
-  } catch (error) {
-
-    container.innerHTML =
-      `<div class="status show error">
-        ❌ ${escapeHtml(error.message)}
-      </div>`;
+    c.innerHTML = `
+      <div class="status show error">
+        ❌ ${escapeHtml(e.message)}
+      </div>
+    `;
 
   }
 
 }
 
 
-function renderStats(stats) {
+function renderStats(stats){
 
   const entries =
-    Object.entries(stats);
+    Object.entries(stats || {});
 
-
-  if (!entries.length) {
+  if(!entries.length){
 
     return `
       <div class="empty">
@@ -1638,206 +1664,1644 @@ function renderStats(stats) {
 
   }
 
+  return entries.map(
+    ([key,value]) => `
 
-  return entries
-    .map(([key,value]) => `
       <div class="stat">
-        <span>${escapeHtml(
-          prettifyKey(key)
-        )}</span>
 
-        <strong>${escapeHtml(
-          String(value)
-        )}</strong>
+        <span>
+          ${escapeHtml(
+            prettifyKey(key)
+          )}
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            String(value)
+          )}
+        </strong>
+
       </div>
-    `)
-    .join("");
+
+    `
+  ).join("");
 
 }
 
 
-/*
-============================================================
-BACKEND TEST
-============================================================
-*/
+/* ================= ПРОВЕРКА BACKEND ================= */
 
-async function testBackend() {
+async function testBackend(){
 
   const box =
     document.getElementById(
       "backendStatus"
     );
 
-
   box.className =
     "status show";
-
 
   box.textContent =
     "Проверяем подключение...";
 
+  try{
 
-  try {
+    const r = await fetch(
+      API + "/test",
+      {
+        cache:"no-store"
+      }
+    );
 
-    const response =
-      await fetch(
-        API + "/test",
-        {
-          cache: "no-store"
-        }
-      );
+    const d = await r.json();
 
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok || !data.ok) {
+    if(!r.ok || !d.ok){
 
       throw new Error(
-        data.error ||
+        d.error ||
         "Backend не отвечает."
       );
 
     }
 
-
     box.className =
       "status show ok";
-
 
     box.textContent =
       "✅ Backend подключён. Бот: @" +
       (
-        data.bot?.username ||
+        d.bot?.username ||
         "неизвестно"
       );
 
-
-  } catch (error) {
+  }catch(e){
 
     box.className =
       "status show error";
 
-
     box.textContent =
-      "❌ " +
-      error.message;
+      "❌ " + e.message;
 
   }
 
 }
 
 
-/*
-============================================================
-CLEAR
-============================================================
-*/
+/* ================= АЛЬБОМЫ ================= */
 
-function clearComposer() {
+async function createAlbum(){
 
-  document.getElementById(
-    "postText"
-  ).value = "";
+  const title =
+    document
+      .getElementById("albumTitle")
+      .value
+      .trim();
 
-  document.getElementById(
-    "textCount"
-  ).textContent = "0";
+  const description =
+    document
+      .getElementById("albumDescription")
+      .value
+      .trim();
 
-  document.getElementById(
-    "scheduleTime"
-  ).value = "";
+  if(!title){
 
-  selectedFiles = [];
+    showStatus(
+      "albumStatus",
+      "Укажи название альбома.",
+      false
+    );
 
-  renderPreviews();
+    return;
+  }
 
-  document.getElementById(
-    "scheduleBox"
-  ).style.display = "none";
+  if(!albumFiles.length){
+
+    showStatus(
+      "albumStatus",
+      "Добавь хотя бы одну страницу.",
+      false
+    );
+
+    return;
+  }
+
+  const btn =
+    document.getElementById(
+      "createAlbumBtn"
+    );
+
+  btn.disabled = true;
+
+  try{
+
+    const form =
+      new FormData();
+
+    form.append(
+      "title",
+      title
+    );
+
+    form.append(
+      "description",
+      description
+    );
+
+    albumFiles.forEach(
+      file => {
+
+        form.append(
+          "photos",
+          file,
+          file.name
+        );
+
+      }
+    );
+
+    showStatus(
+      "albumStatus",
+      "⏳ Загружаем страницы в Storage...",
+      true
+    );
+
+    const r = await fetch(
+      API + "/albums",
+      {
+        method:"POST",
+        body:form
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
+        "Не удалось создать альбом."
+      );
+
+    }
+
+    const id =
+      d.id ??
+      d.album_id ??
+      d.album?.id;
+
+    if(!id){
+
+      throw new Error(
+        "Сервер создал альбом, " +
+        "но не вернул его ID."
+      );
+
+    }
+
+    document
+      .getElementById("albumTitle")
+      .value = "";
+
+    document
+      .getElementById("albumDescription")
+      .value = "";
+
+    albumFiles = [];
+
+    renderAlbumPreviews();
+
+    showStatus(
+      "albumStatus",
+      `✅ Альбом #${id} создан. ` +
+      `Теперь его можно опубликовать.`,
+      true
+    );
+
+    await loadAlbums();
+
+  }catch(e){
+
+    console.error(e);
+
+    showStatus(
+      "albumStatus",
+      "❌ " + e.message,
+      false
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
 
 }
 
 
-/*
-============================================================
-HELPERS
-============================================================
-*/
+async function loadAlbums(){
 
-function sleep(ms) {
+  const c =
+    document.getElementById(
+      "albumsList"
+    );
 
-  return new Promise(
-    resolve => setTimeout(
-      resolve,
-      ms
-    )
+  c.innerHTML =
+    '<div class="loading">Загрузка альбомов...</div>';
+
+  try{
+
+    const r = await fetch(
+      API + "/albums",
+      {
+        cache:"no-store"
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
+        "Ошибка загрузки альбомов"
+      );
+
+    }
+
+    const items =
+      d.items ||
+      d.albums ||
+      [];
+
+    if(!items.length){
+
+      c.innerHTML =
+        '<div class="empty">Альбомов пока нет.</div>';
+
+      return;
+
+    }
+
+    c.innerHTML = "";
+
+    items.forEach(item => {
+
+      const id =
+        item.id ??
+        item.album_id;
+
+      const count =
+        item.media_count ??
+        item.count ??
+        item.total_media ??
+        item.photo_count ??
+        0;
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "album-card";
+
+      const cover =
+        item.cover_url ||
+        item.thumbnail_url ||
+        item.preview_url ||
+        "";
+
+      let coverHtml = "";
+
+      if(cover){
+
+        let coverUrl = cover;
+
+        if(!cover.startsWith("http")){
+
+          coverUrl =
+            API + cover;
+
+        }
+
+        coverHtml = `
+
+          <img
+            class="album-cover"
+            src="${escapeAttr(coverUrl)}"
+            loading="lazy"
+          >
+
+        `;
+
+      }
+
+      card.innerHTML = `
+
+        ${coverHtml}
+
+        <div class="album-title">
+
+          ${escapeHtml(
+            item.title ||
+            ("Альбом #" + id)
+          )}
+
+        </div>
+
+        <div class="album-description">
+
+          ${escapeHtml(
+            item.description || ""
+          )}
+
+        </div>
+
+        <div class="album-meta">
+
+          Страниц:
+          ${escapeHtml(
+            String(count)
+          )}
+
+          • ID:
+          ${escapeHtml(
+            String(id)
+          )}
+
+          <br>
+
+          ${escapeHtml(
+            formatDate(
+              item.created_at ||
+              item.createdAt
+            )
+          )}
+
+        </div>
+
+        <div class="album-actions">
+
+          <button
+            class="secondary"
+            onclick="openAlbum(${Number(id)})"
+          >
+            👁 Открыть
+          </button>
+
+          <button
+            class="secondary"
+            onclick="publishAlbum(${Number(id)})"
+          >
+            📢 Опубликовать
+          </button>
+
+        </div>
+
+        <button
+          class="secondary danger"
+          onclick="deleteAlbum(${Number(id)})"
+        >
+          🗑 Удалить
+        </button>
+
+      `;
+
+      c.appendChild(card);
+
+    });
+
+  }catch(e){
+
+    c.innerHTML =
+      `<div class="empty">❌ ${escapeHtml(e.message)}</div>`;
+
+  }
+
+}
+
+
+async function publishAlbum(id){
+
+  if(!confirm(
+    "Опубликовать этот альбом в канале?"
+  )){
+    return;
+  }
+
+  try{
+
+    const r = await fetch(
+      API + "/albums/" +
+      id +
+      "/publish",
+      {
+        method:"POST"
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
+        "Не удалось опубликовать альбом."
+      );
+
+    }
+
+    alert(
+      "✅ Альбом опубликован в канале."
+    );
+
+    await loadAlbums();
+
+  }catch(e){
+
+    alert(
+      "Ошибка: " +
+      e.message
+    );
+
+  }
+
+}
+
+
+async function deleteAlbum(id){
+
+  if(!confirm(
+    "Удалить этот альбом?"
+  )){
+    return;
+  }
+
+  try{
+
+    const r = await fetch(
+      API + "/albums/" + id,
+      {
+        method:"DELETE"
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
+        "Не удалось удалить альбом."
+      );
+
+    }
+
+    await loadAlbums();
+
+  }catch(e){
+
+    alert(
+      "Ошибка: " +
+      e.message
+    );
+
+  }
+
+}
+
+
+/* ================= ЧТЕНИЕ АЛЬБОМА ================= */
+
+async function openAlbum(id){
+
+  try{
+
+    const r = await fetch(
+      API + "/albums/" + id,
+      {
+        cache:"no-store"
+      }
+    );
+
+    const d = await r.json();
+
+    if(!r.ok || !d.ok){
+
+      throw new Error(
+        d.error ||
+        "Не удалось открыть альбом."
+      );
+
+    }
+
+    readerAlbum =
+      d.album ||
+      d;
+
+    if(
+      !readerAlbum.items &&
+      readerAlbum.media
+    ){
+
+      readerAlbum.items =
+        readerAlbum.media;
+
+    }
+
+    if(
+      !readerAlbum.items &&
+      readerAlbum.pages
+    ){
+
+      readerAlbum.items =
+        readerAlbum.pages;
+
+    }
+
+    if(
+      !Array.isArray(
+        readerAlbum.items
+      )
+    ){
+
+      readerAlbum.items = [];
+
+    }
+
+    readerIndex = 0;
+
+    renderReader();
+
+    document
+      .getElementById("readerOverlay")
+      .classList.add("show");
+
+    document.body.style.overflow =
+      "hidden";
+
+    history.pushState(
+      {
+        album:
+          Number(id)
+      },
+      "",
+      "?album=" +
+      encodeURIComponent(id)
+    );
+
+  }catch(e){
+
+    alert(
+      "Ошибка: " +
+      e.message
+    );
+
+  }
+
+}
+
+
+function renderReader(){
+
+  if(!readerAlbum){
+    return;
+  }
+
+  const items =
+    readerAlbum.items ||
+    [];
+
+  if(!items.length){
+
+    document.getElementById(
+      "readerContent"
+    ).innerHTML = `
+
+      <div class="reader-empty">
+
+        В этом альбоме
+        пока нет страниц.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  if(readerIndex < 0){
+    readerIndex = 0;
+  }
+
+  if(readerIndex >= items.length){
+
+    readerIndex =
+      items.length - 1;
+
+  }
+
+  const item =
+    items[readerIndex];
+
+  let url =
+    item.url ||
+    item.media_url ||
+    item.file_url ||
+    item.src ||
+    "";
+
+  if(
+    !url &&
+    item.position !== undefined
+  ){
+
+    url =
+      API +
+      "/albums/" +
+      readerAlbum.id +
+      "/media/" +
+      item.position;
+
+  }
+
+  if(
+    !url &&
+    item.index !== undefined
+  ){
+
+    url =
+      API +
+      "/albums/" +
+      readerAlbum.id +
+      "/media/" +
+      item.index;
+
+  }
+
+  if(
+    !url &&
+    item.media_id !== undefined
+  ){
+
+    url =
+      API +
+      "/albums/" +
+      readerAlbum.id +
+      "/media/" +
+      item.media_id;
+
+  }
+
+  let mediaHtml = "";
+
+  const type =
+    String(
+      item.type ||
+      item.media_type ||
+      "photo"
+    ).toLowerCase();
+
+  if(
+    type === "video" ||
+    type === "animation"
+  ){
+
+    mediaHtml = `
+
+      <video
+        class="reader-media"
+        src="${escapeAttr(url)}"
+        controls
+        playsinline
+        preload="metadata"
+      ></video>
+
+    `;
+
+  }else{
+
+    mediaHtml = `
+
+      <img
+        class="reader-media"
+        src="${escapeAttr(url)}"
+        alt=""
+        draggable="false"
+      >
+
+    `;
+
+  }
+
+  const title =
+    readerAlbum.title ||
+    "Альбом";
+
+  const description =
+    readerAlbum.description ||
+    "";
+
+  document.getElementById(
+    "readerTitle"
+  ).textContent =
+    title;
+
+  document.getElementById(
+    "readerCounter"
+  ).textContent =
+    (readerIndex + 1) +
+    " / " +
+    items.length;
+
+  document.getElementById(
+    "readerContent"
+  ).innerHTML = `
+
+    ${mediaHtml}
+
+    ${
+      description
+        ? `
+          <div class="reader-description">
+
+            ${escapeHtml(
+              description
+            )}
+
+          </div>
+        `
+        : ""
+    }
+
+  `;
+
+  const prev =
+    document.getElementById(
+      "readerPrev"
+    );
+
+  const next =
+    document.getElementById(
+      "readerNext"
+    );
+
+  prev.disabled =
+    readerIndex <= 0;
+
+  next.disabled =
+    readerIndex >=
+    items.length - 1;
+
+}
+
+
+function readerPrev(){
+
+  if(!readerAlbum){
+    return;
+  }
+
+  if(readerIndex <= 0){
+    return;
+  }
+
+  readerIndex--;
+
+  renderReader();
+
+}
+
+
+function readerNext(){
+
+  if(!readerAlbum){
+    return;
+  }
+
+  const items =
+    readerAlbum.items ||
+    [];
+
+  if(
+    readerIndex >=
+    items.length - 1
+  ){
+
+    return;
+
+  }
+
+  readerIndex++;
+
+  renderReader();
+
+}
+
+
+function closeReader(
+  updateHistory = true
+){
+
+  const overlay =
+    document.getElementById(
+      "readerOverlay"
+    );
+
+  overlay.classList.remove(
+    "show"
+  );
+
+  document.body.style.overflow =
+    "";
+
+  readerAlbum = null;
+
+  readerIndex = 0;
+
+  if(updateHistory){
+
+    history.pushState(
+      {},
+      "",
+      window.location.pathname
+    );
+
+  }
+
+}
+
+
+/* ================= СВАЙПЫ АЛЬБОМА ================= */
+
+let readerTouchStartX = 0;
+let readerTouchStartY = 0;
+
+
+function readerTouchStart(e){
+
+  if(!e.touches || !e.touches.length){
+    return;
+  }
+
+  readerTouchStartX =
+    e.touches[0].clientX;
+
+  readerTouchStartY =
+    e.touches[0].clientY;
+
+}
+
+
+function readerTouchEnd(e){
+
+  if(
+    !e.changedTouches ||
+    !e.changedTouches.length
+  ){
+
+    return;
+
+  }
+
+  const x =
+    e.changedTouches[0].clientX;
+
+  const y =
+    e.changedTouches[0].clientY;
+
+  const dx =
+    x - readerTouchStartX;
+
+  const dy =
+    y - readerTouchStartY;
+
+  if(
+    Math.abs(dx) < 50 ||
+    Math.abs(dx) < Math.abs(dy)
+  ){
+
+    return;
+
+  }
+
+  if(dx < 0){
+
+    readerNext();
+
+  }else{
+
+    readerPrev();
+
+  }
+
+}
+
+
+/* ================= КЛАВИАТУРА ================= */
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    const overlay =
+      document.getElementById(
+        "readerOverlay"
+      );
+
+    if(
+      !overlay ||
+      !overlay.classList.contains("show")
+    ){
+
+      return;
+
+    }
+
+    if(e.key === "ArrowLeft"){
+
+      readerPrev();
+
+    }
+
+    if(e.key === "ArrowRight"){
+
+      readerNext();
+
+    }
+
+    if(e.key === "Escape"){
+
+      closeReader();
+
+    }
+
+  }
+);
+
+
+/* ================= ИСТОРИЯ БРАУЗЕРА ================= */
+
+window.addEventListener(
+  "popstate",
+  () => {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const albumId =
+      params.get("album");
+
+    if(albumId){
+
+      openAlbum(
+        Number(albumId)
+      );
+
+    }else{
+
+      const overlay =
+        document.getElementById(
+          "readerOverlay"
+        );
+
+      if(
+        overlay &&
+        overlay.classList.contains("show")
+      ){
+
+        closeReader(false);
+
+      }
+
+    }
+
+  }
+);
+
+
+/* ================= ОЧИСТКА СОЗДАНИЯ ================= */
+
+function clearComposer(){
+
+  selectedFiles = [];
+
+  const input =
+    document.getElementById(
+      "mediaInput"
+    );
+
+  if(input){
+
+    input.value = "";
+
+  }
+
+  const text =
+    document.getElementById(
+      "postText"
+    );
+
+  if(text){
+
+    text.value = "";
+
+  }
+
+  renderPreviews();
+
+  updateTextCounter();
+
+  showStatus(
+    "createStatus",
+    "",
+    true
   );
 
 }
 
 
-function formatDate(value) {
+/* ================= ОЧИСТКА АЛЬБОМА ================= */
 
-  if (!value) {
-    return "—";
-  }
+function clearAlbumComposer(){
 
-  try {
+  albumFiles = [];
 
-    return new Date(value)
-      .toLocaleString(
-        "ru-RU",
-        {
-          dateStyle: "short",
-          timeStyle: "short"
-        }
-      );
-
-  } catch {
-
-    return value;
-
-  }
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-function prettifyKey(key) {
-
-  return String(key)
-    .replaceAll("_"," ")
-    .replace(
-      /^./,
-      c => c.toUpperCase()
+  const input =
+    document.getElementById(
+      "albumInput"
     );
 
+  if(input){
+
+    input.value = "";
+
+  }
+
+  const title =
+    document.getElementById(
+      "albumTitle"
+    );
+
+  if(title){
+
+    title.value = "";
+
+  }
+
+  const description =
+    /* ================= ПЕРВИЧНАЯ ИНИЦИАЛИЗАЦИЯ ================= */
+
+function initApp(){
+
+  updateTextCounter();
+
+  renderPreviews();
+
+  renderAlbumPreviews();
+
+  loadScheduled();
+
+  loadPosts();
+
+  loadStats();
+
+  loadAlbums();
+
 }
 
 
-/*
-============================================================
-INITIALIZE
-============================================================
-*/
+/* ================= НАВИГАЦИЯ ================= */
 
-renderPreviews();
+document
+  .querySelectorAll(".nav-btn")
+  .forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => {
+
+        const section =
+          btn.dataset.section;
+
+        if(!section){
+          return;
+        }
+
+        showSection(section);
+
+      }
+    );
+
+  });
+
+
+/* ================= КНОПКИ СОЗДАНИЯ ================= */
+
+const mediaInput =
+  document.getElementById(
+    "mediaInput"
+  );
+
+if(mediaInput){
+
+  mediaInput.addEventListener(
+    "change",
+    event => {
+
+      const files =
+        Array.from(
+          event.target.files || []
+        );
+
+      selectedFiles.push(
+        ...files
+      );
+
+      renderPreviews();
+
+      mediaInput.value = "";
+
+    }
+  );
+
+}
+
+
+const albumInput =
+  document.getElementById(
+    "albumInput"
+  );
+
+if(albumInput){
+
+  albumInput.addEventListener(
+    "change",
+    event => {
+
+      const files =
+        Array.from(
+          event.target.files || []
+        );
+
+      albumFiles.push(
+        ...files
+      );
+
+      renderAlbumPreviews();
+
+      albumInput.value = "";
+
+    }
+  );
+
+}
+
+
+/* ================= ТЕКСТ ПОСТА ================= */
+
+const postText =
+  document.getElementById(
+    "postText"
+  );
+
+if(postText){
+
+  postText.addEventListener(
+    "input",
+    updateTextCounter
+  );
+
+}
+
+
+/* ================= КНОПКА ПУБЛИКАЦИИ ================= */
+
+const publishBtn =
+  document.getElementById(
+    "publishBtn"
+  );
+
+if(publishBtn){
+
+  publishBtn.addEventListener(
+    "click",
+    publishPost
+  );
+
+}
+
+
+/* ================= РЕЖИМ ОТЛОЖЕННОГО ПОСТА ================= */
+
+const scheduleBtn =
+  document.getElementById(
+    "scheduleBtn"
+  );
+
+if(scheduleBtn){
+
+  scheduleBtn.addEventListener(
+    "click",
+    schedulePost
+  );
+
+}
+
+
+/* ================= ПРЕДПРОСМОТР ================= */
+
+const previewBtn =
+  document.getElementById(
+    "previewBtn"
+  );
+
+if(previewBtn){
+
+  previewBtn.addEventListener(
+    "click",
+    () => {
+
+      const text =
+        document
+          .getElementById(
+            "postText"
+          )
+          ?.value
+          ?.trim() || "";
+
+      if(!text && !selectedFiles.length){
+
+        alert(
+          "Сначала добавь текст или медиа."
+        );
+
+        return;
+
+      }
+
+      let message = "";
+
+      if(text){
+
+        message +=
+          "📝 Текст:\n\n" +
+          text +
+          "\n\n";
+
+      }
+
+      if(selectedFiles.length){
+
+        message +=
+          "📎 Файлов: " +
+          selectedFiles.length;
+
+      }
+
+      alert(message);
+
+    }
+  );
+
+}
+
+
+/* ================= ОЧИСТИТЬ ПОСТ ================= */
+
+const clearBtn =
+  document.getElementById(
+    "clearBtn"
+  );
+
+if(clearBtn){
+
+  clearBtn.addEventListener(
+    "click",
+    clearComposer
+  );
+
+}
+
+
+/* ================= ОТМЕНА СОЗДАНИЯ ================= */
+
+const cancelBtn =
+  document.getElementById(
+    "cancelBtn"
+  );
+
+if(cancelBtn){
+
+  cancelBtn.addEventListener(
+    "click",
+    () => {
+
+      clearComposer();
+
+      showSection(
+        "create"
+      );
+
+    }
+  );
+
+}
+
+
+/* ================= СОЗДАНИЕ АЛЬБОМА ================= */
+
+const createAlbumBtn =
+  document.getElementById(
+    "createAlbumBtn"
+  );
+
+if(createAlbumBtn){
+
+  createAlbumBtn.addEventListener(
+    "click",
+    createAlbum
+  );
+
+}
+
+
+/* ================= ОЧИСТИТЬ АЛЬБОМ ================= */
+
+const clearAlbumBtn =
+  document.getElementById(
+    "clearAlbumBtn"
+  );
+
+if(clearAlbumBtn){
+
+  clearAlbumBtn.addEventListener(
+    "click",
+    clearAlbumComposer
+  );
+
+}
+
+
+/* ================= ОБНОВЛЕНИЕ СПИСКОВ ================= */
+
+const refreshScheduledBtn =
+  document.getElementById(
+    "refreshScheduledBtn"
+  );
+
+if(refreshScheduledBtn){
+
+  refreshScheduledBtn.addEventListener(
+    "click",
+    loadScheduled
+  );
+
+}
+
+
+const refreshPostsBtn =
+  document.getElementById(
+    "refreshPostsBtn"
+  );
+
+if(refreshPostsBtn){
+
+  refreshPostsBtn.addEventListener(
+    "click",
+    loadPosts
+  );
+
+}
+
+
+const refreshStatsBtn =
+  document.getElementById(
+    "refreshStatsBtn"
+  );
+
+if(refreshStatsBtn){
+
+  refreshStatsBtn.addEventListener(
+    "click",
+    loadStats
+  );
+
+}
+
+
+const refreshAlbumsBtn =
+  document.getElementById(
+    "refreshAlbumsBtn"
+  );
+
+if(refreshAlbumsBtn){
+
+  refreshAlbumsBtn.addEventListener(
+    "click",
+    loadAlbums
+  );
+
+}
+
+
+/* ================= BACKEND ================= */
+
+const testBackendBtn =
+  document.getElementById(
+    "testBackendBtn"
+  );
+
+if(testBackendBtn){
+
+  testBackendBtn.addEventListener(
+    "click",
+    testBackend
+  );
+
+}
+
+
+/* ================= READER ================= */
+
+const readerClose =
+  document.getElementById(
+    "readerClose"
+  );
+
+if(readerClose){
+
+  readerClose.addEventListener(
+    "click",
+    () => closeReader()
+  );
+
+}
+
+
+const readerPrevBtn =
+  document.getElementById(
+    "readerPrev"
+  );
+
+if(readerPrevBtn){
+
+  readerPrevBtn.addEventListener(
+    "click",
+    readerPrev
+  );
+
+}
+
+
+const readerNextBtn =
+  document.getElementById(
+    "readerNext"
+  );
+
+if(readerNextBtn){
+
+  readerNextBtn.addEventListener(
+    "click",
+    readerNext
+  );
+
+}
+
+
+const readerOverlay =
+  document.getElementById(
+    "readerOverlay"
+  );
+
+if(readerOverlay){
+
+  readerOverlay.addEventListener(
+    "touchstart",
+    readerTouchStart,
+    {
+      passive:true
+    }
+  );
+
+  readerOverlay.addEventListener(
+    "touchend",
+    readerTouchEnd,
+    {
+      passive:true
+    }
+  );
+
+  readerOverlay.addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target ===
+        readerOverlay
+      ){
+
+        closeReader();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ================= TELEGRAM MINI APP ================= */
+
+try{
+
+  if(
+    window.Telegram &&
+    window.Telegram.WebApp
+  ){
+
+    window.Telegram.WebApp.ready();
+
+    window.Telegram.WebApp.expand();
+
+  }
+
+}catch(e){
+
+  console.warn(
+    "Telegram WebApp init:",
+    e
+  );
+
+}
+
+
+/* ================= ОТКРЫТИЕ АЛЬБОМА ИЗ URL ================= */
+
+(function(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const albumId =
+    params.get("album");
+
+  if(albumId){
+
+    const numericId =
+      Number(albumId);
+
+    if(
+      Number.isFinite(
+        numericId
+      ) &&
+      numericId > 0
+    ){
+
+      setTimeout(
+        () => {
+
+          openAlbum(
+            numericId
+          );
+
+        },
+        100
+      );
+
+    }
+
+  }
+
+})();
+
+
+/* ================= ЗАПУСК ================= */
+
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initApp
+  );
+
+}else{
+
+  initApp();
+
+}
+
+
+/* ================= КОНЕЦ ПРИЛОЖЕНИЯ ================= */
 
 </script>
 
 </body>
+
 </html>
