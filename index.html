@@ -3061,19 +3061,129 @@ const description =
 
   }
 
+/* ================= БЕЗОПАСНАЯ ИНИЦИАЛИЗАЦИЯ ================= */
+
+(function(){
+
+  function safeCall(fn){
+
+    try{
+
+      if(typeof fn === "function"){
+        fn();
+      }
+
+    }catch(error){
+
+      console.error(
+        "Kawaii Chan:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* ================= TELEGRAM ================= */
+
+  try{
+
+    if(
+      window.Telegram &&
+      window.Telegram.WebApp
+    ){
+
+      window.Telegram.WebApp.ready();
+
+      window.Telegram.WebApp.expand();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Telegram WebApp:",
+      error
+    );
+
+  }
+
+
+  /* ================= ПЕРВИЧНАЯ ИНИЦИАЛИЗАЦИЯ ================= */
+
+  function initAppSafe(){
+
+    safeCall(updateTextCounter);
+
+    safeCall(renderPreviews);
+
+    safeCall(renderAlbumPreviews);
+
+    safeCall(loadScheduled);
+
+    safeCall(loadPosts);
+
+    safeCall(loadStats);
+
+    safeCall(loadAlbums);
+
+
+    /* ================= ОТКРЫТИЕ АЛЬБОМА ПО ССЫЛКЕ ================= */
+
+    try{
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const albumId =
+        params.get("album");
+
+      if(
+        albumId &&
+        typeof openAlbum === "function"
+      ){
+
+        setTimeout(function(){
+
+          safeCall(function(){
+
+            openAlbum(
+              Number(albumId)
+            );
+
+          });
+
+        },100);
+
+      }
+
+    }catch(error){
+
+      console.error(
+        "Ошибка открытия альбома:",
+        error
+      );
+
+    }
+
+  }
+
 
   /* ================= ЗАПУСК ================= */
 
-  if (
+  if(
     document.readyState === "loading"
-  ) {
+  ){
 
     document.addEventListener(
       "DOMContentLoaded",
       initAppSafe
     );
 
-  } else {
+  }else{
 
     initAppSafe();
 
