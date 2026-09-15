@@ -2771,31 +2771,77 @@ function initApp(){
 
 }
 
-
 /* ================= НАВИГАЦИЯ ================= */
 
 document
   .querySelectorAll(".nav-btn")
   .forEach(btn => {
 
-    btn.addEventListener(
-      "click",
-      () => {
+    btn.addEventListener("click", function(){
 
-        const section =
-          btn.dataset.section;
+      let section =
+        this.getAttribute("data-section");
 
-        if(!section){
-          return;
+      /*
+        Если data-section нет,
+        определяем вкладку по тексту кнопки.
+      */
+
+      if(!section){
+
+        const text =
+          this.textContent
+            .trim()
+            .toLowerCase();
+
+        if(text.includes("создать")){
+          section = "create";
         }
 
-        showSection(section);
+        else if(
+          text.includes("отлож")
+        ){
+          section = "scheduled";
+        }
+
+        else if(
+          text.includes("редакт")
+        ){
+          section = "edit";
+        }
+
+        else if(
+          text.includes("статист")
+        ){
+          section = "stats";
+        }
+
+        else if(
+          text.includes("альбом")
+        ){
+          section = "albums";
+        }
+
+        else if(
+          text.includes("настрой")
+        ){
+          section = "settings";
+        }
 
       }
-    );
+
+      if(!section){
+        return;
+      }
+
+      showSection(
+        section,
+        this
+      );
+
+    });
 
   });
-
 
 /* ================= КНОПКИ СОЗДАНИЯ ================= */
 
