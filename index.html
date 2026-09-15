@@ -2751,603 +2751,201 @@ function clearAlbumComposer(){
   }
 
   const description =
-    /* ================= ПЕРВИЧНАЯ ИНИЦИАЛИЗАЦИЯ ================= */
 
-function initApp(){
+<script>
+/* ================= БЕЗОПАСНАЯ ИНИЦИАЛИЗАЦИЯ ================= */
 
-  updateTextCounter();
+(function () {
 
-  renderPreviews();
+  function safeCall(fn) {
+    try {
+      if (typeof fn === "function") {
+        fn();
+      }
+    } catch (error) {
+      console.error("Kawaii Chan:", error);
+    }
+  }
 
-  renderAlbumPreviews();
+  /* ================= НАВИГАЦИЯ ================= */
 
-  loadScheduled();
+  function initNavigation() {
 
-  loadPosts();
-
-  loadStats();
-
-  loadAlbums();
-
-}
-
-/* ================= НАВИГАЦИЯ ================= */
-
-document
-  .querySelectorAll(".nav-btn")
-  .forEach(btn => {
-
-    btn.addEventListener("click", function(){
-
-      let section =
-        this.getAttribute("data-section");
+    document.querySelectorAll(".nav-btn").forEach(function (btn) {
 
       /*
-        Если data-section нет,
-        определяем вкладку по тексту кнопки.
-      */
+       * Если у кнопки уже есть onclick,
+       * не добавляем второй обработчик.
+       */
+      if (btn.hasAttribute("onclick")) {
+        return;
+      }
 
-      if(!section){
+      btn.addEventListener("click", function () {
 
-        const text =
-          this.textContent
+        let section = btn.getAttribute("data-section");
+
+        if (!section) {
+
+          const text = btn.textContent
             .trim()
             .toLowerCase();
 
-        if(text.includes("создать")){
-          section = "create";
+          if (text.includes("создать")) {
+            section = "create";
+          }
+
+          else if (text.includes("отлож")) {
+            section = "scheduled";
+          }
+
+          else if (text.includes("редакт")) {
+            section = "edit";
+          }
+
+          else if (text.includes("статист")) {
+            section = "stats";
+          }
+
+          else if (text.includes("альбом")) {
+            section = "albums";
+          }
+
+          else if (text.includes("настрой")) {
+            section = "settings";
+          }
         }
 
-        else if(
-          text.includes("отлож")
-        ){
-          section = "scheduled";
+        if (!section) {
+          return;
         }
 
-        else if(
-          text.includes("редакт")
-        ){
-          section = "edit";
+        safeCall(function () {
+          showSection(section, btn);
+        });
+
+        if (section === "scheduled") {
+          safeCall(loadScheduled);
         }
 
-        else if(
-          text.includes("статист")
-        ){
-          section = "stats";
+        if (section === "edit") {
+          safeCall(loadPosts);
         }
 
-        else if(
-          text.includes("альбом")
-        ){
-          section = "albums";
+        if (section === "stats") {
+          safeCall(loadStats);
         }
 
-        else if(
-          text.includes("настрой")
-        ){
-          section = "settings";
+        if (section === "albums") {
+          safeCall(loadAlbums);
         }
 
-      }
-
-      if(!section){
-        return;
-      }
-
-      showSection(
-        section,
-        this
-      );
+      });
 
     });
 
-  });
+  }
 
-/* ================= КНОПКИ СОЗДАНИЯ ================= */
 
-const mediaInput =
-  document.getElementById(
-    "mediaInput"
-  );
+  /* ================= ЗАПУСК ПРИЛОЖЕНИЯ ================= */
 
-if(mediaInput){
+  function initAppSafe() {
 
-  mediaInput.addEventListener(
-    "change",
-    event => {
+    safeCall(updateTextCounter);
 
-      const files =
-        Array.from(
-          event.target.files || []
-        );
+    safeCall(renderPreviews);
 
-      selectedFiles.push(
-        ...files
+    safeCall(renderAlbumPreviews);
+
+    initNavigation();
+
+    safeCall(loadScheduled);
+
+    safeCall(loadPosts);
+
+    safeCall(loadStats);
+
+    safeCall(loadAlbums);
+
+
+    /* ================= ОТКРЫТИЕ АЛЬБОМА ПО ССЫЛКЕ ================= */
+
+    try {
+
+      const params = new URLSearchParams(
+        window.location.search
       );
 
-      renderPreviews();
+      const albumId = params.get("album");
 
-      mediaInput.value = "";
+      if (albumId && typeof openAlbum === "function") {
 
-    }
-  );
+        setTimeout(function () {
 
-}
+          safeCall(function () {
+            openAlbum(albumId);
+          });
 
-
-const albumInput =
-  document.getElementById(
-    "albumInput"
-  );
-
-if(albumInput){
-
-  albumInput.addEventListener(
-    "change",
-    event => {
-
-      const files =
-        Array.from(
-          event.target.files || []
-        );
-
-      albumFiles.push(
-        ...files
-      );
-
-      renderAlbumPreviews();
-
-      albumInput.value = "";
-
-    }
-  );
-
-}
-
-
-/* ================= ТЕКСТ ПОСТА ================= */
-
-const postText =
-  document.getElementById(
-    "postText"
-  );
-
-if(postText){
-
-  postText.addEventListener(
-    "input",
-    updateTextCounter
-  );
-
-}
-
-
-/* ================= КНОПКА ПУБЛИКАЦИИ ================= */
-
-const publishBtn =
-  document.getElementById(
-    "publishBtn"
-  );
-
-if(publishBtn){
-
-  publishBtn.addEventListener(
-    "click",
-    publishPost
-  );
-
-}
-
-
-/* ================= РЕЖИМ ОТЛОЖЕННОГО ПОСТА ================= */
-
-const scheduleBtn =
-  document.getElementById(
-    "scheduleBtn"
-  );
-
-if(scheduleBtn){
-
-  scheduleBtn.addEventListener(
-    "click",
-    schedulePost
-  );
-
-}
-
-
-/* ================= ПРЕДПРОСМОТР ================= */
-
-const previewBtn =
-  document.getElementById(
-    "previewBtn"
-  );
-
-if(previewBtn){
-
-  previewBtn.addEventListener(
-    "click",
-    () => {
-
-      const text =
-        document
-          .getElementById(
-            "postText"
-          )
-          ?.value
-          ?.trim() || "";
-
-      if(!text && !selectedFiles.length){
-
-        alert(
-          "Сначала добавь текст или медиа."
-        );
-
-        return;
+        }, 100);
 
       }
 
-      let message = "";
+    } catch (error) {
 
-      if(text){
-
-        message +=
-          "📝 Текст:\n\n" +
-          text +
-          "\n\n";
-
-      }
-
-      if(selectedFiles.length){
-
-        message +=
-          "📎 Файлов: " +
-          selectedFiles.length;
-
-      }
-
-      alert(message);
-
-    }
-  );
-
-}
-
-
-/* ================= ОЧИСТИТЬ ПОСТ ================= */
-
-const clearBtn =
-  document.getElementById(
-    "clearBtn"
-  );
-
-if(clearBtn){
-
-  clearBtn.addEventListener(
-    "click",
-    clearComposer
-  );
-
-}
-
-
-/* ================= ОТМЕНА СОЗДАНИЯ ================= */
-
-const cancelBtn =
-  document.getElementById(
-    "cancelBtn"
-  );
-
-if(cancelBtn){
-
-  cancelBtn.addEventListener(
-    "click",
-    () => {
-
-      clearComposer();
-
-      showSection(
-        "create"
+      console.error(
+        "Ошибка открытия альбома:",
+        error
       );
 
     }
-  );
-
-}
-
-
-/* ================= СОЗДАНИЕ АЛЬБОМА ================= */
-
-const createAlbumBtn =
-  document.getElementById(
-    "createAlbumBtn"
-  );
-
-if(createAlbumBtn){
-
-  createAlbumBtn.addEventListener(
-    "click",
-    createAlbum
-  );
-
-}
-
-
-/* ================= ОЧИСТИТЬ АЛЬБОМ ================= */
-
-const clearAlbumBtn =
-  document.getElementById(
-    "clearAlbumBtn"
-  );
-
-if(clearAlbumBtn){
-
-  clearAlbumBtn.addEventListener(
-    "click",
-    clearAlbumComposer
-  );
-
-}
-
-
-/* ================= ОБНОВЛЕНИЕ СПИСКОВ ================= */
-
-const refreshScheduledBtn =
-  document.getElementById(
-    "refreshScheduledBtn"
-  );
-
-if(refreshScheduledBtn){
-
-  refreshScheduledBtn.addEventListener(
-    "click",
-    loadScheduled
-  );
-
-}
-
-
-const refreshPostsBtn =
-  document.getElementById(
-    "refreshPostsBtn"
-  );
-
-if(refreshPostsBtn){
-
-  refreshPostsBtn.addEventListener(
-    "click",
-    loadPosts
-  );
-
-}
-
-
-const refreshStatsBtn =
-  document.getElementById(
-    "refreshStatsBtn"
-  );
-
-if(refreshStatsBtn){
-
-  refreshStatsBtn.addEventListener(
-    "click",
-    loadStats
-  );
-
-}
-
-
-const refreshAlbumsBtn =
-  document.getElementById(
-    "refreshAlbumsBtn"
-  );
-
-if(refreshAlbumsBtn){
-
-  refreshAlbumsBtn.addEventListener(
-    "click",
-    loadAlbums
-  );
-
-}
-
-
-/* ================= BACKEND ================= */
-
-const testBackendBtn =
-  document.getElementById(
-    "testBackendBtn"
-  );
-
-if(testBackendBtn){
-
-  testBackendBtn.addEventListener(
-    "click",
-    testBackend
-  );
-
-}
-
-
-/* ================= READER ================= */
-
-const readerClose =
-  document.getElementById(
-    "readerClose"
-  );
-
-if(readerClose){
-
-  readerClose.addEventListener(
-    "click",
-    () => closeReader()
-  );
-
-}
-
-
-const readerPrevBtn =
-  document.getElementById(
-    "readerPrev"
-  );
-
-if(readerPrevBtn){
-
-  readerPrevBtn.addEventListener(
-    "click",
-    readerPrev
-  );
-
-}
-
-
-const readerNextBtn =
-  document.getElementById(
-    "readerNext"
-  );
-
-if(readerNextBtn){
-
-  readerNextBtn.addEventListener(
-    "click",
-    readerNext
-  );
-
-}
-
-
-const readerOverlay =
-  document.getElementById(
-    "readerOverlay"
-  );
-
-if(readerOverlay){
-
-  readerOverlay.addEventListener(
-    "touchstart",
-    readerTouchStart,
-    {
-      passive:true
-    }
-  );
-
-  readerOverlay.addEventListener(
-    "touchend",
-    readerTouchEnd,
-    {
-      passive:true
-    }
-  );
-
-  readerOverlay.addEventListener(
-    "click",
-    event => {
-
-      if(
-        event.target ===
-        readerOverlay
-      ){
-
-        closeReader();
-
-      }
-
-    }
-  );
-
-}
-
-
-/* ================= TELEGRAM MINI APP ================= */
-
-try{
-
-  if(
-    window.Telegram &&
-    window.Telegram.WebApp
-  ){
-
-    window.Telegram.WebApp.ready();
-
-    window.Telegram.WebApp.expand();
 
   }
 
-}catch(e){
 
-  console.warn(
-    "Telegram WebApp init:",
-    e
-  );
+  /* ================= TELEGRAM ================= */
 
-}
+  try {
 
+    if (
+      window.Telegram &&
+      window.Telegram.WebApp
+    ) {
 
-/* ================= ОТКРЫТИЕ АЛЬБОМА ИЗ URL ================= */
+      window.Telegram.WebApp.ready();
 
-(function(){
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const albumId =
-    params.get("album");
-
-  if(albumId){
-
-    const numericId =
-      Number(albumId);
-
-    if(
-      Number.isFinite(
-        numericId
-      ) &&
-      numericId > 0
-    ){
-
-      setTimeout(
-        () => {
-
-          openAlbum(
-            numericId
-          );
-
-        },
-        100
-      );
+      window.Telegram.WebApp.expand();
 
     }
+
+  } catch (error) {
+
+    console.error(
+      "Telegram WebApp:",
+      error
+    );
+
+  }
+
+
+  /* ================= ЗАПУСК ================= */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initAppSafe
+    );
+
+  } else {
+
+    initAppSafe();
 
   }
 
 })();
-
-
-/* ================= ЗАПУСК ================= */
-
-if(
-  document.readyState ===
-  "loading"
-){
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initApp
-  );
-
-}else{
-
-  initApp();
-
-}
-
-
-/* ================= КОНЕЦ ПРИЛОЖЕНИЯ ================= */
-
 </script>
 
 </body>
-
 </html>
